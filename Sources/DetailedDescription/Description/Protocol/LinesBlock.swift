@@ -30,4 +30,8 @@ public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockPro
         }
     }
     
+    init(lines: (repeat each T)) {
+        self.lines = lines
+    }
+    
 }

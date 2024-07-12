@@ -21,5 +21,6 @@ let package = Package(
             name: "DetailedDescriptionTests",
             dependencies: ["DetailedDescription"]
         ),
+        .executableTarget(name: "Client", dependencies: ["DetailedDescription"])
     ]
 )

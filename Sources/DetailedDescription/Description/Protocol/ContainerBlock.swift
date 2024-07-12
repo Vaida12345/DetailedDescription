@@ -5,6 +5,8 @@
 //  Created by Vaida on 7/12/24.
 //
 
+import Foundation
+
 
 struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
@@ -22,15 +24,21 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         }
         
         var linesCount = 0
-        for line in repeat each lines.lines {
-            guard !line.isEmpty else { continue }
-            
+        
+        dump(lines)
+        
+        func advanceCounter(_ line: some DescriptionBlockProtocol) {
+            guard !line.isEmpty else { return }
             linesCount += 1
         }
         
+        repeat advanceCounter(each lines.lines)
+        
+        
         var index = 0
-        for line in repeat each lines.lines {
-            guard !line.isEmpty else { continue }
+        
+        func process(_ line: some DescriptionBlockProtocol) {
+            guard !line.isEmpty else { return }
             
             let isLastLine = index == linesCount - 1
             
@@ -46,6 +54,13 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
             
             index += 1
         }
+        
+        repeat process(each lines.lines)
+    }
+    
+    init(title: String?, lines: _LinesBlock<repeat each T>) {
+        self.title = title
+        self.lines = lines
     }
     
 }
