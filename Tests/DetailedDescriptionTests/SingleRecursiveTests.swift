@@ -52,7 +52,7 @@ private let simpleNode = Node.node(
 
 extension Node: CustomDetailedStringConvertible {
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> DetailedDescription.Description {
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
         descriptor.container("Node<Int>") {
             descriptor.value(for: \.nextNode)
             descriptor.value(for: \.leaf)
@@ -63,7 +63,7 @@ extension Node: CustomDetailedStringConvertible {
 
 
 @Test
-func testSingleRecursive() async throws {
+func testSingleRecursive() throws {
     let match = """
     Node<Int>
      ╰─nextNode: Node<Int>

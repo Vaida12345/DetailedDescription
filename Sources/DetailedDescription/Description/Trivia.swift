@@ -6,44 +6,42 @@
 //
 
 
-extension DetailedDescription.Description.Segment {
+public enum _Trivia: CustomStringConvertible {
+    case space
+    case block(_Block)
+    case index(Int)
     
-    enum Trivia: CustomStringConvertible {
-        case space
-        case block(Block)
-        case index(Int)
-        
-        enum Block: String {
-            case vertical
-            case child
-            case lastChild
-            case dash
-            
-            var symbol: String {
-                switch self {
-                case .vertical: "│"
-                case .child:  "├"
-                case .lastChild: "╰"
-                case .dash: "─"
-                }
-            }
-        }
+    public enum _Block: String {
+        case vertical
+        case child
+        case dash
         
         var symbol: String {
             switch self {
-            case .space: " "
-            case let .block(block): block.symbol
-            case .index(let index): "[\(index)]"
+            case .vertical: "│"
+            case .child:  "├"
+            case .dash: "─"
             }
         }
         
-        var description: String {
-            switch self {
-            case .space: ".space"
-            case .block(let block): "." + block.rawValue
-            case .index(let index): ".index(\(index))"
-            }
+        static var lastChildSymbol: String {
+            "╰"
         }
     }
     
+    var symbol: String {
+        switch self {
+        case .space: " "
+        case let .block(block): block.symbol
+        case .index(let index): "[\(index)]"
+        }
+    }
+    
+    public var description: String {
+        switch self {
+        case .space: ".space"
+        case .block(let block): "." + block.rawValue
+        case .index(let index): ".index(\(index))"
+        }
+    }
 }

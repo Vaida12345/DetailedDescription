@@ -13,13 +13,13 @@ import DetailedDescription
 @Suite
 struct DebuggingTests {
     
-    @Test func symbolNames() async throws {
-        #expect(DetailedDescription.Description.Segment.Trivia.space.description == ".space")
-        #expect(DetailedDescription.Description.Segment.Trivia.block(.vertical).description == ".vertical")
-        #expect(DetailedDescription.Description.Segment.Trivia.block(.child).description == ".child")
-        #expect(DetailedDescription.Description.Segment.Trivia.block(.lastChild).description == ".lastChild")
-        #expect(DetailedDescription.Description.Segment.Trivia.block(.dash).description == ".dash")
-    }
+//    @Test func symbolNames() async throws {
+//        #expect(DetailedDescription.Description.Segment.Trivia.space.description == ".space")
+//        #expect(DetailedDescription.Description.Segment.Trivia.block(.vertical).description == ".vertical")
+//        #expect(DetailedDescription.Description.Segment.Trivia.block(.child).description == ".child")
+//        #expect(DetailedDescription.Description.Segment.Trivia.block(.lastChild).description == ".lastChild")
+//        #expect(DetailedDescription.Description.Segment.Trivia.block(.dash).description == ".dash")
+//    }
     
 //    @Test func descriptionDescription() {
 //        var description = DetailedDescription.Description()

@@ -6,15 +6,10 @@
 //
 
 
-public extension DetailedDescription {
+public protocol CustomDetailedStringConvertible {
     
-    protocol DescriptionProtocol {
-        
-        func detailedDescription(using descriptor: Descriptor<Self>) -> Description
-        
-    }
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Self>) -> DescriptionBlock
+    
+    associatedtype DescriptionBlock: DescriptionBlockProtocol
     
 }
-
-
-public typealias CustomDetailedStringConvertible = DetailedDescription.DescriptionProtocol

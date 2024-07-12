@@ -13,45 +13,24 @@ extension DetailedDescription {
         let base: Base
         
         
-        public func container(
+        public func container<each T: DescriptionBlockProtocol>(
             _ title: String,
-            @DetailedDescription.Builder blocks: () -> [Description]
-        ) -> Description {
-            let blocks = blocks().filter({ !$0.isEmpty })
-            
-            var description = DetailedDescription.Description()
-            var childrenDescription = DetailedDescription.Description()
-            
-            
-            for block in blocks {
-                print(">>", block)
-                if block.lines.count > 1 {
-                    childrenDescription.add(key: "?what key?", block: block)
-                } else {
-                    childrenDescription.lines.append(block.lines[0])
-                }
-            }
-            
-            description.add(key: title, block: childrenDescription)
-            
-            return description
+            @DetailedDescription.Builder blocks: () -> _LinesBlock<repeat each T>
+        ) -> some DescriptionBlockProtocol {
+            ContainerBlock<repeat each T>(title: title, lines: blocks())
         }
         
         public func value<T>(
             _ title: String? = nil,
             for keyPath: KeyPath<Base, T>
-        ) -> Description {
-            var description = Description()
-            description.add(key: (title, keyPath), string: "\(base[keyPath: keyPath])")
-            return description
+        ) -> some DescriptionBlockProtocol {
+            LineBlock(title: title ?? keyPath.trailingPath, value: base[keyPath: keyPath])
         }
         
         public func value(
             _ content: String
-        ) -> Description {
-            var description = Description()
-            description.add(key: "", string: content)
-            return description
+        ) -> some DescriptionBlockProtocol {
+            LineBlock(title: nil, value: content)
         }
         
         init(base: Base) {
