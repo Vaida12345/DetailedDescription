@@ -24,7 +24,7 @@ struct ArrayBlock: DescriptionBlockProtocol {
             target.write(title)
         }
         
-        let blocks = self.blocks.filter({ !$0.isEmpty })
+        let blocks = self.blocks.filter({ !$0._isEmpty })
         
         let linesCount = self.blocks.count
         
@@ -42,7 +42,7 @@ struct ArrayBlock: DescriptionBlockProtocol {
         }
         
         for (index, line) in blocks.enumerated() {
-            guard !line.isEmpty else { return }
+            guard !line._isEmpty else { return }
             
             let isLastLine = index == linesCount - 1
             

@@ -26,7 +26,7 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         var linesCount = 0
         
         func advanceCounter(_ line: some DescriptionBlockProtocol) {
-            guard !line.isEmpty else { return }
+            guard !line._isEmpty else { return }
             linesCount += 1
         }
         
@@ -39,7 +39,7 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         var index = 0
         
         func process(_ line: some DescriptionBlockProtocol) {
-            guard !line.isEmpty else { return }
+            guard !line._isEmpty else { return }
             
             let isLastLine = index == linesCount - 1
             

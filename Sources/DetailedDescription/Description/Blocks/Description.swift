@@ -6,6 +6,9 @@
 //
 
 
+/// A block of description.
+///
+/// This is implementation details.
 public protocol DescriptionBlockProtocol {
     
     /// When writing, write the heads for children, while `self` remains headless.
@@ -17,7 +20,7 @@ public protocol DescriptionBlockProtocol {
         trivia: [_Trivia]
     )
     
-    var isEmpty: Bool { get }
+    var _isEmpty: Bool { get }
     
 }
 
@@ -30,7 +33,7 @@ extension DescriptionBlockProtocol {
         return string
     }
     
-    public var isEmpty: Bool {
+    public var _isEmpty: Bool {
         false
     }
     

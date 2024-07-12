@@ -17,8 +17,8 @@ struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProto
         }
     }
     
-    var isEmpty: Bool {
-        self.block?.isEmpty ?? true
+    var _isEmpty: Bool {
+        self.block?._isEmpty ?? true
     }
     
 }

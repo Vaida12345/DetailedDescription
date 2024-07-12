@@ -8,6 +8,7 @@
 
 extension DetailedDescription {
     
+    /// Builder for DSL.
     @resultBuilder
     public enum Builder {
         

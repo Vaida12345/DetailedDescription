@@ -27,7 +27,7 @@ extension DetailedDescription.Descriptor {
 //        for keyPath: KeyPath<Base, Array<Base>>
 //    ) -> some DescriptionBlockProtocol {
 //        let children = base[keyPath: keyPath]
-//        guard !children.isEmpty else { return DetailedDescription.Description() }
+//        guard !children._isEmpty else { return DetailedDescription.Description() }
 //        
 //        return child.detailedDescription(using: DetailedDescription.Descriptor(base: child))
 //    }

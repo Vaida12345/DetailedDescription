@@ -8,6 +8,7 @@
 
 public extension CustomDetailedStringConvertible {
     
+    /// Use this property to access the detailed description.
     var detailedDescription: String {
         let descriptor = DetailedDescription.Descriptor(base: self)
         let descriptions = self.detailedDescription(using: descriptor)

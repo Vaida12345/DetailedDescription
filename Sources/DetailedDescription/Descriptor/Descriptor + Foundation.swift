@@ -8,6 +8,7 @@
 
 extension DetailedDescription {
     
+    /// A structure used to coordinate and provide the description.
     public struct Descriptor<Base> where Base: CustomDetailedStringConvertible {
         
         let base: Base

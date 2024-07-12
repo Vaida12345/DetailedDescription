@@ -16,13 +16,13 @@ struct AnyBlock: DescriptionBlockProtocol {
     }
     
     func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia]) where Target : TextOutputStream {
-        if !(self.isEmpty) {
+        if !(self._isEmpty) {
             block._detailedWrite(to: &target, trivia: trivia)
         }
     }
     
-    var isEmpty: Bool {
-        self.block.isEmpty
+    var _isEmpty: Bool {
+        self.block._isEmpty
     }
     
 }

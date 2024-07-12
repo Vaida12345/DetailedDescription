@@ -67,7 +67,7 @@ struct LineBlock: DescriptionBlockProtocol {
     }
     
     
-    var isEmpty: Bool {
+    var _isEmpty: Bool {
         self.title == nil && value.isNone
     }
     

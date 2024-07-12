@@ -6,6 +6,7 @@
 //
 
 
+/// The container for DetailedDescription.
 public enum DetailedDescription {
     
 }
