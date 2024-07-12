@@ -13,11 +13,11 @@ extension DetailedDescription {
         let base: Base
         
         
-        public func container(
+        public func container<each T: DescriptionBlockProtocol>(
             _ title: String,
-            @DetailedDescription.Builder blocks: () -> LinesBlock
+            @DetailedDescription.Builder blocks: () -> _LinesBlock<repeat each T>
         ) -> some DescriptionBlockProtocol {
-            ContainerBlock(title: title, lines: blocks())
+            ContainerBlock<repeat each T>(title: title, lines: blocks())
         }
         
         public func value<T>(

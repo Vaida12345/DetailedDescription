@@ -17,6 +17,8 @@ public protocol DescriptionBlockProtocol {
         trivia: [_Trivia]
     )
     
+    var isEmpty: Bool { get }
+    
 }
 
 
@@ -26,6 +28,10 @@ extension DescriptionBlockProtocol {
         var string = ""
         self._detailedWrite(to: &string, trivia: [.space])
         return string
+    }
+    
+    public var isEmpty: Bool {
+        false
     }
     
 }

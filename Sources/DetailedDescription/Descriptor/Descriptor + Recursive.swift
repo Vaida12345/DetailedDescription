@@ -11,14 +11,17 @@ extension DetailedDescription.Descriptor {
     public func value(
         _ title: String? = nil,
         for keyPath: KeyPath<Base, Optional<Base>>
-    ) -> any DescriptionBlockProtocol {
+    ) -> some DescriptionBlockProtocol {
+        let title = title ?? keyPath.trailingPath
         if let child = base[keyPath: keyPath] {
-            return self.container(title ?? keyPath.trailingPath) {
-                child.detailedDescription(using: DetailedDescription.Descriptor<Base>(base: child))
-            }
+            let description = child.detailedDescription(using: DetailedDescription.Descriptor<Base>(base: child))
+            
+            return AnyBlock(
+                block: ContainerBlock(title: title, lines: _LinesBlock(lines: description))
+            )
         }
         
-        return EmptyBlock()
+        return AnyBlock(block: EmptyBlock())
     }
     
 //    public func array(

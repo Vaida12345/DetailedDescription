@@ -6,11 +6,11 @@
 //
 
 
-struct ContainerBlock: DescriptionBlockProtocol {
+struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
     let title: String?
     
-    let lines: LinesBlock
+    let lines: _LinesBlock<repeat each T>
     
     
     func _detailedWrite<Target>(
@@ -21,11 +21,16 @@ struct ContainerBlock: DescriptionBlockProtocol {
             target.write(title + "\n")
         }
         
-        let linesCount = lines.lines.count
+        var linesCount = 0
+        for line in repeat each lines.lines {
+            guard !line.isEmpty else { continue }
+            
+            linesCount += 1
+        }
         
         var index = 0
-        for line in lines.lines {
-            guard !(line is EmptyBlock) else { continue }
+        for line in repeat each lines.lines {
+            guard !line.isEmpty else { continue }
             
             let isLastLine = index == linesCount - 1
             

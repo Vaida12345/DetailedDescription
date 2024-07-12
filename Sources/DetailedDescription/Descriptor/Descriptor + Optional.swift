@@ -11,10 +11,10 @@ extension DetailedDescription.Descriptor {
     public func value<T>(
         _ title: String? = nil,
         for keyPath: KeyPath<Base, Optional<T>>
-    ) -> any DescriptionBlockProtocol {
-        guard let attribute = base[keyPath: keyPath] else { return EmptyBlock() }
-        
-        return LineBlock(title: title ?? keyPath.trailingPath, value: attribute)
+    ) -> some DescriptionBlockProtocol {
+        print("called optional")
+        guard let attribute = base[keyPath: keyPath] else { return OptionalBlock<LineBlock>(block: nil) }
+        return OptionalBlock(block: LineBlock(title: title ?? keyPath.trailingPath, value: attribute))
     }
     
 }

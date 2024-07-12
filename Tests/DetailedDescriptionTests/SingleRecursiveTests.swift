@@ -75,5 +75,5 @@ func testSingleRecursive() throws {
     
     #expect(node.detailedDescription == match)
     
-    print(simpleNode.detailedDescription)
+    print(node.detailedDescription)
 }

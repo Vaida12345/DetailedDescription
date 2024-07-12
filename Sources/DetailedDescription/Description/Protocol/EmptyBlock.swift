@@ -11,4 +11,8 @@ struct EmptyBlock: DescriptionBlockProtocol {
         fatalError("Should never call")
     }
     
+    var isEmpty: Bool {
+        true
+    }
+    
 }
