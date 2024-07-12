@@ -14,18 +14,9 @@ extension DetailedDescription.Descriptor {
     ) -> DetailedDescription.Description {
         guard let child = base[keyPath: keyPath] else { return DetailedDescription.Description() }
         
-        print(">>>>")
-        
-        print(child)
-        
-        var description = DetailedDescription.Description()
-        description.add(descriptionOf: child, indicator: "\(title ?? keyPath.trailingPath)", trivia: [], isLast: true)
-        
-        print(description)
-        
-        print("<<<<")
-        
-        return description
+        return self.container(title ?? keyPath.trailingPath) {
+            child.detailedDescription(using: DetailedDescription.Descriptor<Base>(base: child))
+        }
     }
     
 //    public func array(

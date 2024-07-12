@@ -32,11 +32,13 @@ struct Model: CustomDetailedStringConvertible {
 @Test func example() async throws {
     let model = Model(name: "hello", age: 100)
     let match = """
-    Model<T>
-     ├─details
-     │  ├─name: hello
-     │  ╰─age: 100
+    Model<T>:
+     ├─details:
+     │ ├─name: hello
+     │ ╰─age: 100
      ╰─the end
     """
+    dump(model.detailedDescription(using: DetailedDescription.Descriptor<Model>(base: model)))
+    
     #expect(model.detailedDescription == match)
 }

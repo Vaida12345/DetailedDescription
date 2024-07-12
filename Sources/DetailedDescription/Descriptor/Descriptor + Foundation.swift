@@ -17,19 +17,22 @@ extension DetailedDescription {
             _ title: String,
             @DetailedDescription.Builder blocks: () -> [Description]
         ) -> Description {
-            var blocks = blocks().filter({ !$0.isEmpty })
-            var description = Description()
+            let blocks = blocks().filter({ !$0.isEmpty })
             
-            description.add(trivia: [], indicator: "", content: title)
+            var description = DetailedDescription.Description()
+            var childrenDescription = DetailedDescription.Description()
             
-            guard !blocks.isEmpty else { return Description() }
-            let lastBlock = blocks.removeLast()
             
             for block in blocks {
-                description.add(block: block, isLast: false)
+                print(">>", block)
+                if block.lines.count > 1 {
+                    childrenDescription.add(key: "?what key?", block: block)
+                } else {
+                    childrenDescription.lines.append(block.lines[0])
+                }
             }
             
-            description.add(block: lastBlock, isLast: true)
+            description.add(key: title, block: childrenDescription)
             
             return description
         }
@@ -39,7 +42,7 @@ extension DetailedDescription {
             for keyPath: KeyPath<Base, T>
         ) -> Description {
             var description = Description()
-            description.add(trivia: [], indicator: (title, keyPath), content: "\(base[keyPath: keyPath])")
+            description.add(key: (title, keyPath), string: "\(base[keyPath: keyPath])")
             return description
         }
         
@@ -47,7 +50,7 @@ extension DetailedDescription {
             _ content: String
         ) -> Description {
             var description = Description()
-            description.add(trivia: [], indicator: "", content: content)
+            description.add(key: "", string: content)
             return description
         }
         

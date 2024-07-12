@@ -6,7 +6,7 @@
 //
 
 
-extension DetailedDescription.Description.Line {
+extension DetailedDescription.Description.Segment {
     
     enum Trivia: CustomStringConvertible {
         case space

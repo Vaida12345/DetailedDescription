@@ -11,7 +11,9 @@ public extension CustomDetailedStringConvertible {
     var detailedDescription: String {
         let descriptor = DetailedDescription.Descriptor(base: self)
         let descriptions = self.detailedDescription(using: descriptor)
-        return descriptions.string
+        var string = ""
+        descriptions.detailedWrite(to: &string, trivia: [])
+        return string
     }
     
 }

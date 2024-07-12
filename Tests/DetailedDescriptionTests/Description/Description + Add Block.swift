@@ -17,14 +17,15 @@ struct Description_AddBlock {
         let block = model.detailedDescription(using: DetailedDescription.Descriptor<Model>(base: model))
         
         var description = DetailedDescription.Description()
-        description.add(block: block, isLast: true)
+        description.add(key: "key", block: block)
         
         let match = """
-         ╰─Model<T>
-            ├─details
-            │  ├─name: hello
-            │  ╰─age: 100
-            ╰─the end
+        key:
+         ╰─Model<T>:
+           ├─details:
+           │ ├─name: hello
+           │ ╰─age: 100
+           ╰─the end
         """
         
         #expect(description.string == match)

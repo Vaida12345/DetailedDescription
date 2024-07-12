@@ -15,7 +15,7 @@ extension DetailedDescription.Descriptor {
         var description = DetailedDescription.Description()
         guard let attribute = base[keyPath: keyPath] else { return description }
         
-        description.add(trivia: [], indicator: (title, keyPath), content: "\(attribute)")
+        description.add(key: (title, keyPath), string: "\(attribute)")
         return description
     }
     

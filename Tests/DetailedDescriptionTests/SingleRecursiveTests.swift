@@ -71,7 +71,9 @@ func testSingleRecursive() async throws {
            ╰─nextNode: Node<Int>
               ╰─leaf: 2
     """
-//    #expect(node.detailedDescription == match)
+    dump(node.detailedDescription(using: DetailedDescription.Descriptor<Node>(base: node)))
+    
+    #expect(node.detailedDescription == match)
     
     print(simpleNode.detailedDescription)
 }
