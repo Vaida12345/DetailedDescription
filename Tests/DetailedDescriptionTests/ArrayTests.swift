@@ -21,7 +21,7 @@ struct ArrayTestSuit {
             LineBlock(title: "Hello", value: "you toooooo"),
             LineBlock(title: "Hello", value: "you tooooooo"),
             LineBlock(title: "Hello", value: "you toooooooo"),
-        ], includeIndex: false)
+        ], includeIndex: false, hideEmptyArray: false)
         
         let match = """
         <8 elements>
@@ -48,7 +48,7 @@ struct ArrayTestSuit {
             LineBlock(title: "Hello", value: "you toooooo"),
             LineBlock(title: "Hello", value: "you tooooooo"),
             LineBlock(title: "Hello", value: "you toooooooo"),
-        ], includeIndex: true)
+        ], includeIndex: true, hideEmptyArray: false)
         
         let match = """
         <8 elements>
@@ -71,7 +71,7 @@ struct ArrayTestSuit {
             LineBlock(title: "Hello", value: "you too"),
             LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: _LinesBlock(lines: LineBlock(title: "Not", value: "you tooo")), configuration: .init()))),
             LineBlock(title: "Hello", value: "you tooo"),
-        ], includeIndex: true)
+        ], includeIndex: true, hideEmptyArray: false)
         
         let match = """
         <4 elements>

@@ -44,19 +44,34 @@ private let node = Node.node([
 ])
 
 
-//extension Node: CustomDetailedStringConvertible {
-//    
-//    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> DetailedDescription.Description {
-//        descriptor.container("Node<Int>") {
-//            descriptor.array(for: \.nextNodes)
-//            descriptor.value(for: \.leaf)
-//        }
-//    }
-//    
-//}
-//
-//
-//@Test
-//func testMultiRecursive() async throws {
-//    print(node.detailedDescription)
-//}
+extension Node: CustomDetailedStringConvertible {
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
+        descriptor.container {
+            descriptor.array(for: \.nextNodes, includeIndex: false)
+            descriptor.value(for: \.leaf)
+        }
+    }
+    
+}
+
+
+@Test
+func testMultiRecursive() async throws {
+    let match = """
+    Node
+     ╰─nextNodes: <2 elements>
+       ├─Node
+       │ ╰─nextNodes: <2 elements>
+       │   ├─Node
+       │   │ ╰─leaf: 1
+       │   ╰─Node
+       │     ╰─nextNodes: <1 element>
+       │       ╰─Node
+       │         ╰─leaf: 2
+       ╰─Node
+         ╰─leaf: 3
+    """
+    
+    #expect(node.detailedDescription == match)
+}

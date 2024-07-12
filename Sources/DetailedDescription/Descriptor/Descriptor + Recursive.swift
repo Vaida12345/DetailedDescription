@@ -6,31 +6,40 @@
 //
 
 
-extension DetailedDescription.Descriptor {
-    
-    public func value(
-        _ title: String? = nil,
-        for keyPath: KeyPath<Base, Optional<Base>>
-    ) -> some DescriptionBlockProtocol {
-        let title = title ?? keyPath.trailingPath
-        if let child = base[keyPath: keyPath] {
-            let descriptor = DetailedDescription.Descriptor<Base>(base: child)
-            let description = child.detailedDescription(using: descriptor)
-            
-            return LineBlock(title: title, value: description)
-        }
-        
-        return LineBlock.empty
-    }
-    
+//extension DetailedDescription.Descriptor {
+//    
+//    public func value(
+//        _ title: String? = nil,
+//        for keyPath: KeyPath<Base, Optional<Base>>
+//    ) -> some DescriptionBlockProtocol {
+//        let title = title ?? keyPath.trailingPath
+//        if let child = base[keyPath: keyPath] {
+//            let descriptor = DetailedDescription.Descriptor<Base>(base: child)
+//            let description = child.detailedDescription(using: descriptor)
+//            
+//            return LineBlock(title: title, value: description)
+//        }
+//        
+//        return LineBlock.empty
+//    }
+//    
 //    public func array(
 //        _ title: String? = nil,
-//        for keyPath: KeyPath<Base, Array<Base>>
+//        for keyPath: KeyPath<Base, Array<Base>>,
+//        includeIndex: Bool = true
 //    ) -> some DescriptionBlockProtocol {
-//        let children = base[keyPath: keyPath]
-//        guard !children._isEmpty else { return DetailedDescription.Description() }
+//        let title = title ?? keyPath.trailingPath
 //        
-//        return child.detailedDescription(using: DetailedDescription.Descriptor(base: child))
+//        let array = base[keyPath: keyPath]
+//        
+//        return LineBlock(
+//            title: title,
+//            value: ArrayBlock(
+//                blocks: array.map {
+//                    LineBlock(title: nil, value: $0)
+//                },
+//                includeIndex: includeIndex)
+//            )
 //    }
-    
-}
+//    
+//}

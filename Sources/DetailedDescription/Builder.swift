@@ -31,10 +31,10 @@ extension DetailedDescription {
 //        public static func buildEither<TrueBlock>(last component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
 //            ConditionBlock(block: component)
 //        }
-//        
-//        public static func buildOptional<T>(_ component: T?) -> some DescriptionBlockProtocol where T: DescriptionBlockProtocol {
-//            OptionalBlock(block: component)
-//        }
+        
+        public static func buildOptional<T>(_ component: T?) -> some DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+            OptionalBlock(block: component)
+        }
         
     }
     

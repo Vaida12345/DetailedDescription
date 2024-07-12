@@ -21,6 +21,8 @@ struct LineBlock: DescriptionBlockProtocol {
         
         if let value = value as? DescriptionBlockProtocol {
             self.value = .block(value)
+        } else if let value = value as? (any CustomDetailedStringConvertible) {
+            self.value = .customDetailedStringConvertible(value)
         } else if let value = value as? CustomStringConvertible {
             self.value = .customStringConvertible(value)
         } else {
@@ -51,6 +53,8 @@ struct LineBlock: DescriptionBlockProtocol {
             }
         case .block(let block):
             block._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
+        case .customDetailedStringConvertible(let value):
+            value.descriptionBlocks()._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
         case .customStringConvertible(let value):
             target.write(value.description)
             if configuration.showType ?? false {
@@ -65,6 +69,7 @@ struct LineBlock: DescriptionBlockProtocol {
         case string(String)
         case block(any DescriptionBlockProtocol)
         case customStringConvertible(any CustomStringConvertible)
+        case customDetailedStringConvertible(any CustomDetailedStringConvertible)
         case none
         
         var isNone: Bool {
@@ -79,7 +84,19 @@ struct LineBlock: DescriptionBlockProtocol {
     
     
     var _isEmpty: Bool {
-        self.title == nil && value.isNone
+        if self.title == nil && value.isNone {
+            return true
+        } else if case let .block(block) = self.value, let block = block as? ArrayBlock  {
+            if (block.hideEmptyArray && block.blocks.filter({ !$0._isEmpty }).isEmpty) {
+                return true
+            }
+        } else if case let .customDetailedStringConvertible(value) = self.value, let block = value.descriptionBlocks() as? ArrayBlock  {
+            if (block.hideEmptyArray && block.blocks.filter({ !$0._isEmpty }).isEmpty) {
+                return true
+            }
+        }
+        
+        return false
     }
     
     static var empty: LineBlock {

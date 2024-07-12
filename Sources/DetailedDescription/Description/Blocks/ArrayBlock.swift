@@ -15,17 +15,19 @@ struct ArrayBlock: DescriptionBlockProtocol {
     
     let includeIndex: Bool
     
+    let hideEmptyArray: Bool
+    
     
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration
     ) where Target : TextOutputStream {
+        let blocks = self.blocks.filter({ !$0._isEmpty })
+        
         if let title {
             target.write(title)
         }
-        
-        let blocks = self.blocks.filter({ !$0._isEmpty })
         
         let linesCount = self.blocks.count
         
@@ -67,10 +69,11 @@ struct ArrayBlock: DescriptionBlockProtocol {
     }
     
     
-    init(title: String? = nil, blocks: [LineBlock], includeIndex: Bool) {
+    init(title: String? = nil, blocks: [LineBlock], includeIndex: Bool, hideEmptyArray: Bool) {
         self.title = title
         self.blocks = blocks
         self.includeIndex = includeIndex
+        self.hideEmptyArray = hideEmptyArray
     }
     
 }
