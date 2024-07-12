@@ -12,7 +12,6 @@ extension DetailedDescription.Descriptor {
         _ title: String? = nil,
         for keyPath: KeyPath<Base, Optional<T>>
     ) -> some DescriptionBlockProtocol {
-        print("called optional")
         guard let attribute = base[keyPath: keyPath] else { return OptionalBlock<LineBlock>(block: nil) }
         return OptionalBlock(block: LineBlock(title: title ?? keyPath.trailingPath, value: attribute))
     }

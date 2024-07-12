@@ -25,8 +25,6 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         
         var linesCount = 0
         
-        dump(lines)
-        
         func advanceCounter(_ line: some DescriptionBlockProtocol) {
             guard !line.isEmpty else { return }
             linesCount += 1
