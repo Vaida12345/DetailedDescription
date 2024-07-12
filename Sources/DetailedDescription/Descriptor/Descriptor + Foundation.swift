@@ -15,10 +15,10 @@ extension DetailedDescription {
         
         
         public func container<each T: DescriptionBlockProtocol>(
-            _ title: String,
+            _ title: String? = nil,
             @DetailedDescription.Builder blocks: () -> _LinesBlock<repeat each T>
         ) -> some DescriptionBlockProtocol {
-            ContainerBlock<repeat each T>(title: title, lines: blocks())
+            ContainerBlock<repeat each T>(title: title ?? "\(type(of: self.base))", lines: blocks())
         }
         
         public func value<T>(
