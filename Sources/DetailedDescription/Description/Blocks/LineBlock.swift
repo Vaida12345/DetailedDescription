@@ -15,7 +15,19 @@ struct LineBlock: DescriptionBlockProtocol {
     
     init<T>(title: String?, value: T) {
         self.title = title
-        self.value = .string("\(value)")
+        
+        if let value = value as? DescriptionBlockProtocol {
+            self.value = .block(value)
+        } else if let value = value as? CustomStringConvertible {
+            self.value = .customStringConvertible(value)
+        } else {
+            self.value = .string("\(value)")
+        }
+    }
+    
+    init(title: String?, raw: Value) {
+        self.title = title
+        self.value = raw
     }
     
     func _detailedWrite<Target>(
@@ -25,14 +37,42 @@ struct LineBlock: DescriptionBlockProtocol {
         if let title {
             target.write(title + ": ")
         }
+        
         switch value {
         case .string(let string):
             target.write(string)
+        case .block(let block):
+            block._detailedWrite(to: &target, trivia: trivia)
+        case .customStringConvertible(let value):
+            target.write(value.description)
+        case .none:
+            fatalError("Should never evoke")
         }
     }
     
     enum Value {
         case string(String)
+        case block(any DescriptionBlockProtocol)
+        case customStringConvertible(any CustomStringConvertible)
+        case none
+        
+        var isNone: Bool {
+            switch self {
+            case .none:
+                true
+            default:
+                false
+            }
+        }
+    }
+    
+    
+    var isEmpty: Bool {
+        self.title == nil && value.isNone
+    }
+    
+    static var empty: LineBlock {
+        LineBlock(title: nil, raw: .none)
     }
     
 }

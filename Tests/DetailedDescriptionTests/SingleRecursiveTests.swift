@@ -13,7 +13,7 @@ private indirect enum Node {
     case node(Node)
     case leaf(Int)
     
-    var leaf: Int? {
+    var isLeaf: Int? {
         switch self {
         case .node:
             nil
@@ -55,7 +55,7 @@ extension Node: CustomDetailedStringConvertible {
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
         descriptor.container("Node<Int>") {
             descriptor.value(for: \.nextNode)
-            descriptor.value(for: \.leaf)
+            descriptor.value(for: \.isLeaf)
         }
     }
     
@@ -67,13 +67,10 @@ func testSingleRecursive() throws {
     let match = """
     Node<Int>
      ╰─nextNode: Node<Int>
-        ╰─nextNode: Node<Int>
-           ╰─nextNode: Node<Int>
-              ╰─leaf: 2
+       ╰─nextNode: Node<Int>
+         ╰─nextNode: Node<Int>
+           ╰─isLeaf: 2
     """
-    dump(node.detailedDescription(using: DetailedDescription.Descriptor<Node>(base: node)))
     
     #expect(node.detailedDescription == match)
-    
-    print(node.detailedDescription)
 }

@@ -6,7 +6,7 @@
 //
 
 
-public enum _Trivia: CustomStringConvertible {
+public enum _Trivia {
     case space
     case block(_Block)
     case index(Int)
@@ -23,10 +23,6 @@ public enum _Trivia: CustomStringConvertible {
             case .dash: "─"
             }
         }
-        
-        static var lastChildSymbol: String {
-            "╰"
-        }
     }
     
     var symbol: String {
@@ -34,14 +30,6 @@ public enum _Trivia: CustomStringConvertible {
         case .space: " "
         case let .block(block): block.symbol
         case .index(let index): "[\(index)]"
-        }
-    }
-    
-    public var description: String {
-        switch self {
-        case .space: ".space"
-        case .block(let block): "." + block.rawValue
-        case .index(let index): ".index(\(index))"
         }
     }
 }

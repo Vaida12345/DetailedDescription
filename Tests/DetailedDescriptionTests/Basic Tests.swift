@@ -25,7 +25,6 @@ struct Model: CustomDetailedStringConvertible {
             descriptor.value("the end")
         }
     }
-    
 }
 
 struct BasicModel: CustomDetailedStringConvertible {
@@ -41,6 +40,15 @@ struct BasicModel: CustomDetailedStringConvertible {
         }
     }
     
+}
+
+struct EmptyModel: CustomDetailedStringConvertible {
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<EmptyModel>) -> some DescriptionBlockProtocol {
+        descriptor.container("Model<T>") {
+            
+        }
+    }
 }
 
 @Test func testBasic() async throws {
@@ -65,4 +73,12 @@ struct BasicModel: CustomDetailedStringConvertible {
     """
     
     #expect(model.detailedDescription == match)
+}
+
+@Test func testEmpty() {
+    let model = EmptyModel()
+    
+//    dump(model.detailedDescription(using: DetailedDescription.Descriptor<EmptyModel>.init(base: model)))
+    
+    #expect(model.detailedDescription == "Model<T>")
 }

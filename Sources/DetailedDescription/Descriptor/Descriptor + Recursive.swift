@@ -16,18 +16,16 @@ extension DetailedDescription.Descriptor {
         if let child = base[keyPath: keyPath] {
             let description = child.detailedDescription(using: DetailedDescription.Descriptor<Base>(base: child))
             
-            return AnyBlock(
-                block: ContainerBlock(title: title, lines: _LinesBlock(lines: description))
-            )
+            return LineBlock(title: title, value: description)
         }
         
-        return AnyBlock(block: EmptyBlock())
+        return LineBlock.empty
     }
     
 //    public func array(
 //        _ title: String? = nil,
 //        for keyPath: KeyPath<Base, Array<Base>>
-//    ) -> DetailedDescription.Description {
+//    ) -> some DescriptionBlockProtocol {
 //        let children = base[keyPath: keyPath]
 //        guard !children.isEmpty else { return DetailedDescription.Description() }
 //        

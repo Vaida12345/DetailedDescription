@@ -20,7 +20,7 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         trivia: [_Trivia]
     ) where Target : TextOutputStream {
         if let title {
-            target.write(title + "\n")
+            target.write(title)
         }
         
         var linesCount = 0
@@ -32,6 +32,9 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         
         repeat advanceCounter(each lines.lines)
         
+        if linesCount != 0 {
+            target.write("\n")
+        }
         
         var index = 0
         
