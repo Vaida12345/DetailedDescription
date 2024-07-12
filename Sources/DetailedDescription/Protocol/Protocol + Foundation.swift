@@ -15,4 +15,11 @@ public extension CustomDetailedStringConvertible {
         return descriptions.string
     }
     
+    
+    /// The blocks for debugging use.
+    internal func descriptionBlocks() -> some DescriptionBlockProtocol {
+        let descriptor = DetailedDescription.Descriptor(base: self)
+        return self.detailedDescription(using: descriptor)
+    }
+    
 }

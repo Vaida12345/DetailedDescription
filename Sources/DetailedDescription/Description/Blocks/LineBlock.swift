@@ -12,9 +12,12 @@ struct LineBlock: DescriptionBlockProtocol {
     
     let value: Value
     
+    let type: String
+    
     
     init<T>(title: String?, value: T) {
         self.title = title
+        self.type = "\(Swift.type(of: value))"
         
         if let value = value as? DescriptionBlockProtocol {
             self.value = .block(value)
@@ -26,13 +29,15 @@ struct LineBlock: DescriptionBlockProtocol {
     }
     
     init(title: String?, raw: Value) {
+        self.type = ""
         self.title = title
         self.value = raw
     }
     
     func _detailedWrite<Target>(
         to target: inout Target,
-        trivia: [_Trivia]
+        trivia: [_Trivia],
+        configuration: _Configuration
     ) where Target : TextOutputStream {
         if let title {
             target.write(title + ": ")
@@ -41,10 +46,16 @@ struct LineBlock: DescriptionBlockProtocol {
         switch value {
         case .string(let string):
             target.write(string)
+            if configuration.showType ?? false {
+                target.write(" <\(type)>")
+            }
         case .block(let block):
-            block._detailedWrite(to: &target, trivia: trivia)
+            block._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
         case .customStringConvertible(let value):
             target.write(value.description)
+            if configuration.showType ?? false {
+                target.write(" <\(type)>")
+            }
         case .none:
             fatalError("Should never evoke")
         }

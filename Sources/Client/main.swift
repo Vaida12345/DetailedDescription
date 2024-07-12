@@ -60,7 +60,7 @@ extension Node: CustomDetailedStringConvertible {
     
 }
 
-dump(node.detailedDescription(using: DetailedDescription.Descriptor<Node>(base: node)))
+dump(node.descriptionBlocks())
 
 
 print(node.detailedDescription)

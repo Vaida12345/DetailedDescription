@@ -23,7 +23,7 @@
 /// - ``DetailedDescription/DescriptionBlockProtocol``
 ///
 /// ### Builder
-/// The build is not applied to ``detailedDescription(using:)``, as it is designed to use ``DetailedDescription/DetailedDescription/Descriptor/container(_:blocks:)`` on the top level.
+/// The build is not applied to ``detailedDescription(using:)``, as it is designed to use ``DetailedDescription/Descriptor/container(_:showType:blocks:)`` on the top level.
 /// - ``DetailedDescription/DetailedDescription/Builder``
 ///
 /// ### Descriptor:
@@ -36,7 +36,7 @@ public protocol CustomDetailedStringConvertible {
     ///
     /// Create the description block.
     ///
-    /// - Tip: To create the top level container, please use ``DetailedDescription/DetailedDescription/Descriptor/container(_:blocks:)``.
+    /// - Tip: To create the top level container, please use ``DetailedDescription/Descriptor/container(_:showType:blocks:)``, in which you could make configuration.
     ///
     /// - Parameters:
     ///   - descriptor: The source of block creation.

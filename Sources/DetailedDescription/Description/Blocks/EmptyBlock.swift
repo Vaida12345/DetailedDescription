@@ -7,7 +7,11 @@
 
 struct EmptyBlock: DescriptionBlockProtocol {
     
-    func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia]) where Target : TextOutputStream {
+    func _detailedWrite<Target>(
+        to target: inout Target,
+        trivia: [_Trivia],
+        configuration: _Configuration
+    ) where Target : TextOutputStream {
         fatalError("Should never call")
     }
     

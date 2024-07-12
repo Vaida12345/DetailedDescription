@@ -17,7 +17,14 @@ extension DetailedDescription.Descriptor {
         
         let array = base[keyPath: keyPath]
         
-        return LineBlock(title: title, value: ArrayBlock(blocks: array.map { LineBlock(title: nil, value: $0) }, includeIndex: includeIndex))
+        return LineBlock(
+            title: title,
+            value: ArrayBlock(
+                blocks: array.map { 
+                    LineBlock(title: nil, value: $0)
+                },
+                includeIndex: includeIndex)
+        )
     }
     
 }

@@ -16,9 +16,12 @@ extension DetailedDescription {
         
         public func container<each T: DescriptionBlockProtocol>(
             _ title: String? = nil,
+            showType: Bool? = nil,
             @DetailedDescription.Builder blocks: () -> _LinesBlock<repeat each T>
         ) -> some DescriptionBlockProtocol {
-            ContainerBlock<repeat each T>(title: title ?? "\(type(of: self.base))", lines: blocks())
+            let configuration = _Configuration(showType: showType)
+            
+            return ContainerBlock<repeat each T>(title: title ?? "\(type(of: self.base))", lines: blocks(), configuration: configuration)
         }
         
         public func value<T>(
@@ -31,7 +34,7 @@ extension DetailedDescription {
         public func value(
             _ content: String
         ) -> some DescriptionBlockProtocol {
-            LineBlock(title: nil, value: content)
+            LineBlock(title: nil, raw: .string(content))
         }
         
         init(base: Base) {

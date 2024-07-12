@@ -11,8 +11,12 @@ struct ConditionBlock<TrueBlock>: DescriptionBlockProtocol where TrueBlock: Desc
     let block: TrueBlock
     
     
-    func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia]) where Target : TextOutputStream {
-        block._detailedWrite(to: &target, trivia: trivia)
+    func _detailedWrite<Target>(
+        to target: inout Target,
+        trivia: [_Trivia],
+        configuration: _Configuration
+    ) where Target : TextOutputStream {
+        block._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
     }
     
 }

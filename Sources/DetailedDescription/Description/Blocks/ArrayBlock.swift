@@ -18,7 +18,8 @@ struct ArrayBlock: DescriptionBlockProtocol {
     
     func _detailedWrite<Target>(
         to target: inout Target,
-        trivia: [_Trivia]
+        trivia: [_Trivia],
+        configuration: _Configuration
     ) where Target : TextOutputStream {
         if let title {
             target.write(title)
@@ -57,7 +58,7 @@ struct ArrayBlock: DescriptionBlockProtocol {
                 target.write(_index)
             }
             
-            line._detailedWrite(to: &target, trivia: childTrivia)
+            line._detailedWrite(to: &target, trivia: childTrivia, configuration: configuration)
             
             if !isLastLine {
                 target.write("\n")

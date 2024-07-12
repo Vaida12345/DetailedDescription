@@ -14,10 +14,13 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
     
     let lines: _LinesBlock<repeat each T>
     
+    let configuration: _Configuration
+    
     
     func _detailedWrite<Target>(
         to target: inout Target,
-        trivia: [_Trivia]
+        trivia: [_Trivia],
+        configuration: _Configuration
     ) where Target : TextOutputStream {
         if let title {
             target.write(title)
@@ -47,7 +50,7 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
             target.write(isLastLine ? "╰─" : "├─")
             
             let childTrivia = trivia + (isLastLine ? [.space, .space] : [.block(.vertical), .space])
-            line._detailedWrite(to: &target, trivia: childTrivia)
+            line._detailedWrite(to: &target, trivia: childTrivia, configuration: self.configuration.showType != nil ? self.configuration : configuration)
             
             if !isLastLine {
                 target.write("\n")
@@ -57,11 +60,6 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         }
         
         repeat process(each lines.lines)
-    }
-    
-    init(title: String?, lines: _LinesBlock<repeat each T>) {
-        self.title = title
-        self.lines = lines
     }
     
 }

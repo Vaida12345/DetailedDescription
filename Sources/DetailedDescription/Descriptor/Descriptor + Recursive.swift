@@ -14,7 +14,8 @@ extension DetailedDescription.Descriptor {
     ) -> some DescriptionBlockProtocol {
         let title = title ?? keyPath.trailingPath
         if let child = base[keyPath: keyPath] {
-            let description = child.detailedDescription(using: DetailedDescription.Descriptor<Base>(base: child))
+            let descriptor = DetailedDescription.Descriptor<Base>(base: child)
+            let description = child.detailedDescription(using: descriptor)
             
             return LineBlock(title: title, value: description)
         }
