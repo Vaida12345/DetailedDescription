@@ -11,8 +11,8 @@ extension DetailedDescription {
     @resultBuilder
     public enum Builder {
         
-        public static func buildBlock<each T>(_ components: repeat each T) -> _LinesBlock<repeat each T> where repeat each T: DescriptionBlockProtocol {
-            _LinesBlock(lines: (repeat each components))
+        public static func buildBlock(_ components: (any DescriptionBlockProtocol)...) -> LinesBlock {
+            LinesBlock(lines: components)
         }
         
         public static func buildBlock() -> some DescriptionBlockProtocol {

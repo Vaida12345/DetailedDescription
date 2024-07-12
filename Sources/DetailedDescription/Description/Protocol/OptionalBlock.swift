@@ -6,9 +6,9 @@
 //
 
 
-struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+struct OptionalBlock: DescriptionBlockProtocol {
     
-    let block: T?
+    let block: (any DescriptionBlockProtocol)?
     
     
     func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia]) where Target : TextOutputStream {

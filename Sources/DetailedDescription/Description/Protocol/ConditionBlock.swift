@@ -6,9 +6,9 @@
 //
 
 
-struct ConditionBlock<TrueBlock>: DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
+struct ConditionBlock: DescriptionBlockProtocol {
     
-    let block: TrueBlock
+    let block: any DescriptionBlockProtocol
     
     
     func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia]) where Target : TextOutputStream {

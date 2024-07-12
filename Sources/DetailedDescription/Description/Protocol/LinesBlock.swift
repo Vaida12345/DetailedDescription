@@ -6,9 +6,9 @@
 //
 
 
-public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+public struct LinesBlock: DescriptionBlockProtocol {
     
-    let lines: (repeat each T)
+    let lines: [any DescriptionBlockProtocol]
     
     
     public func _detailedWrite<Target>(
@@ -17,7 +17,7 @@ public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockPro
     ) where Target : TextOutputStream {
         var needsToWriteNewLine = false
         
-        for line in repeat each lines {
+        for line in lines {
             guard !(line is EmptyBlock) else { continue }
             
             if needsToWriteNewLine {
