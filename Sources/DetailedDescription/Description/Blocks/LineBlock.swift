@@ -23,6 +23,8 @@ struct LineBlock: DescriptionBlockProtocol {
             self.value = .block(value)
         } else if let value = value as? (any CustomDetailedStringConvertible) {
             self.value = .customDetailedStringConvertible(value)
+        } else if let value = value as? String {
+            self.value = .string("\"\(value)\"")
         } else if let value = value as? CustomStringConvertible {
             self.value = .customStringConvertible(value)
         } else {
