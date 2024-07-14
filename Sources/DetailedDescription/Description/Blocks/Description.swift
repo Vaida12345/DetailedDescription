@@ -21,7 +21,13 @@ public protocol DescriptionBlockProtocol {
         configuration: _Configuration
     )
     
+    /// Whether the block is empty
+    ///
+    /// Empty blocks will not be rendered.
     var _isEmpty: Bool { get }
+    
+    /// If has peers, the peers will be used instead of `self`.
+    var _peers: [any DescriptionBlockProtocol] { get }
     
 }
 
@@ -36,6 +42,10 @@ extension DescriptionBlockProtocol {
     
     public var _isEmpty: Bool {
         false
+    }
+    
+    public var _peers: [any DescriptionBlockProtocol] {
+        []
     }
     
 }

@@ -30,7 +30,12 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         
         func advanceCounter(_ line: some DescriptionBlockProtocol) {
             guard !line._isEmpty else { return }
-            linesCount += 1
+            let peers = line._peers
+            if !peers.isEmpty {
+                linesCount += peers.filter({ !$0._isEmpty }).count
+            } else {
+                linesCount += 1
+            }
         }
         
         repeat advanceCounter(each lines.lines)
@@ -42,6 +47,14 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
         var index = 0
         
         func process(_ line: some DescriptionBlockProtocol) {
+            let peers = line._peers.filter({ !$0._isEmpty })
+            guard peers.isEmpty else {
+                for peer in peers {
+                    process(peer)
+                }
+                return
+            }
+            
             guard !line._isEmpty else { return }
             
             let isLastLine = index == linesCount - 1

@@ -6,9 +6,22 @@
 //
 
 
-public struct _LinesBlock<each T: DescriptionBlockProtocol> {
+public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
     let lines: (repeat each T)
+    
+    public func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia], configuration: _Configuration) where Target : TextOutputStream {
+        fatalError("Should never call")
+    }
+    
+    public var _peers: [any DescriptionBlockProtocol] {
+        var peers: [any DescriptionBlockProtocol] = []
+        func getLine(line: some DescriptionBlockProtocol) {
+            peers.append(line)
+        }
+        repeat getLine(line: each lines)
+        return peers
+    }
     
     
     init(lines: (repeat each T)) {

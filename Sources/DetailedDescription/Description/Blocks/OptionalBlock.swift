@@ -25,4 +25,8 @@ struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProto
         self.block?._isEmpty ?? true
     }
     
+    var _peers: [any DescriptionBlockProtocol] {
+        block?._peers ?? []
+    }
+    
 }
