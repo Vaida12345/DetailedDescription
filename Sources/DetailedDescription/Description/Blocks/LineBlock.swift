@@ -44,7 +44,10 @@ struct LineBlock: DescriptionBlockProtocol {
         configuration: _Configuration
     ) where Target : TextOutputStream {
         if let title {
-            target.write(title + ": ")
+            target.write(title)
+            if !title.isEmpty {
+                target.write(": ")
+            }
         }
         
         switch value {

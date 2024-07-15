@@ -10,3 +10,9 @@
 public enum DetailedDescription {
     
 }
+
+
+/// Prints the detailed description.
+public func detailedPrint(_ content: some CustomDetailedStringConvertible, terminator: String = "\n") {
+    print(content.detailedDescription, terminator: terminator)
+}
