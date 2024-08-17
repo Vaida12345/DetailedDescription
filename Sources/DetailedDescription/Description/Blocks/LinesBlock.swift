@@ -6,11 +6,11 @@
 //
 
 
-struct LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+public struct LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
     let lines: (repeat each T)
     
-    func _detailedWrite<Target>(
+    public func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,
@@ -74,7 +74,7 @@ struct LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
 }
 
-struct FlattenLinesBlock<T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+public struct FlattenLinesBlock<T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
     public func _detailedWrite<Target>(
         to target: inout Target,

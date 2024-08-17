@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct ContainerBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+public struct ContainerBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
     
     let title: String?
     
@@ -17,7 +17,7 @@ struct ContainerBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProt
     let configuration: _Configuration
     
     
-    func _detailedWrite<Target>(
+    public func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,

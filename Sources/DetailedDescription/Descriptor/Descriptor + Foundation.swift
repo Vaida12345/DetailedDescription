@@ -59,11 +59,11 @@ extension DetailedDescription {
         ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
         ///   - showType: If `true`, the type of its children will be shown. See Discussion for more information.
         ///   - blocks: The DSL for building description.
-        public func container(
+        public func container<T>(
             _ title: String? = nil,
             showType: Bool? = nil,
-            @DetailedDescription.Builder blocks: () -> some DescriptionBlockProtocol
-        ) -> some DescriptionBlockProtocol {
+            @DetailedDescription.Builder blocks: () -> T
+        ) -> ContainerBlock<T> where T: DescriptionBlockProtocol {
             let configuration = _Configuration(showType: showType)
             
             return ContainerBlock(title: title ?? "\(type(of: self.base))", lines: blocks(), configuration: configuration)
@@ -91,7 +91,7 @@ extension DetailedDescription {
         public func value<T>(
             _ title: String,
             of value: T
-        ) -> some DescriptionBlockProtocol {
+        ) -> LineBlock {
             LineBlock(title: title, value: value)
         }
         

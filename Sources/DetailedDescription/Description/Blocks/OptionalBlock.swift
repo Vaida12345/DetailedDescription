@@ -6,12 +6,12 @@
 //
 
 
-struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+public struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
     
     let block: T?
     
     
-    func _detailedWrite<Target>(
+    public func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,
@@ -22,7 +22,7 @@ struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProto
         }
     }
     
-    var _isEmpty: Bool {
+    public var _isEmpty: Bool {
         self.block?._isEmpty ?? true
     }
     
