@@ -16,7 +16,7 @@ struct BasicModel: CustomDetailedStringConvertible {
     let age: Int
 
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> some DescriptionBlockProtocol {
-        descriptor.container("BasicModelModel<T>") {
+        descriptor.container {
             descriptor.value(for: \.name)
             descriptor.value(for: \.age)
         }
@@ -26,7 +26,7 @@ struct BasicModel: CustomDetailedStringConvertible {
 let model = BasicModel(name: "hello", age: 100)
 
 detailedPrint(model)
-// BasicModelModel<T>
+// BasicModel
 //  ├─name: "hello"
 //  ╰─age: 100
 ```

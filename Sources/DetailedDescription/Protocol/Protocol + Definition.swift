@@ -26,7 +26,7 @@
 /// The build is not applied to ``detailedDescription(using:)``, as it is designed to use ``DetailedDescription/Descriptor/container(_:showType:blocks:)`` on the top level.
 /// - ``DetailedDescription/DetailedDescription/Builder``
 ///
-/// ### Descriptor:
+/// ### Descriptor
 /// The descriptor for providing the description.
 /// - ``DetailedDescription/DetailedDescription/Descriptor``
 /// - ``DetailedDescription/DetailedDescription``

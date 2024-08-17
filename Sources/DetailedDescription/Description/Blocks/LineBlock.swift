@@ -14,7 +14,6 @@ struct LineBlock: DescriptionBlockProtocol {
     
     let type: String
     
-    
     init<T>(title: String?, value: T) {
         self.title = title
         self.type = "\(Swift.type(of: value))"
@@ -81,6 +80,8 @@ struct LineBlock: DescriptionBlockProtocol {
             switch self {
             case .none:
                 true
+            case let .block(block):
+                block._isEmpty
             default:
                 false
             }
@@ -89,19 +90,7 @@ struct LineBlock: DescriptionBlockProtocol {
     
     
     var _isEmpty: Bool {
-        if self.title == nil && value.isNone {
-            return true
-        } else if case let .block(block) = self.value, let block = block as? ArrayBlock  {
-            if (block.hideEmptyArray && block.blocks.filter({ !$0._isEmpty }).isEmpty) {
-                return true
-            }
-        } else if case let .customDetailedStringConvertible(value) = self.value, let block = value.descriptionBlocks() as? ArrayBlock  {
-            if (block.hideEmptyArray && block.blocks.filter({ !$0._isEmpty }).isEmpty) {
-                return true
-            }
-        }
-        
-        return false
+        value.isNone
     }
     
     static var empty: LineBlock {

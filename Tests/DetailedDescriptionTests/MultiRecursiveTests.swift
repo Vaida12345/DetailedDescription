@@ -48,8 +48,8 @@ extension Node: CustomDetailedStringConvertible {
     
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
         descriptor.container {
-            descriptor.array(for: \.nextNodes, includeIndex: false)
-            descriptor.value(for: \.leaf)
+            descriptor.sequence(for: \.nextNodes, includeIndex: false)
+            descriptor.optional(for: \.leaf)
         }
     }
     

@@ -6,9 +6,15 @@
 //
 
 
-public final class _Configuration {
+public struct _Configuration {
     
     var showType: Bool?
+    
+    func mergingKeepingLeft(_ rhs: _Configuration) -> _Configuration {
+        _Configuration(
+            showType: self.showType ?? rhs.showType
+        )
+    }
     
     init(showType: Bool? = nil) {
         self.showType = showType

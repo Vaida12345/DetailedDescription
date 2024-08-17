@@ -7,7 +7,7 @@
 
 
 
-struct ArrayBlock: DescriptionBlockProtocol {
+struct SequenceBlock: DescriptionBlockProtocol {
     
     let title: String?
     
@@ -15,7 +15,14 @@ struct ArrayBlock: DescriptionBlockProtocol {
     
     let includeIndex: Bool
     
-    let hideEmptyArray: Bool
+    let serialized: Bool
+    
+    let hideEmptySequence: Bool
+    
+    
+    var _isEmpty: Bool {
+        hideEmptySequence && blocks.allSatisfy({ $0._isEmpty })
+    }
     
     
     func _detailedWrite<Target>(
@@ -31,7 +38,21 @@ struct ArrayBlock: DescriptionBlockProtocol {
         
         let linesCount = self.blocks.count
         
-        if linesCount != 0 {
+        if serialized {
+            target.write("[")
+            for (index, line) in blocks.enumerated() {
+                guard !line._isEmpty else { continue }
+                
+                let isLastLine = index == linesCount - 1
+                line._detailedWrite(to: &target, trivia: [], configuration: configuration)
+                
+                if !isLastLine {
+                    target.write(", ")
+                }
+            }
+            target.write("]")
+            return
+        } else if linesCount != 0 {
             if linesCount == 1 {
                 target.write("<\(linesCount) element>")
             } else {
@@ -45,7 +66,7 @@ struct ArrayBlock: DescriptionBlockProtocol {
         }
         
         for (index, line) in blocks.enumerated() {
-            guard !line._isEmpty else { return }
+            guard !line._isEmpty else { continue }
             
             let isLastLine = index == linesCount - 1
             
@@ -69,11 +90,12 @@ struct ArrayBlock: DescriptionBlockProtocol {
     }
     
     
-    init(title: String? = nil, blocks: [LineBlock], includeIndex: Bool, hideEmptyArray: Bool) {
+    init(title: String? = nil, blocks: [LineBlock], includeIndex: Bool, serialized: Bool, hideEmptySequence: Bool) {
         self.title = title
         self.blocks = blocks
         self.includeIndex = includeIndex
-        self.hideEmptyArray = hideEmptyArray
+        self.serialized = serialized
+        self.hideEmptySequence = hideEmptySequence
     }
     
 }

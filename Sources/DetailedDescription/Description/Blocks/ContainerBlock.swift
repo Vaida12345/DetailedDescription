@@ -63,7 +63,7 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
             target.write(isLastLine ? "╰─" : "├─")
             
             let childTrivia = trivia + (isLastLine ? [.space, .space] : [.block(.vertical), .space])
-            line._detailedWrite(to: &target, trivia: childTrivia, configuration: self.configuration.showType != nil ? self.configuration : configuration)
+            line._detailedWrite(to: &target, trivia: childTrivia, configuration: self.configuration.mergingKeepingLeft(configuration))
             
             if !isLastLine {
                 target.write("\n")

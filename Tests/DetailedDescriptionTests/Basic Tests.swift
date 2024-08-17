@@ -22,7 +22,7 @@ struct Model: CustomDetailedStringConvertible {
                 descriptor.value(for: \.age)
             }
             
-            descriptor.value("the end")
+            descriptor.string("the end")
         }
     }
 }
@@ -50,6 +50,8 @@ struct EmptyModel: CustomDetailedStringConvertible {
         }
     }
 }
+
+nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyModel())
 
 @Test func testBasic() async throws {
     let model = BasicModel(name: "hello", age: 100)

@@ -16,24 +16,28 @@ extension DetailedDescription {
             _LinesBlock(lines: (repeat each components))
         }
         
-//        public static func buildBlock() -> some DescriptionBlockProtocol {
-//            EmptyBlock()
-//        }
+        public static func buildBlock() -> some DescriptionBlockProtocol {
+            EmptyBlock()
+        }
         
         public static func buildExpression<T>(_ expression: T) -> T where T: DescriptionBlockProtocol {
             expression
         }
         
-//        public static func buildEither<TrueBlock>(first component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
-//            ConditionBlock(block: component)
-//        }
-//        
-//        public static func buildEither<TrueBlock>(last component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
-//            ConditionBlock(block: component)
-//        }
+        public static func buildEither<TrueBlock>(first component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
+            ConditionBlock(block: component)
+        }
+        
+        public static func buildEither<TrueBlock>(last component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
+            ConditionBlock(block: component)
+        }
         
         public static func buildOptional<T>(_ component: T?) -> some DescriptionBlockProtocol where T: DescriptionBlockProtocol {
             OptionalBlock(block: component)
+        }
+        
+        public static func buildArray<T>(_ components: [T]) -> _FlattenLinesBlock<T> where T: DescriptionBlockProtocol {
+            _FlattenLinesBlock<T>(lines: components)
         }
         
     }

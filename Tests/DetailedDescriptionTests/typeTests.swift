@@ -26,6 +26,20 @@ struct TypeTestSuit {
         #expect(model.detailedDescription == match)
     }
     
+    @Test
+    func typeTests2() {
+        let model = BasicModel2(name: "dog", age: 11)
+        
+        let match = """
+        BasicModel2
+         ├─details
+         │ ├─name: "dog" <String>
+         │ ╰─age: 11 <Int>
+         ╰─name: "dog" <String>
+        """
+        #expect(model.detailedDescription == match)
+    }
+    
     struct BasicModel: CustomDetailedStringConvertible {
         
         let name: String
@@ -35,6 +49,25 @@ struct TypeTestSuit {
         func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> some DescriptionBlockProtocol {
             descriptor.container(showType: true) {
                 descriptor.container("details", showType: false) {
+                    descriptor.value(for: \.name)
+                    descriptor.value(for: \.age)
+                }
+                
+                descriptor.value(for: \.name)
+            }
+        }
+        
+    }
+    
+    struct BasicModel2: CustomDetailedStringConvertible {
+        
+        let name: String
+        
+        let age: Int
+        
+        func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel2>) -> some DescriptionBlockProtocol {
+            descriptor.container(showType: true) {
+                descriptor.container("details", showType: nil) {
                     descriptor.value(for: \.name)
                     descriptor.value(for: \.age)
                 }

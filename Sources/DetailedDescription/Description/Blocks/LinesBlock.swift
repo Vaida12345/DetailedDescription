@@ -29,3 +29,22 @@ public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockPro
     }
     
 }
+
+public struct _FlattenLinesBlock<T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+    
+    public func _detailedWrite<Target>(to target: inout Target, trivia: [_Trivia], configuration: _Configuration) where Target : TextOutputStream {
+        fatalError("Should never call")
+    }
+    
+    private let peers: [T]
+    
+    public var _peers: [any DescriptionBlockProtocol] {
+        self.peers
+    }
+    
+    
+    init(lines: [T]) {
+        self.peers = lines
+    }
+    
+}

@@ -9,7 +9,7 @@ import Testing
 @testable import DetailedDescription
 
 
-private indirect enum Node {
+private indirect enum Node : Sendable{
     case node(Node)
     case leaf(Int)
     
@@ -54,8 +54,8 @@ extension Node: CustomDetailedStringConvertible {
     
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
         descriptor.container("Node<Int>") {
-            descriptor.value(for: \.nextNode)
-            descriptor.value(for: \.isLeaf)
+            descriptor.optional(for: \.nextNode)
+            descriptor.optional(for: \.isLeaf)
         }
     }
     
