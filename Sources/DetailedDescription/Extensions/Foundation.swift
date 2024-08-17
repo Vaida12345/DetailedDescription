@@ -11,7 +11,7 @@ import Foundation
 
 extension Array: CustomDetailedStringConvertible {
     
-    public func detailedDescription(using descriptor: DetailedDescription.Descriptor<Array<Element>>) -> some DescriptionBlockProtocol {
+    public func detailedDescription(using descriptor: DetailedDescription.Descriptor<Array<Element>>) -> any DescriptionBlockProtocol {
         descriptor.sequence("", for: \.self)
     }
     

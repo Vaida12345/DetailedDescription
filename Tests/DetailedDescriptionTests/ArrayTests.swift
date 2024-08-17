@@ -79,7 +79,7 @@ struct ArrayTestSuit {
         let block = SequenceBlock(blocks: [
             LineBlock(title: "Hello", value: "you"),
             LineBlock(title: "Hello", value: "you too"),
-            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: LinesBlock(lines: LineBlock(title: "Not", value: "you tooo")), configuration: .init()))),
+            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: FlattenLinesBlock(lines: [LineBlock(title: "Not", value: "you tooo")]), configuration: .init()))),
             LineBlock(title: "Hello", value: "you tooo"),
         ], includeIndex: true, serialized: false, hideEmptySequence: false)
         
@@ -102,9 +102,9 @@ struct ArrayTestSuit {
         var count: Int
         
         
-        func detailedDescription(using descriptor: DetailedDescription.Descriptor<ArrayTestSuit.Model>) -> some DescriptionBlockProtocol {
+        func detailedDescription(using descriptor: DetailedDescription.Descriptor<ArrayTestSuit.Model>) -> any DescriptionBlockProtocol {
             descriptor.container("Model<Array>") {
-                descriptor.sequence(for: \.array)
+                descriptor.sequence("_array", for: \.array)
                 descriptor.value(for: \.count)
             }
         }
@@ -116,7 +116,7 @@ struct ArrayTestSuit {
         
         let match = """
         Model<Array>
-         ├─array: []
+         ├─_array: []
          ╰─count: 3
         """
         
@@ -129,7 +129,7 @@ struct ArrayTestSuit {
         
         let match = """
         Model<Array>
-         ├─array: <3 elements>
+         ├─_array: <3 elements>
          │ ├─[0]: 10
          │ ├─[1]: 10
          │ ╰─[2]: 10
@@ -143,7 +143,7 @@ struct ArrayTestSuit {
         
         let dictionary: [String : String]
         
-        func detailedDescription(using descriptor: DetailedDescription.Descriptor<LoopModel>) -> some DescriptionBlockProtocol {
+        func detailedDescription(using descriptor: DetailedDescription.Descriptor<LoopModel>) -> any DescriptionBlockProtocol {
             descriptor.container {
                 descriptor.forEach(dictionary) { (key, value) in
                     descriptor.string("\(key): \(value)")

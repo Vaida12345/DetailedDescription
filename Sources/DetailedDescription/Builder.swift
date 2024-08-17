@@ -12,28 +12,28 @@ extension DetailedDescription {
     @resultBuilder
     public enum Builder {
         
-        public static func buildBlock<each T>(_ components: repeat each T) -> LinesBlock<repeat each T> where repeat each T: DescriptionBlockProtocol {
-            LinesBlock(lines: (repeat each components))
+        public static func buildBlock(_ components: (any DescriptionBlockProtocol)...) -> any DescriptionBlockProtocol {
+            FlattenLinesBlock(lines: components)
         }
         
-        public static func buildBlock() -> EmptyBlock {
+        public static func buildBlock() -> any DescriptionBlockProtocol {
             EmptyBlock()
         }
         
-        public static func buildEither<TrueBlock, FalseBlock>(first component: TrueBlock) -> EitherBlock<TrueBlock, FalseBlock> where TrueBlock: DescriptionBlockProtocol, FalseBlock: DescriptionBlockProtocol {
-            EitherBlock(block: component)
+        public static func buildEither(first component: some DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
+            AnyBlock(block: component)
         }
         
-        public static func buildEither<TrueBlock, FalseBlock>(second component: TrueBlock) -> EitherBlock<TrueBlock, FalseBlock> where TrueBlock: DescriptionBlockProtocol, FalseBlock: DescriptionBlockProtocol {
-            EitherBlock(block: component)
+        public static func buildEither(second component: some DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
+            AnyBlock(block: component)
         }
         
-        public static func buildOptional<T>(_ component: T?) -> OptionalBlock<T> where T: DescriptionBlockProtocol {
+        public static func buildOptional<T>(_ component: T?) -> any DescriptionBlockProtocol where T: DescriptionBlockProtocol {
             OptionalBlock(block: component)
         }
         
-        public static func buildArray<T>(_ components: [T]) -> FlattenLinesBlock<T> where T: DescriptionBlockProtocol {
-            FlattenLinesBlock<T>(lines: components)
+        public static func buildArray<T>(_ components: [T]) -> any DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+            FlattenLinesBlock(lines: components)
         }
         
 //        public static func buildPartialBlock<T>(first: T) -> T where T: DescriptionBlockProtocol  {

@@ -17,7 +17,7 @@ public extension CustomDetailedStringConvertible {
     
     
     /// The blocks for debugging use.
-    internal func descriptionBlocks() -> some DescriptionBlockProtocol {
+    internal func descriptionBlocks() -> any DescriptionBlockProtocol {
         let descriptor = DetailedDescription.Descriptor(base: self)
         return self.detailedDescription(using: descriptor)
     }

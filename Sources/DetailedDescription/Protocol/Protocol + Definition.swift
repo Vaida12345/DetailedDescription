@@ -42,11 +42,6 @@ public protocol CustomDetailedStringConvertible {
     ///   - descriptor: The source of block creation.
     ///
     /// - Returns: The built blocks using `descriptor`.
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Self>) -> DescriptionBlock
-    
-    /// The provided description block.
-    ///
-    /// You typically do not interact with this type, use `some DescriptionBlockProtocol` while possible.
-    associatedtype DescriptionBlock: DescriptionBlockProtocol
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Self>) -> any DescriptionBlockProtocol
     
 }

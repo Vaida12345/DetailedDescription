@@ -18,7 +18,7 @@ public struct LineBlock: DescriptionBlockProtocol {
         self.title = title
         self.type = "\(Swift.type(of: value as Any))"
         
-        if let value = value as? DescriptionBlockProtocol {
+        if let value = value as? (any DescriptionBlockProtocol) {
             self.value = .block(value)
         } else if let value = value as? (any CustomDetailedStringConvertible) {
             self.value = .customDetailedStringConvertible(value)

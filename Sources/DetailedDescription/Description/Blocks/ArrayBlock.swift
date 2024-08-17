@@ -6,10 +6,7 @@
 //
 
 
-
 struct SequenceBlock: DescriptionBlockProtocol {
-    
-    let title: String?
     
     let blocks: [LineBlock]
     
@@ -32,10 +29,6 @@ struct SequenceBlock: DescriptionBlockProtocol {
         parent: _ParentInfo = []
     ) where Target : TextOutputStream {
         let blocks = self.blocks.filter({ !$0._isEmpty })
-        
-        if let title {
-            target.write(title)
-        }
         
         let linesCount = self.blocks.count
         
@@ -91,8 +84,7 @@ struct SequenceBlock: DescriptionBlockProtocol {
     }
     
     
-    init(title: String? = nil, blocks: [LineBlock], includeIndex: Bool, serialized: Bool, hideEmptySequence: Bool) {
-        self.title = title
+    init(blocks: [LineBlock], includeIndex: Bool, serialized: Bool, hideEmptySequence: Bool) {
         self.blocks = blocks
         self.includeIndex = includeIndex
         self.serialized = serialized

@@ -42,10 +42,6 @@ extension DescriptionBlockProtocol {
         false
     }
     
-    public var _peers: [any DescriptionBlockProtocol] {
-        []
-    }
-    
     func _detailedWrite<Target: TextOutputStream>(
         to target: inout Target,
         trivia: [_Trivia],

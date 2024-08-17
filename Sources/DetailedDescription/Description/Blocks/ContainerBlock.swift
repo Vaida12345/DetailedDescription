@@ -8,16 +8,16 @@
 import Foundation
 
 
-public struct ContainerBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+struct ContainerBlock: DescriptionBlockProtocol {
     
     let title: String?
     
-    let lines: T
+    let lines: any DescriptionBlockProtocol
     
     let configuration: _Configuration
     
     
-    public func _detailedWrite<Target>(
+    func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,

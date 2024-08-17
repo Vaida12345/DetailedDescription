@@ -8,16 +8,6 @@
 
 extension DetailedDescription.Descriptor {
     
-    @available(*, deprecated, renamed: "sequence", message: "Use `sequence` instead.")
-    public func array<T>(
-        _ title: String? = nil,
-        for keyPath: KeyPath<Base, Array<T>>,
-        includeIndex: Bool = true,
-        serialized: Bool = false
-    ) -> some DescriptionBlockProtocol {
-        self.sequence(title, for: keyPath, includeIndex: includeIndex, serialized: serialized)
-    }
-    
     /// A description for a sequence.
     ///
     /// This method is used to describe a sequence.
@@ -46,7 +36,7 @@ extension DetailedDescription.Descriptor {
         includeIndex: Bool = true,
         hideEmptySequence: Bool? = nil,
         serialized: Bool = false
-    ) -> some DescriptionBlockProtocol {
+    ) -> any DescriptionBlockProtocol {
         self.sequence(title ?? keyPath.trailingPath, of: self.base[keyPath: keyPath], includeIndex: includeIndex, hideEmptySequence: hideEmptySequence, serialized: serialized)
     }
     
@@ -80,7 +70,7 @@ extension DetailedDescription.Descriptor {
         includeIndex: Bool = true,
         hideEmptySequence: Bool? = nil,
         serialized: Bool = false
-    ) -> some DescriptionBlockProtocol {
+    ) -> any DescriptionBlockProtocol {
         LineBlock(
             title: title,
             value: SequenceBlock(
@@ -97,8 +87,8 @@ extension DetailedDescription.Descriptor {
     /// Unfolds the sequence without creating a new hierarchy.
     public func forEach<S: Sequence>(
         _ sequence: S,
-        @DetailedDescription.Builder blocks: (S.Element) -> some DescriptionBlockProtocol
-    ) -> some DescriptionBlockProtocol {
+        @DetailedDescription.Builder blocks: (S.Element) -> any DescriptionBlockProtocol
+    ) -> any DescriptionBlockProtocol {
         FlattenLinesBlock(lines: sequence.map(blocks))
     }
     

@@ -59,11 +59,11 @@ extension DetailedDescription {
         ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
         ///   - showType: If `true`, the type of its children will be shown. See Discussion for more information.
         ///   - blocks: The DSL for building description.
-        public func container<T>(
+        public func container(
             _ title: String? = nil,
             showType: Bool? = nil,
-            @DetailedDescription.Builder blocks: () -> T
-        ) -> ContainerBlock<T> where T: DescriptionBlockProtocol {
+            @DetailedDescription.Builder blocks: () -> any DescriptionBlockProtocol
+        ) -> any DescriptionBlockProtocol {
             let configuration = _Configuration(showType: showType)
             
             return ContainerBlock(title: title ?? "\(type(of: self.base))", lines: blocks(), configuration: configuration)
@@ -77,7 +77,7 @@ extension DetailedDescription {
         public func value<T>(
             _ title: String? = nil,
             for keyPath: KeyPath<Base, T>
-        ) -> some DescriptionBlockProtocol {
+        ) -> any DescriptionBlockProtocol {
             LineBlock(title: title ?? keyPath.trailingPath, value: base[keyPath: keyPath])
         }
         
@@ -91,15 +91,8 @@ extension DetailedDescription {
         public func value<T>(
             _ title: String,
             of value: T
-        ) -> LineBlock {
+        ) -> any DescriptionBlockProtocol {
             LineBlock(title: title, value: value)
-        }
-        
-        @available(*, deprecated, renamed: "string")
-        public func value(
-            _ content: String
-        ) -> some DescriptionBlockProtocol {
-            LineBlock(title: nil, raw: .string(content))
         }
         
         /// Explicitly add a `String`.
@@ -107,7 +100,7 @@ extension DetailedDescription {
         /// Use this when you want to add an invariant string. For dynamically constructed description, it is recommended to use ``value(_:for:)``
         public func string(
             _ content: String
-        ) -> some DescriptionBlockProtocol {
+        ) -> any DescriptionBlockProtocol {
             LineBlock(title: nil, raw: .string(content))
         }
         

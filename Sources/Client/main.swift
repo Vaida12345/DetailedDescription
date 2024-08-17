@@ -51,7 +51,7 @@ private let simpleNode = Node.node(
 
 extension Node: CustomDetailedStringConvertible {
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> any DescriptionBlockProtocol {
         descriptor.container("Node<Int>") {
             descriptor.optional(for: \.nextNode)
             descriptor.optional(for: \.leaf)
@@ -59,8 +59,6 @@ extension Node: CustomDetailedStringConvertible {
     }
     
 }
-
-dump(node.descriptionBlocks())
 
 
 print(node.detailedDescription)

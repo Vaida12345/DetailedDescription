@@ -5,9 +5,9 @@
 //  Created by Vaida on 7/12/24.
 //
 
-public struct EmptyBlock: DescriptionBlockProtocol {
+struct EmptyBlock: DescriptionBlockProtocol {
     
-    public func _detailedWrite<Target>(
+    func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,

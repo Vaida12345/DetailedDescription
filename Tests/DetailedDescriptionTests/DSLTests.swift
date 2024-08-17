@@ -14,11 +14,13 @@ struct LoopModel: CustomDetailedStringConvertible {
     
     let dictionary: [String : String]
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<LoopModel>) -> some DescriptionBlockProtocol {
+    let index: Int
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<LoopModel>) -> any DescriptionBlockProtocol {
         descriptor.container {
-            if 1 == 0 {
+            if index == 0 {
                 descriptor.value("", of: "2")
-            } else if 2 == 1 {
+            } else if index == 1 {
                 //                    if dictionary.count == 0 {
                 //                        descriptor.value("", of: "2")
                 //                    } else {
@@ -33,10 +35,9 @@ struct LoopModel: CustomDetailedStringConvertible {
 
 
 @Test func testLoopModel() async throws {
-    let model = LoopModel(dictionary: ["a" : "1"])
+    let model = LoopModel(dictionary: ["a" : "1"], index: 2)
     let match = """
     LoopModel
-     ╰─d
     """
     
     #expect(model.detailedDescription == match)

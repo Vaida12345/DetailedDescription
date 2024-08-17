@@ -46,7 +46,7 @@ private let node = Node.node([
 
 extension Node: CustomDetailedStringConvertible {
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> some DescriptionBlockProtocol {
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> any DescriptionBlockProtocol {
         descriptor.container {
             descriptor.sequence(for: \.nextNodes, includeIndex: false)
             descriptor.optional(for: \.leaf)

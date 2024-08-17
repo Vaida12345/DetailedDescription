@@ -6,12 +6,12 @@
 //
 
 
-public struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+struct OptionalBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
     
     let block: T?
     
     
-    public func _detailedWrite<Target>(
+    func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,

@@ -46,7 +46,7 @@ struct TypeTestSuit {
         
         let age: Int
         
-        func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> some DescriptionBlockProtocol {
+        func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> any DescriptionBlockProtocol {
             descriptor.container(showType: true) {
                 descriptor.container("details", showType: false) {
                     descriptor.value(for: \.name)
@@ -65,7 +65,7 @@ struct TypeTestSuit {
         
         let age: Int
         
-        func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel2>) -> some DescriptionBlockProtocol {
+        func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel2>) -> any DescriptionBlockProtocol {
             descriptor.container(showType: true) {
                 descriptor.container("details", showType: nil) {
                     descriptor.value(for: \.name)

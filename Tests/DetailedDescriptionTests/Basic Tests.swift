@@ -5,6 +5,7 @@
 //  Created by Vaida on 7/12/24.
 //
 
+import Foundation
 import Testing
 @testable 
 import DetailedDescription
@@ -15,11 +16,11 @@ struct Model: CustomDetailedStringConvertible {
     
     let age: Int
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Model>) -> some DescriptionBlockProtocol {
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Model>) -> any DescriptionBlockProtocol {
         descriptor.container("Model<T>") {
             descriptor.container("details") {
                 descriptor.value(for: \.name)
-                descriptor.value(for: \.age)
+                descriptor.value("age", of: age)
             }
             
             descriptor.string("the end")
@@ -33,7 +34,7 @@ struct BasicModel: CustomDetailedStringConvertible {
     
     let age: Int
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> some DescriptionBlockProtocol {
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> any DescriptionBlockProtocol {
         descriptor.container("BasicModelModel<T>") {
             descriptor.value(for: \.name)
             descriptor.value(for: \.age)
@@ -44,7 +45,7 @@ struct BasicModel: CustomDetailedStringConvertible {
 
 struct EmptyModel: CustomDetailedStringConvertible {
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<EmptyModel>) -> some DescriptionBlockProtocol {
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<EmptyModel>) -> any DescriptionBlockProtocol {
         descriptor.container("Model<T>") {
             
         }
@@ -64,7 +65,7 @@ nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyM
 }
 
 
-@Test func testNested() async throws {
+@Test func testNested() throws {
     let model = Model(name: "hello", age: 100)
     let match = """
     Model<T>
@@ -75,12 +76,28 @@ nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyM
     """
     
     #expect(model.detailedDescription == match)
+    
+    // Create a pipe and redirect stdout
+    let pipe = Pipe()
+    let oldStdout = dup(STDOUT_FILENO)
+    dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
+    
+    // Print something (this will be captured)
+    detailedPrint(model, terminator: "")
+    
+    // Restore stdout
+    dup2(oldStdout, STDOUT_FILENO)
+    close(oldStdout)
+    try pipe.fileHandleForWriting.close()
+    
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: data, encoding: .utf8) ?? "(false data)"
+    
+    #expect(output == match)
 }
 
 @Test func testEmpty() {
     let model = EmptyModel()
-    
-//    dump(model.detailedDescription(using: DetailedDescription.Descriptor<EmptyModel>.init(base: model)))
     
     #expect(model.detailedDescription == "Model<T>")
 }
