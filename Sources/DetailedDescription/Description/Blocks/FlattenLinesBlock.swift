@@ -8,7 +8,7 @@
 
 struct FlattenLinesBlock: DescriptionBlockProtocol {
     
-    private let lines: [any DescriptionBlockProtocol]
+    let lines: [any DescriptionBlockProtocol]
     
     var _isEmpty: Bool {
         lines.allSatisfy(\._isEmpty)
@@ -53,6 +53,25 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
     }
     
     init(lines: [any DescriptionBlockProtocol]) {
+        var checking: [any DescriptionBlockProtocol] = lines
+        var lines: [any DescriptionBlockProtocol] = []
+        var i = 0
+        while i < checking.count {
+            let target = checking[i]
+            
+            if let target = target as? FlattenLinesBlock {
+                checking.append(contentsOf: target.lines)
+            } else if let target = target as? AnyBlock {
+                checking.append(target.block)
+            } else if let target = (target as? OptionalBlock)?.block {
+                checking.append(target)
+            } else {
+                lines.append(target)
+            }
+            
+            i += 1
+        }
+        
         self.lines = lines
     }
     

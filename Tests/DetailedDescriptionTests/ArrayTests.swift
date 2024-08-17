@@ -164,4 +164,38 @@ struct ArrayTestSuit {
         #expect(match == model.detailedDescription)
     }
     
+    @Test
+    func testFlatten() async throws {
+        let block = descriptor.container {
+            descriptor.forEach(0..<2) { i in
+                descriptor.value("a", of: i)
+            }
+        }
+        
+        let match = """
+        EmptyModel
+         ├─a: 0
+         ╰─a: 1
+        """
+        
+        #expect(block.string == match)
+    }
+    
+    @Test
+    func testFlatten2() async throws {
+        let block = descriptor.container {
+            descriptor.forEach(0..<2) { i in
+                descriptor.value("a", of: i)
+            }
+        }
+        
+        let match = """
+        EmptyModel
+         ├─a: 0
+         ╰─a: 1
+        """
+        
+        #expect(block.string == match)
+    }
+    
 }

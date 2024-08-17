@@ -21,9 +21,8 @@ struct AnyBlock: DescriptionBlockProtocol {
         configuration: _Configuration,
         parent: _ParentInfo = []
     ) where Target : TextOutputStream {
-        if !(self._isEmpty) {
-            block._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
-        }
+        assert(!self._isEmpty)
+        block._detailedWrite(to: &target, trivia: trivia, configuration: configuration, parent: parent) // pass through
     }
     
     var _isEmpty: Bool {

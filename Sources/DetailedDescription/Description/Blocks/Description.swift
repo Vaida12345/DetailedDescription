@@ -51,3 +51,12 @@ extension DescriptionBlockProtocol {
     }
     
 }
+
+
+extension DescriptionBlockProtocol {
+    
+    func `as`<T>(_ type: T.Type) -> T where T: DescriptionBlockProtocol {
+        self as! T
+    }
+    
+}

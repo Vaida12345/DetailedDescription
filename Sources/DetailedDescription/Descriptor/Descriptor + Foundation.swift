@@ -85,6 +85,8 @@ extension DetailedDescription {
         ///
         /// - Tip: ``value(_:for:)`` is preferred when it is possible to access the keyPath.
         ///
+        /// - Tip: When you want to pass type-erased optional values `Any?`, explicitly cast `as Any` to show type info.
+        ///
         /// - Parameters:
         ///   - title: The title of the description.
         ///   - value: The value to be described.

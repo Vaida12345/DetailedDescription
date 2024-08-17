@@ -98,4 +98,19 @@ struct LineBlock: DescriptionBlockProtocol {
         LineBlock(title: nil, raw: .none)
     }
     
+    func childBlock() -> any DescriptionBlockProtocol {
+        switch value {
+        case .string(let string):
+            fatalError("encountered `String`")
+        case .block(let descriptionBlockProtocol):
+            descriptionBlockProtocol
+        case .customStringConvertible(let customStringConvertible):
+            fatalError("encountered `customStringConvertible`")
+        case .customDetailedStringConvertible(let customDetailedStringConvertible):
+            customDetailedStringConvertible.descriptionBlocks()
+        case .none:
+            fatalError("encountered `none`")
+        }
+    }
+    
 }
