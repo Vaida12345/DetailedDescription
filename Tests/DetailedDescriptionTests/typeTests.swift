@@ -19,9 +19,9 @@ struct TypeTestSuit {
         let match = """
         BasicModel
          ├─details
-         │ ├─name: dog
+         │ ├─name: "dog"
          │ ╰─age: 11
-         ╰─name: dog <String>
+         ╰─name: "dog" <String>
         """
         #expect(model.detailedDescription == match)
     }

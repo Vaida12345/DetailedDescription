@@ -25,14 +25,14 @@ struct ArrayTestSuit {
         
         let match = """
         <8 elements>
-         ├─Hello: you
-         ├─Hello: you too
-         ├─Hello: you tooo
-         ├─Hello: you toooo
-         ├─Hello: you tooooo
-         ├─Hello: you toooooo
-         ├─Hello: you tooooooo
-         ╰─Hello: you toooooooo
+         ├─Hello: "you"
+         ├─Hello: "you too"
+         ├─Hello: "you tooo"
+         ├─Hello: "you toooo"
+         ├─Hello: "you tooooo"
+         ├─Hello: "you toooooo"
+         ├─Hello: "you tooooooo"
+         ╰─Hello: "you toooooooo"
         """
         
         #expect(block.string == match)
@@ -52,14 +52,14 @@ struct ArrayTestSuit {
         
         let match = """
         <8 elements>
-         ├─[0]: Hello: you
-         ├─[1]: Hello: you too
-         ├─[2]: Hello: you tooo
-         ├─[3]: Hello: you toooo
-         ├─[4]: Hello: you tooooo
-         ├─[5]: Hello: you toooooo
-         ├─[6]: Hello: you tooooooo
-         ╰─[7]: Hello: you toooooooo
+         ├─[0]: Hello: "you"
+         ├─[1]: Hello: "you too"
+         ├─[2]: Hello: "you tooo"
+         ├─[3]: Hello: "you toooo"
+         ├─[4]: Hello: "you tooooo"
+         ├─[5]: Hello: "you toooooo"
+         ├─[6]: Hello: "you tooooooo"
+         ╰─[7]: Hello: "you toooooooo"
         """
         
         #expect(block.string == match)
@@ -75,11 +75,11 @@ struct ArrayTestSuit {
         
         let match = """
         <4 elements>
-         ├─[0]: Hello: you
-         ├─[1]: Hello: you too
+         ├─[0]: Hello: "you"
+         ├─[1]: Hello: "you too"
          ├─[2]: Not: No
-         │      ╰─Not: you tooo
-         ╰─[3]: Hello: you tooo
+         │      ╰─Not: "you tooo"
+         ╰─[3]: Hello: "you tooo"
         """
         
         #expect(block.string == match)

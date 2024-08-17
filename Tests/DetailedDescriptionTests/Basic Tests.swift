@@ -55,7 +55,7 @@ struct EmptyModel: CustomDetailedStringConvertible {
     let model = BasicModel(name: "hello", age: 100)
     let match = """
     BasicModelModel<T>
-     ├─name: hello
+     ├─name: "hello"
      ╰─age: 100
     """
     #expect(model.detailedDescription == match)
@@ -67,7 +67,7 @@ struct EmptyModel: CustomDetailedStringConvertible {
     let match = """
     Model<T>
      ├─details
-     │ ├─name: hello
+     │ ├─name: "hello"
      │ ╰─age: 100
      ╰─the end
     """
