@@ -6,7 +6,7 @@
 //
 
 
-public struct LineBlock: DescriptionBlockProtocol {
+struct LineBlock: DescriptionBlockProtocol {
     
     let title: String?
     
@@ -37,7 +37,7 @@ public struct LineBlock: DescriptionBlockProtocol {
         self.value = raw
     }
     
-    public func _detailedWrite<Target>(
+    func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,
@@ -90,7 +90,7 @@ public struct LineBlock: DescriptionBlockProtocol {
     }
     
     
-    public var _isEmpty: Bool {
+    var _isEmpty: Bool {
         value.isNone
     }
     
