@@ -59,14 +59,14 @@ extension DetailedDescription {
         ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
         ///   - showType: If `true`, the type of its children will be shown. See Discussion for more information.
         ///   - blocks: The DSL for building description.
-        public func container<each T: DescriptionBlockProtocol>(
+        public func container(
             _ title: String? = nil,
             showType: Bool? = nil,
-            @DetailedDescription.Builder blocks: () -> _LinesBlock<repeat each T>
+            @DetailedDescription.Builder blocks: () -> some DescriptionBlockProtocol
         ) -> some DescriptionBlockProtocol {
             let configuration = _Configuration(showType: showType)
             
-            return ContainerBlock<repeat each T>(title: title ?? "\(type(of: self.base))", lines: blocks(), configuration: configuration)
+            return ContainerBlock(title: title ?? "\(type(of: self.base))", lines: blocks(), configuration: configuration)
         }
         
         /// Annotate the value.

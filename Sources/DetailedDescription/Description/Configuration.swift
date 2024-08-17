@@ -21,3 +21,19 @@ public struct _Configuration {
     }
     
 }
+
+
+/// Configuration, but only pass down one level.
+public struct _ParentInfo: OptionSet, Sendable {
+    
+    public let rawValue: UInt
+    
+    public init(rawValue: UInt) {
+        self.rawValue = rawValue
+    }
+    
+    
+    static let isContainer  = _ParentInfo(rawValue: 1 << 0)
+    static let isLinesBlock = _ParentInfo(rawValue: 1 << 1)
+    
+}

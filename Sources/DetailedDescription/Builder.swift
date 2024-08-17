@@ -12,7 +12,7 @@ extension DetailedDescription {
     @resultBuilder
     public enum Builder {
         
-        public static func buildBlock<each T>(_ components: repeat each T) -> _LinesBlock<repeat each T> where repeat each T: DescriptionBlockProtocol {
+        public static func buildBlock<each T>(_ components: repeat each T) -> some DescriptionBlockProtocol where repeat each T: DescriptionBlockProtocol {
             _LinesBlock(lines: (repeat each components))
         }
         
@@ -38,6 +38,18 @@ extension DetailedDescription {
         
         public static func buildArray<T>(_ components: [T]) -> _FlattenLinesBlock<T> where T: DescriptionBlockProtocol {
             _FlattenLinesBlock<T>(lines: components)
+        }
+        
+        public static func buildEither<T>(first component: T) -> T where T: DescriptionBlockProtocol {
+            component
+        }
+        
+        public static func buildEither<T>(second component: T) -> T where T: DescriptionBlockProtocol {
+            component
+        }
+        
+        public static func buildPartialBlock<T>(first: T) -> T where T: DescriptionBlockProtocol  {
+            first
         }
         
     }

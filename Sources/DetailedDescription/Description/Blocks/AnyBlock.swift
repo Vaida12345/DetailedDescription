@@ -18,7 +18,8 @@ struct AnyBlock: DescriptionBlockProtocol {
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration
+        configuration: _Configuration,
+        parent: _ParentInfo = []
     ) where Target : TextOutputStream {
         if !(self._isEmpty) {
             block._detailedWrite(to: &target, trivia: trivia, configuration: configuration)

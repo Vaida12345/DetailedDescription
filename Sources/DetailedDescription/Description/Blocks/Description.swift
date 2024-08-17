@@ -18,7 +18,8 @@ public protocol DescriptionBlockProtocol {
     func _detailedWrite<Target: TextOutputStream>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration
+        configuration: _Configuration,
+        parent: _ParentInfo
     )
     
     /// Whether the block is empty
@@ -36,7 +37,7 @@ extension DescriptionBlockProtocol {
     
     var string: String {
         var string = ""
-        self._detailedWrite(to: &string, trivia: [.space], configuration: _Configuration())
+        self._detailedWrite(to: &string, trivia: [.space], configuration: _Configuration(), parent: [])
         return string
     }
     
@@ -46,6 +47,14 @@ extension DescriptionBlockProtocol {
     
     public var _peers: [any DescriptionBlockProtocol] {
         []
+    }
+    
+    func _detailedWrite<Target: TextOutputStream>(
+        to target: inout Target,
+        trivia: [_Trivia],
+        configuration: _Configuration
+    ) {
+        _detailedWrite(to: &target, trivia: trivia, configuration: configuration, parent: [])
     }
     
 }

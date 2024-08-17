@@ -8,11 +8,11 @@
 import Foundation
 
 
-struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+struct ContainerBlock<T>: DescriptionBlockProtocol where T: DescriptionBlockProtocol {
     
     let title: String?
     
-    let lines: _LinesBlock<repeat each T>
+    let lines: T
     
     let configuration: _Configuration
     
@@ -20,59 +20,18 @@ struct ContainerBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtoco
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration
+        configuration: _Configuration,
+        parent: _ParentInfo = []
     ) where Target : TextOutputStream {
         if let title {
             target.write(title)
         }
         
-        var linesCount = 0
+        guard !lines._isEmpty else { return }
         
-        func advanceCounter(_ line: some DescriptionBlockProtocol) {
-            guard !line._isEmpty else { return }
-            let peers = line._peers
-            if !peers.isEmpty {
-                linesCount += peers.filter({ !$0._isEmpty }).count
-            } else {
-                linesCount += 1
-            }
-        }
+        target.write("\n")
         
-        repeat advanceCounter(each lines.lines)
-        
-        if linesCount != 0 {
-            target.write("\n")
-        }
-        
-        var index = 0
-        
-        func process(_ line: some DescriptionBlockProtocol) {
-            let peers = line._peers.filter({ !$0._isEmpty })
-            guard peers.isEmpty else {
-                for peer in peers {
-                    process(peer)
-                }
-                return
-            }
-            
-            guard !line._isEmpty else { return }
-            
-            let isLastLine = index == linesCount - 1
-            
-            target.write(trivia.map(\.symbol).joined())
-            target.write(isLastLine ? "╰─" : "├─")
-            
-            let childTrivia = trivia + (isLastLine ? [.space, .space] : [.block(.vertical), .space])
-            line._detailedWrite(to: &target, trivia: childTrivia, configuration: self.configuration.mergingKeepingLeft(configuration))
-            
-            if !isLastLine {
-                target.write("\n")
-            }
-            
-            index += 1
-        }
-        
-        repeat process(each lines.lines)
+        lines._detailedWrite(to: &target, trivia: trivia, configuration: self.configuration.mergingKeepingLeft(configuration), parent: .isContainer)
     }
     
 }

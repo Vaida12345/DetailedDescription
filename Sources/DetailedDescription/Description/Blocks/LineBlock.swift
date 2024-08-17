@@ -16,7 +16,7 @@ struct LineBlock: DescriptionBlockProtocol {
     
     init<T>(title: String?, value: T) {
         self.title = title
-        self.type = "\(Swift.type(of: value))"
+        self.type = "\(Swift.type(of: value as Any))"
         
         if let value = value as? DescriptionBlockProtocol {
             self.value = .block(value)
@@ -40,7 +40,8 @@ struct LineBlock: DescriptionBlockProtocol {
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration
+        configuration: _Configuration,
+        parent: _ParentInfo = []
     ) where Target : TextOutputStream {
         if let title {
             target.write(title)

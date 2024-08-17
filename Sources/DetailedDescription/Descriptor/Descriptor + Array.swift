@@ -95,8 +95,11 @@ extension DetailedDescription.Descriptor {
     }
     
     /// Unfolds the sequence without creating a new hierarchy.
-    public func forEach<S: Sequence>(_ sequence: S, block: (S.Element) -> some DescriptionBlockProtocol) -> some DescriptionBlockProtocol {
-        _FlattenLinesBlock(lines: sequence.map(block))
+    public func forEach<S: Sequence>(
+        _ sequence: S,
+        @DetailedDescription.Builder blocks: (S.Element) -> some DescriptionBlockProtocol
+    ) -> some DescriptionBlockProtocol {
+        _FlattenLinesBlock(lines: sequence.map(blocks))
     }
     
 }

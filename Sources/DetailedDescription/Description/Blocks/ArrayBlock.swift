@@ -28,7 +28,8 @@ struct SequenceBlock: DescriptionBlockProtocol {
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration
+        configuration: _Configuration,
+        parent: _ParentInfo = []
     ) where Target : TextOutputStream {
         let blocks = self.blocks.filter({ !$0._isEmpty })
         
