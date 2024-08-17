@@ -99,7 +99,7 @@ extension DetailedDescription.Descriptor {
         _ sequence: S,
         @DetailedDescription.Builder blocks: (S.Element) -> some DescriptionBlockProtocol
     ) -> some DescriptionBlockProtocol {
-        _FlattenLinesBlock(lines: sequence.map(blocks))
+        FlattenLinesBlock(lines: sequence.map(blocks))
     }
     
 }

@@ -79,7 +79,7 @@ struct ArrayTestSuit {
         let block = SequenceBlock(blocks: [
             LineBlock(title: "Hello", value: "you"),
             LineBlock(title: "Hello", value: "you too"),
-            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: _LinesBlock(lines: LineBlock(title: "Not", value: "you tooo")), configuration: .init()))),
+            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: LinesBlock(lines: LineBlock(title: "Not", value: "you tooo")), configuration: .init()))),
             LineBlock(title: "Hello", value: "you tooo"),
         ], includeIndex: true, serialized: false, hideEmptySequence: false)
         

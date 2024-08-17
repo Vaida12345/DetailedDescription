@@ -13,7 +13,7 @@ extension DetailedDescription {
     public enum Builder {
         
         public static func buildBlock<each T>(_ components: repeat each T) -> some DescriptionBlockProtocol where repeat each T: DescriptionBlockProtocol {
-            _LinesBlock(lines: (repeat each components))
+            LinesBlock(lines: (repeat each components))
         }
         
         public static func buildBlock() -> some DescriptionBlockProtocol {
@@ -24,22 +24,6 @@ extension DetailedDescription {
             expression
         }
         
-        public static func buildEither<TrueBlock>(first component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
-            ConditionBlock(block: component)
-        }
-        
-        public static func buildEither<TrueBlock>(last component: TrueBlock) -> some DescriptionBlockProtocol where TrueBlock: DescriptionBlockProtocol {
-            ConditionBlock(block: component)
-        }
-        
-        public static func buildOptional<T>(_ component: T?) -> some DescriptionBlockProtocol where T: DescriptionBlockProtocol {
-            OptionalBlock(block: component)
-        }
-        
-        public static func buildArray<T>(_ components: [T]) -> _FlattenLinesBlock<T> where T: DescriptionBlockProtocol {
-            _FlattenLinesBlock<T>(lines: components)
-        }
-        
         public static func buildEither<T>(first component: T) -> T where T: DescriptionBlockProtocol {
             component
         }
@@ -48,8 +32,20 @@ extension DetailedDescription {
             component
         }
         
+        public static func buildOptional<T>(_ component: T?) -> some DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+            OptionalBlock(block: component)
+        }
+        
+        public static func buildArray<T>(_ components: [T]) -> some DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+            FlattenLinesBlock<T>(lines: components)
+        }
+        
         public static func buildPartialBlock<T>(first: T) -> T where T: DescriptionBlockProtocol  {
             first
+        }
+        
+        public static func buildPartialBlock(accumulated: some DescriptionBlockProtocol, next: some DescriptionBlockProtocol) -> some DescriptionBlockProtocol {
+            LinesBlock(lines: (accumulated, next))
         }
         
     }

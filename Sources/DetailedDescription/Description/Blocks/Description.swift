@@ -27,9 +27,6 @@ public protocol DescriptionBlockProtocol {
     /// Empty blocks will not be rendered.
     var _isEmpty: Bool { get }
     
-    /// If has peers, the peers will be used instead of `self`.
-    var _peers: [any DescriptionBlockProtocol] { get }
-    
 }
 
 

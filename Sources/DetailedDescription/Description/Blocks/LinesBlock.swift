@@ -6,11 +6,11 @@
 //
 
 
-public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+struct LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
     let lines: (repeat each T)
     
-    public func _detailedWrite<Target>(
+    func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
         configuration: _Configuration,
@@ -20,12 +20,7 @@ public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockPro
         
         func advanceCounter(_ line: some DescriptionBlockProtocol) {
             guard !line._isEmpty else { return }
-            let peers = line._peers
-            if !peers.isEmpty {
-                linesCount += peers.filter({ !$0._isEmpty }).count
-            } else {
-                linesCount += 1
-            }
+            linesCount += 1
         }
         
         repeat advanceCounter(each lines)
@@ -33,14 +28,6 @@ public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockPro
         var index = 0
         
         func process(_ line: some DescriptionBlockProtocol) {
-            let peers = line._peers.filter({ !$0._isEmpty })
-            guard peers.isEmpty else {
-                for peer in peers {
-                    process(peer)
-                }
-                return
-            }
-            
             guard !line._isEmpty else { return }
             
             let isLastLine = index == linesCount - 1
@@ -87,7 +74,7 @@ public struct _LinesBlock<each T: DescriptionBlockProtocol>: DescriptionBlockPro
     
 }
 
-public struct _FlattenLinesBlock<T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
+struct FlattenLinesBlock<T: DescriptionBlockProtocol>: DescriptionBlockProtocol {
     
     public func _detailedWrite<Target>(
         to target: inout Target,
@@ -95,18 +82,37 @@ public struct _FlattenLinesBlock<T: DescriptionBlockProtocol>: DescriptionBlockP
         configuration: _Configuration,
         parent: _ParentInfo
     ) where Target : TextOutputStream {
-        fatalError("Should never call")
+        for (index, line) in lines.enumerated() {
+            guard !line._isEmpty else { continue }
+            
+            let isLastLine = index == lines.count - 1
+            
+            // trivia inherited
+            if !parent.contains(.isLinesBlock) {
+                target.write(trivia.map(\.symbol).joined())
+            }
+            
+            let childTrivia: [_Trivia]
+            if parent.contains(.isContainer) {
+                // new trivia
+                target.write(isLastLine ? "╰─" : "├─")
+                childTrivia = trivia + (isLastLine ? [.space, .space] : [.block(.vertical), .space])
+            } else {
+                childTrivia = trivia
+            }
+            
+            line._detailedWrite(to: &target, trivia: childTrivia, configuration: configuration, parent: .isLinesBlock)
+            
+            if !isLastLine {
+                target.write("\n")
+            }
+        }
     }
     
-    private let peers: [T]
-    
-    public var _peers: [any DescriptionBlockProtocol] {
-        self.peers
-    }
-    
+    private let lines: [T]
     
     init(lines: [T]) {
-        self.peers = lines
+        self.lines = lines
     }
     
 }
