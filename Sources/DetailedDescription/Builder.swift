@@ -20,19 +20,19 @@ extension DetailedDescription {
             EmptyBlock()
         }
         
-        public static func buildEither(first component: some DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
+        public static func buildEither(first component: any DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
             AnyBlock(block: component)
         }
         
-        public static func buildEither(second component: some DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
+        public static func buildEither(second component: any DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
             AnyBlock(block: component)
         }
         
-        public static func buildOptional<T>(_ component: T?) -> any DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+        public static func buildOptional(_ component: (any DescriptionBlockProtocol)?) -> any DescriptionBlockProtocol {
             OptionalBlock(block: component)
         }
         
-        public static func buildArray<T>(_ components: [T]) -> any DescriptionBlockProtocol where T: DescriptionBlockProtocol {
+        public static func buildArray(_ components: [any DescriptionBlockProtocol]) -> any DescriptionBlockProtocol {
             FlattenLinesBlock(lines: components)
         }
         
