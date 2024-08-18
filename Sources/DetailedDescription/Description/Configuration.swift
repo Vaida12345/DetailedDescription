@@ -6,7 +6,7 @@
 //
 
 
-public struct _Configuration {
+public struct _Configuration: Sendable {
     
     var showType: Bool?
     
@@ -18,6 +18,11 @@ public struct _Configuration {
     
     init(showType: Bool? = nil) {
         self.showType = showType
+    }
+    
+    /// The default used by renderer.
+    static var nonNilDefault: _Configuration {
+        _Configuration(showType: false)
     }
     
 }

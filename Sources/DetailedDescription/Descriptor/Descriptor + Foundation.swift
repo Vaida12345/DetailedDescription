@@ -100,10 +100,22 @@ extension DetailedDescription {
         /// Explicitly add a `String`.
         ///
         /// Use this when you want to add an invariant string. For dynamically constructed description, it is recommended to use ``value(_:for:)``
+        @available(*, deprecated, renamed: "constant")
         public func string(
             _ content: String
         ) -> any DescriptionBlockProtocol {
-            LineBlock(title: nil, raw: .string(content))
+            LineBlock(title: nil, raw: .string(content, isString: false))
+        }
+        
+        /// Explicitly add a `String`.
+        ///
+        /// Use this when you want to add a constant string. For dynamically constructed description, it is recommended to use ``value(_:for:)``
+        ///
+        /// - Note: `content` will not be bounded by quotation marks.
+        public func constant(
+            _ content: String
+        ) -> any DescriptionBlockProtocol {
+            LineBlock(title: nil, raw: .string(content, isString: false))
         }
         
         

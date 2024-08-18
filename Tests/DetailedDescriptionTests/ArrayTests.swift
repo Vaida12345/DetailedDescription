@@ -146,7 +146,7 @@ struct ArrayTestSuit {
         func detailedDescription(using descriptor: DetailedDescription.Descriptor<LoopModel>) -> any DescriptionBlockProtocol {
             descriptor.container {
                 descriptor.forEach(dictionary) { (key, value) in
-                    descriptor.string("\(key): \(value)")
+                    descriptor.constant("\(key): \(value)")
                 }
             }
         }

@@ -23,7 +23,7 @@ struct Model: CustomDetailedStringConvertible {
                 descriptor.value("age", of: age)
             }
             
-            descriptor.string("the end")
+            descriptor.constant("the end")
         }
     }
 }
@@ -100,4 +100,24 @@ nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyM
     let model = EmptyModel()
     
     #expect(model.detailedDescription == "Model<T>")
+}
+
+@Test func testLongString() {
+    let model = BasicModel(name: """
+    I
+    Am
+    Long
+    String
+    """, age: 100)
+    let match = #"""
+    BasicModelModel<T>
+     ├─name: """
+     │       I
+     │       Am
+     │       Long
+     │       String
+     │       """
+     ╰─age: 100
+    """#
+    #expect(model.detailedDescription == match)
 }
