@@ -65,6 +65,25 @@ nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyM
 }
 
 
+/// Redirects the standard output and captures the result.
+public func withStandardOutputCaptured(_ body: () throws -> Void) throws -> FileHandle {
+    // Create a pipe and redirect stdout
+    let pipe = Pipe()
+    let oldStdout = dup(STDOUT_FILENO)
+    dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
+    
+    // Print something (this will be captured)
+    try body()
+    
+    // Restore stdout
+    dup2(oldStdout, STDOUT_FILENO)
+    close(oldStdout)
+    try pipe.fileHandleForWriting.close()
+    
+    return pipe.fileHandleForReading
+}
+
+
 @Test func testNested() throws {
     let model = Model(name: "hello", age: 100)
     let match = """
@@ -77,20 +96,9 @@ nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyM
     
     #expect(model.detailedDescription == match)
     
-    // Create a pipe and redirect stdout
-    let pipe = Pipe()
-    let oldStdout = dup(STDOUT_FILENO)
-    dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
-    
-    // Print something (this will be captured)
-    detailedPrint(model, terminator: "")
-    
-    // Restore stdout
-    dup2(oldStdout, STDOUT_FILENO)
-    close(oldStdout)
-    try pipe.fileHandleForWriting.close()
-    
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let data = try withStandardOutputCaptured {
+        detailedPrint(model, terminator: "")
+    }.readToEnd()!
     let output = String(data: data, encoding: .utf8) ?? "(false data)"
     
     #expect(output == match)
