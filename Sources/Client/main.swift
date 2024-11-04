@@ -5,7 +5,7 @@
 //  Created by Vaida on 7/12/24.
 //
 
-@testable import DetailedDescription
+import DetailedDescription
 
 
 private indirect enum Node {
