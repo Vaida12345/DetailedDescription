@@ -48,4 +48,4 @@ https://github.com/Vaida12345/DetailedDescription
 
 ## Documentation
 
-Full Documentation in DocC.
+Full Documentation in DocC. [View on Github Pages](https://vaida12345.github.io/DetailedDescription/documentation/detaileddescription)
