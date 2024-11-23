@@ -43,27 +43,4 @@ struct LoopModel: CustomDetailedStringConvertible {
     #expect(model.detailedDescription == match)
 }
 
-//return descriptor.container("CGPDFArray") {
-//    descriptor.forEach(0..<count) { index in
-//        if let innerArray = source._arrayGetValue(using: CGPDFArrayGetArray, index: index) {
-//            descriptor.value("", of: CGPDFArrayWrapper(source: innerArray))
-//        } else if let name = source._arrayGetValue(using: CGPDFArrayGetName, index: index) {
-//            descriptor.value("", of: String(cString: name))
-//        } else if let stream = source._arrayGetValue(using: CGPDFArrayGetStream, index: index) {
-//            descriptor.value("", of: stream.dictionary)
-//        } else if let dictionary = source._arrayGetValue(using: CGPDFArrayGetDictionary, index: index) {
-//            descriptor.value("", of: dictionary)
-//        } else if let string = source._arrayGetValue(using: CGPDFArrayGetString, index: index) {
-//            if let value = CGPDFStringCopyDate(string) {
-//                descriptor.value("", of: value)
-//            } else {
-//                let value = CGPDFStringCopyTextString(string)
-//                descriptor.value("", of: value)
-//            }
-//        } else if let object = source._arrayGetValue(using: CGPDFArrayGetObject, index: index) {
-//            descriptor.value("", of: CGPDFObjectWrapper(key: "", source: object))
-//        } else {
-//            descriptor.string("(unknown)")
-//        }
-//    }
-//    }
+
