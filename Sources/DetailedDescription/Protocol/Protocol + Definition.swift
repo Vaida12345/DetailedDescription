@@ -18,8 +18,7 @@
 /// - ``detailedDescription``
 ///
 /// ### associatedtype
-/// The ``detailedDescription(using:)`` would return `some DescriptionBlockProtocol` when possible.
-/// - ``DescriptionBlock``
+/// The ``detailedDescription(using:)`` would return `any DescriptionBlockProtocol` when possible.
 /// - ``DetailedDescription/DescriptionBlockProtocol``
 ///
 /// ### Builder
