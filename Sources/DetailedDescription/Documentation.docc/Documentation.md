@@ -54,6 +54,19 @@ https://www.github.com/Vaida12345/DetailedDescription
 
 - ``CustomDetailedStringConvertible``
 
-### Modifiers
+### Block Structure
+Use these methods and modifiers to build the resulting blocks.
 
+- <doc:BuildMethods>
 - <doc:BlockModifiers>
+
+
+### Description
+Use the following to retrieve the detailed description.
+- ``CustomDetailedStringConvertible/detailedDescription``
+- ``detailedPrint(_:terminator:)``
+
+
+### Implementation Details
+- ``DetailedDescription``
+- ``DescriptionBlockProtocol``

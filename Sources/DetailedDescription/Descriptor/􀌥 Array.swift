@@ -22,8 +22,6 @@ extension DetailedDescription.Descriptor {
     /// //  ╰─[4]: 5
     /// ```
     ///
-    /// - Note: setting `serialized` to `true` will hide index.
-    ///
     /// - Parameters:
     ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
     ///   - keyPath: The keyPath to the sequence to be described.
@@ -50,8 +48,6 @@ extension DetailedDescription.Descriptor {
     /// //  ╰─[4]: 5
     /// ```
     ///
-    /// - Note: setting `serialized` to `true` will hide index.
-    ///
     /// - Parameters:
     ///   - title: The title of the description.
     ///   - sequence: The sequence to be described.
@@ -72,6 +68,24 @@ extension DetailedDescription.Descriptor {
     }
     
     /// Unfolds the sequence without creating a new hierarchy.
+    ///
+    /// This method is used to unfold a sequence.
+    ///
+    /// ```swift
+    /// let block = descriptor.container {
+    ///     descriptor.forEach(0..<2) { i in
+    ///         descriptor.value("a", of: i)
+    ///     }
+    /// }
+    ///
+    /// /// descriptor
+    /// ///  ├─a: 0
+    /// ///  ╰─a: 1
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - sequence: The sequence to be mapped.
+    ///   - blocks: The result builder for each element in the `sequence`.
     public func forEach<S: Sequence>(
         _ sequence: S,
         @DetailedDescription.Builder blocks: (S.Element) -> any DescriptionBlockProtocol

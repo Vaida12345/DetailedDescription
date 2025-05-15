@@ -39,6 +39,8 @@ public extension DescriptionBlockProtocol {
     /// Specifies that `sequence` should be described in the same way that arrays are printed.
     ///
     /// Such as `"header: [1, 2, 3, 4, 5]"`.
+    ///
+    /// - Note: setting `serialized` to `true` will hide index.
     func serialized(_ bool: Bool = true) -> any DescriptionBlockProtocol {
         self.environment(.serialized, value: bool)
     }

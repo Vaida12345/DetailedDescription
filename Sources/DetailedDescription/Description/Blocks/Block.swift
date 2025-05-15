@@ -9,6 +9,15 @@
 /// A block of description.
 ///
 /// This is a implementation detail. This protocol is returned by ``DetailedDescription/Descriptor``.
+///
+/// ## Topics
+/// ### General Modifiers
+/// - ``DescriptionBlockProtocol/showType(_:)``
+///
+/// ### Sequence Modifiers
+/// - ``DescriptionBlockProtocol/hideIndex(_:)``
+/// - ``DescriptionBlockProtocol/serialized(_:)``
+/// - ``DescriptionBlockProtocol/hideEmptySequence(_:)``
 public protocol DescriptionBlockProtocol {
     
     /// When writing, write the heads for children, while `self` remains headless.
