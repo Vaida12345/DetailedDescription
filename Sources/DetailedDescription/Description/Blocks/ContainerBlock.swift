@@ -14,24 +14,31 @@ struct ContainerBlock: DescriptionBlockProtocol {
     
     let lines: any DescriptionBlockProtocol
     
-    let configuration: _Configuration
-    
     
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo = []
+        parent: _ParentInfo = [],
+        environment: _EnvironmentValues
     ) where Target : TextOutputStream {
         if let title {
             target.write(title)
         }
         
-        guard !lines._isEmpty else { return }
+        guard !lines._isEmpty(environment: environment) else { return }
         
         target.write("\n")
         
-        lines._detailedWrite(to: &target, trivia: trivia, configuration: self.configuration.mergingKeepingLeft(configuration), parent: .isContainer)
+        lines._detailedWrite(
+            to: &target,
+            trivia: trivia,
+            parent: .isContainer,
+            environment: environment
+        )
+    }
+    
+    func _isEmpty(environment: _EnvironmentValues) -> Bool {
+        false
     }
     
 }

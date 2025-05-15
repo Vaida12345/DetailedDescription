@@ -21,7 +21,9 @@ struct ArrayTestSuit {
             LineBlock(title: "Hello", value: "you toooooo"),
             LineBlock(title: "Hello", value: "you tooooooo"),
             LineBlock(title: "Hello", value: "you toooooooo"),
-        ], includeIndex: false, serialized: false, hideEmptySequence: false)
+        ])
+            .hideIndex()
+            .hideEmptySequence()
         
         let match = """
         <8 elements>
@@ -39,7 +41,8 @@ struct ArrayTestSuit {
     }
     
     @Test func serialized() async throws {
-        let block = descriptor.sequence("header", of: [1, 2, 3, 4, 5], serialized: true)
+        let block = descriptor.sequence("header", of: [1, 2, 3, 4, 5])
+            .serialized()
         
         let match = """
         header: [1, 2, 3, 4, 5]
@@ -58,7 +61,8 @@ struct ArrayTestSuit {
             LineBlock(title: "Hello", value: "you toooooo"),
             LineBlock(title: "Hello", value: "you tooooooo"),
             LineBlock(title: "Hello", value: "you toooooooo"),
-        ], includeIndex: true, serialized: false, hideEmptySequence: false)
+        ])
+            .hideIndex(false)
         
         let match = """
         <8 elements>
@@ -79,9 +83,10 @@ struct ArrayTestSuit {
         let block = SequenceBlock(blocks: [
             LineBlock(title: "Hello", value: "you"),
             LineBlock(title: "Hello", value: "you too"),
-            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: FlattenLinesBlock(lines: [LineBlock(title: "Not", value: "you tooo")]), configuration: .init()))),
+            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: FlattenLinesBlock(lines: [LineBlock(title: "Not", value: "you tooo")])))),
             LineBlock(title: "Hello", value: "you tooo"),
-        ], includeIndex: true, serialized: false, hideEmptySequence: false)
+        ])
+            .hideEmptySequence()
         
         let match = """
         <4 elements>

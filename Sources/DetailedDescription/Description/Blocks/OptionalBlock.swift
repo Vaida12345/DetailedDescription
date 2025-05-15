@@ -14,15 +14,15 @@ struct OptionalBlock: DescriptionBlockProtocol {
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo = []
+        parent: _ParentInfo = [],
+        environment: _EnvironmentValues
     ) where Target : TextOutputStream {
         assert(block != nil)
-        block!._detailedWrite(to: &target, trivia: trivia, configuration: configuration, parent: parent) // pass through
+        block!._detailedWrite(to: &target, trivia: trivia, parent: parent, environment: environment) // pass through
     }
     
-    public var _isEmpty: Bool {
-        self.block?._isEmpty ?? true
+    func _isEmpty(environment: _EnvironmentValues) -> Bool {
+        self.block?._isEmpty(environment: environment) ?? true
     }
     
 }

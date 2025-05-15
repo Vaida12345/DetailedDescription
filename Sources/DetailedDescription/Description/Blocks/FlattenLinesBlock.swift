@@ -10,21 +10,21 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
     
     let lines: [any DescriptionBlockProtocol]
     
-    var _isEmpty: Bool {
-        lines.allSatisfy(\._isEmpty)
+    func _isEmpty(environment: _EnvironmentValues) -> Bool {
+        lines.allSatisfy { $0._isEmpty(environment: environment) }
     }
     
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo
+        parent: _ParentInfo,
+        environment: _EnvironmentValues
     ) where Target : TextOutputStream {
-        let count = lines.count(where: { !$0._isEmpty })
+        let count = lines.count(where: { !$0._isEmpty(environment: environment) })
         
         var index = 0
         for line in lines {
-            guard !line._isEmpty else { continue }
+            guard !line._isEmpty(environment: environment) else { continue }
             
             let isLastLine = index == count - 1
             
@@ -42,7 +42,7 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
                 childTrivia = trivia
             }
             
-            line._detailedWrite(to: &target, trivia: childTrivia, configuration: configuration, parent: .isLinesBlock)
+            line._detailedWrite(to: &target, trivia: childTrivia, parent: .isLinesBlock, environment: environment)
             
             if !isLastLine {
                 target.write("\n")
@@ -61,8 +61,6 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
             
             if let target = target as? FlattenLinesBlock {
                 checking.append(contentsOf: target.lines)
-            } else if let target = target as? AnyBlock {
-                checking.append(target.block)
             } else if let target = (target as? OptionalBlock)?.block {
                 checking.append(target)
             } else {

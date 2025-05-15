@@ -10,13 +10,13 @@ struct EmptyBlock: DescriptionBlockProtocol {
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo = []
+        parent: _ParentInfo = [],
+        environment: _EnvironmentValues
     ) where Target : TextOutputStream {
         fatalError("Should never call")
     }
     
-    public var _isEmpty: Bool {
+    func _isEmpty(environment: _EnvironmentValues) -> Bool {
         true
     }
     

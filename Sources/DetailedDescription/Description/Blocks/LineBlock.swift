@@ -40,8 +40,8 @@ struct LineBlock: DescriptionBlockProtocol {
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo = []
+        parent: _ParentInfo = [],
+        environment: _EnvironmentValues
     ) where Target : TextOutputStream {
         var leadingCount = 0
         if let title {
@@ -59,7 +59,7 @@ struct LineBlock: DescriptionBlockProtocol {
                 if isString {
                     target.write(#"""""#)
                 }
-                if configuration.mergingKeepingLeft(.nonNilDefault).showType! {
+                if environment.showType {
                     target.write(" <String>")
                 }
                 target.write("\n")
@@ -82,17 +82,17 @@ struct LineBlock: DescriptionBlockProtocol {
                 if isString {
                     target.write("\"")
                 }
-                if configuration.mergingKeepingLeft(.nonNilDefault).showType! {
+                if environment.showType {
                     target.write(" <\(type)>")
                 }
             }
         case .block(let block):
-            block._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
+            block._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         case .customDetailedStringConvertible(let value):
-            value.descriptionBlocks()._detailedWrite(to: &target, trivia: trivia, configuration: configuration)
+            value.descriptionBlocks()._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         case .customStringConvertible(let value):
             target.write(value.description)
-            if configuration.showType ?? false {
+            if environment.showType {
                 target.write(" <\(type)>")
             }
         case .none:
@@ -106,22 +106,18 @@ struct LineBlock: DescriptionBlockProtocol {
         case customStringConvertible(any CustomStringConvertible)
         case customDetailedStringConvertible(any CustomDetailedStringConvertible)
         case none
-        
-        var isNone: Bool {
-            switch self {
-            case .none:
-                true
-            case let .block(block):
-                block._isEmpty
-            default:
-                false
-            }
-        }
     }
     
     
-    var _isEmpty: Bool {
-        value.isNone
+    func _isEmpty(environment: _EnvironmentValues) -> Bool {
+        switch value {
+        case .none:
+            true
+        case let .block(block):
+            block._isEmpty(environment: environment)
+        default:
+            false
+        }
     }
     
     static var empty: LineBlock {

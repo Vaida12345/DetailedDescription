@@ -10,35 +10,29 @@ struct SequenceBlock: DescriptionBlockProtocol {
     
     let blocks: [LineBlock]
     
-    let includeIndex: Bool
     
-    let serialized: Bool
-    
-    let hideEmptySequence: Bool
-    
-    
-    var _isEmpty: Bool {
-        hideEmptySequence && blocks.allSatisfy({ $0._isEmpty })
+    func _isEmpty(environment: _EnvironmentValues) -> Bool {
+        environment.hideEmptySequence && blocks.allSatisfy({ $0._isEmpty(environment: environment) })
     }
     
     
     func _detailedWrite<Target>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo = []
+        parent: _ParentInfo = [],
+        environment: _EnvironmentValues
     ) where Target : TextOutputStream {
-        let blocks = self.blocks.filter({ !$0._isEmpty })
+        let blocks = self.blocks.filter({ !$0._isEmpty(environment: environment) })
         
         let linesCount = self.blocks.count
         
-        if serialized {
+        if environment.serialized {
             target.write("[")
             for (index, line) in blocks.enumerated() {
-                guard !line._isEmpty else { continue }
+                guard !line._isEmpty(environment: environment) else { continue }
                 
                 let isLastLine = index == linesCount - 1
-                line._detailedWrite(to: &target, trivia: [], configuration: configuration)
+                line._detailedWrite(to: &target, trivia: [], environment: environment)
                 
                 if !isLastLine {
                     target.write(", ")
@@ -60,7 +54,7 @@ struct SequenceBlock: DescriptionBlockProtocol {
         }
         
         for (index, line) in blocks.enumerated() {
-            guard !line._isEmpty else { continue }
+            guard !line._isEmpty(environment: environment) else { continue }
             
             let isLastLine = index == linesCount - 1
             
@@ -69,26 +63,18 @@ struct SequenceBlock: DescriptionBlockProtocol {
             
             var childTrivia = trivia + (isLastLine ? [.space, .space] : [.block(.vertical), .space])
             
-            if includeIndex {
+            if environment.includeIndex {
                 let _index = "[\(index)]: "
                 childTrivia += Array(repeating: .space, count: _index.count)
                 target.write(_index)
             }
             
-            line._detailedWrite(to: &target, trivia: childTrivia, configuration: configuration)
+            line._detailedWrite(to: &target, trivia: childTrivia, environment: environment)
             
             if !isLastLine {
                 target.write("\n")
             }
         }
-    }
-    
-    
-    init(blocks: [LineBlock], includeIndex: Bool, serialized: Bool, hideEmptySequence: Bool) {
-        self.blocks = blocks
-        self.includeIndex = includeIndex
-        self.serialized = serialized
-        self.hideEmptySequence = hideEmptySequence
     }
     
 }

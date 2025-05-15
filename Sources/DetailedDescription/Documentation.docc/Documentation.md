@@ -53,3 +53,7 @@ https://www.github.com/Vaida12345/DetailedDescription
 ### Interface
 
 - ``CustomDetailedStringConvertible``
+
+### Modifiers
+
+- <doc:BlockModifiers>

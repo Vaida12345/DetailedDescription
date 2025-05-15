@@ -48,13 +48,15 @@ extension Node: CustomDetailedStringConvertible {
     
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> any DescriptionBlockProtocol {
         descriptor.container {
-            descriptor.sequence(for: \.nextNodes, includeIndex: false)
+            descriptor.sequence(for: \.nextNodes)
+                .hideIndex()
+                .hideEmptySequence()
             descriptor.optional(for: \.leaf)
         }
+        .hideIndex(false)
     }
     
 }
-
 
 @Test
 func testMultiRecursive() async throws {

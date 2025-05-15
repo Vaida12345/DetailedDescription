@@ -8,24 +8,27 @@
 
 /// A block of description.
 ///
-/// This is implementation details.
+/// This is a implementation detail. This protocol is returned by ``DetailedDescription/Descriptor``.
 public protocol DescriptionBlockProtocol {
     
     /// When writing, write the heads for children, while `self` remains headless.
     ///
     /// - Parameters:
+    ///   - target: The output stream
     ///   - trivia: The leading trivia for its children, if any.
+    ///   - parent: The direct parent. Such parameter is not inherited when propagating values down the stream, expect for `ModifiedBlock`.
+    ///   - environment: The environment values, such value is propagated down the stream.
     func _detailedWrite<Target: TextOutputStream>(
         to target: inout Target,
         trivia: [_Trivia],
-        configuration: _Configuration,
-        parent: _ParentInfo
+        parent: _ParentInfo,
+        environment: _EnvironmentValues
     )
     
     /// Whether the block is empty
     ///
     /// Empty blocks will not be rendered.
-    var _isEmpty: Bool { get }
+    func _isEmpty(environment: _EnvironmentValues) -> Bool
     
 }
 
@@ -34,20 +37,13 @@ extension DescriptionBlockProtocol {
     
     var string: String {
         var string = ""
-        self._detailedWrite(to: &string, trivia: [.space], configuration: _Configuration(), parent: [])
+        self._detailedWrite(
+            to: &string,
+            trivia: [.space],
+            parent: [],
+            environment: _EnvironmentValues()
+        )
         return string
-    }
-    
-    public var _isEmpty: Bool {
-        false
-    }
-    
-    func _detailedWrite<Target: TextOutputStream>(
-        to target: inout Target,
-        trivia: [_Trivia],
-        configuration: _Configuration
-    ) {
-        _detailedWrite(to: &target, trivia: trivia, configuration: configuration, parent: [])
     }
     
 }

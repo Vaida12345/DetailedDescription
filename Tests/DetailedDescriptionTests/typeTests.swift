@@ -47,14 +47,16 @@ struct TypeTestSuit {
         let age: Int
         
         func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> any DescriptionBlockProtocol {
-            descriptor.container(showType: true) {
-                descriptor.container("details", showType: false) {
+            descriptor.container {
+                descriptor.container("details") {
                     descriptor.value(for: \.name)
                     descriptor.value(for: \.age)
                 }
+                .showType(false)
                 
                 descriptor.value(for: \.name)
             }
+            .showType()
         }
         
     }
@@ -66,14 +68,15 @@ struct TypeTestSuit {
         let age: Int
         
         func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel2>) -> any DescriptionBlockProtocol {
-            descriptor.container(showType: true) {
-                descriptor.container("details", showType: nil) {
+            descriptor.container {
+                descriptor.container("details") {
                     descriptor.value(for: \.name)
                     descriptor.value(for: \.age)
                 }
                 
                 descriptor.value(for: \.name)
             }
+            .showType()
         }
         
     }

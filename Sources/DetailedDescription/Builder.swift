@@ -21,11 +21,11 @@ extension DetailedDescription {
         }
         
         public static func buildEither(first component: any DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
-            AnyBlock(block: component)
+            ModifiedBlock(block: component)
         }
         
         public static func buildEither(second component: any DescriptionBlockProtocol) -> any DescriptionBlockProtocol {
-            AnyBlock(block: component)
+            ModifiedBlock(block: component)
         }
         
         public static func buildOptional(_ component: (any DescriptionBlockProtocol)?) -> any DescriptionBlockProtocol {
