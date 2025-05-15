@@ -13,7 +13,9 @@ struct BasicModel: CustomDetailedStringConvertible {
 
     let age: Int
 
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> any DescriptionBlockProtocol {
+    func detailedDescription(
+        using descriptor: DetailedDescription.Descriptor<BasicModel>
+    ) -> any DescriptionBlockProtocol {
         descriptor.container {
             descriptor.value(for: \.name)
             descriptor.value(for: \.age)
@@ -64,15 +66,18 @@ With the above definition, you can now inspect a complex `SCNNode` by `detailedP
 
 ### DSL
 
-Similar to `SwiftUI`, the `detailedDescription` function also supports builing conditional blocks, and the use of loops.
+Similar to `SwiftUI`, the `detailedDescription` function also supports building conditional blocks, and the use of loops.
 
 ```swift
-func detailedDescription(using descriptor: DetailedDescription.Descriptor<Component>) -> any DescriptionBlockProtocol {
-    descriptor.container(showType: false) {
+func detailedDescription(
+    using descriptor: DetailedDescription.Descriptor<Component>
+) -> any DescriptionBlockProtocol {
+    descriptor.container {
         if !content.isEmpty {
             descriptor.value(for: \.content)
         }
-        descriptor.sequence(for: \.metadata, hideEmptySequence: true)
+        descriptor.sequence(for: \.metadata)
+            .hideEmptySequence()
         descriptor.value(for: \.boundary)
     }
 }
@@ -112,7 +117,9 @@ struct BasicModel: CustomDetailedStringConvertible {
     
     let age: Int
     
-    func detailedDescription(using descriptor: DetailedDescription.Descriptor<BasicModel>) -> any DescriptionBlockProtocol {
+    func detailedDescription(
+        using descriptor: DetailedDescription.Descriptor<BasicModel>
+    ) -> any DescriptionBlockProtocol {
         descriptor.container {
             descriptor.container("details") {
                 descriptor.value(for: \.name)

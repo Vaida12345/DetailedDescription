@@ -30,13 +30,13 @@ extension DetailedDescription.Descriptor {
     /// ```
     ///
     /// - Parameters:
-    ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
+    ///   - label: The label of the description. When `nil`, the `keyPath` will be used instead.
     ///   - blocks: The DSL for building description.
     public func container(
-        _ title: String? = nil,
+        _ label: String? = nil,
         @DetailedDescription.Builder blocks: () -> any DescriptionBlockProtocol
     ) -> any DescriptionBlockProtocol {
-        ContainerBlock(title: title ?? "\(type(of: self.base))", lines: blocks())
+        ContainerBlock(label: label ?? "\(type(of: self.base))", lines: blocks())
     }
     
 }

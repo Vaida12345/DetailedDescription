@@ -18,7 +18,6 @@ let package = Package(
         .testTarget(
             name: "DetailedDescriptionTests",
             dependencies: ["DetailedDescription"]
-        ),
-        .executableTarget(name: "Client", dependencies: ["DetailedDescription"])
+        )
     ]
 )

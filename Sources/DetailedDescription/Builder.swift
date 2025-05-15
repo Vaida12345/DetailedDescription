@@ -36,14 +36,6 @@ extension DetailedDescription {
             FlattenLinesBlock(lines: components)
         }
         
-//        public static func buildPartialBlock<T>(first: T) -> T where T: DescriptionBlockProtocol  {
-//            first
-//        }
-//        
-//        public static func buildPartialBlock(accumulated: some DescriptionBlockProtocol, next: some DescriptionBlockProtocol) -> some DescriptionBlockProtocol {
-//            LinesBlock(lines: (accumulated, next))
-//        }
-        
     }
     
 }

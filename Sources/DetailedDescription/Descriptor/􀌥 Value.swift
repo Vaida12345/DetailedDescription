@@ -11,13 +11,13 @@ extension DetailedDescription.Descriptor {
     /// Annotate the value.
     ///
     /// - Parameters:
-    ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
+    ///   - label: The label of the description. When `nil`, the `keyPath` will be used instead.
     ///   - keyPath: The keyPath to the property to be described.
     public func value<T>(
-        _ title: String? = nil,
+        _ label: String? = nil,
         for keyPath: KeyPath<Base, T>
     ) -> any DescriptionBlockProtocol {
-        LineBlock(title: title ?? keyPath.trailingPath, value: base[keyPath: keyPath])
+        LineBlock(label: label ?? keyPath.trailingPath, value: base[keyPath: keyPath])
     }
     
     /// Annotate the value.
@@ -27,13 +27,13 @@ extension DetailedDescription.Descriptor {
     /// - Tip: When you want to pass type-erased optional values `Any?`, explicitly cast `as Any` to show type info.
     ///
     /// - Parameters:
-    ///   - title: The title of the description.
+    ///   - label: The label of the description.
     ///   - value: The value to be described.
     public func value<T>(
-        _ title: String,
+        _ label: String,
         of value: T
     ) -> any DescriptionBlockProtocol {
-        LineBlock(title: title, value: value)
+        LineBlock(label: label, value: value)
     }
     
     /// Explicitly add a `String`.
@@ -44,7 +44,7 @@ extension DetailedDescription.Descriptor {
     public func constant(
         _ content: String
     ) -> any DescriptionBlockProtocol {
-        LineBlock(title: nil, raw: .string(content, isString: false))
+        LineBlock(label: nil, raw: .string(content, isString: false))
     }
     
 }

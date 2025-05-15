@@ -8,14 +8,14 @@
 
 struct LineBlock: DescriptionBlockProtocol {
     
-    let title: String?
+    let label: String?
     
     let value: Value
     
     let type: String
     
-    init<T>(title: String?, value: T) {
-        self.title = title
+    init<T>(label: String?, value: T) {
+        self.label = label
         self.type = "\(Swift.type(of: value as Any))"
         
         if let value = value as? (any DescriptionBlockProtocol) {
@@ -31,9 +31,9 @@ struct LineBlock: DescriptionBlockProtocol {
         }
     }
     
-    init(title: String?, raw: Value) {
+    init(label: String?, raw: Value) {
         self.type = ""
-        self.title = title
+        self.label = label
         self.value = raw
     }
     
@@ -44,10 +44,10 @@ struct LineBlock: DescriptionBlockProtocol {
         environment: _EnvironmentValues
     ) where Target : TextOutputStream {
         var leadingCount = 0
-        if let title {
-            target.write(title)
-            leadingCount += title.count
-            if !title.isEmpty {
+        if let label {
+            target.write(label)
+            leadingCount += label.count
+            if !label.isEmpty {
                 target.write(": ")
                 leadingCount += 2
             }
@@ -117,25 +117,6 @@ struct LineBlock: DescriptionBlockProtocol {
             block._isEmpty(environment: environment)
         default:
             false
-        }
-    }
-    
-    static var empty: LineBlock {
-        LineBlock(title: nil, raw: .none)
-    }
-    
-    func childBlock() -> any DescriptionBlockProtocol {
-        switch value {
-        case .string:
-            fatalError("encountered `String`")
-        case .block(let descriptionBlockProtocol):
-            descriptionBlockProtocol
-        case .customStringConvertible:
-            fatalError("encountered `customStringConvertible`")
-        case .customDetailedStringConvertible(let customDetailedStringConvertible):
-            customDetailedStringConvertible.descriptionBlocks()
-        case .none:
-            fatalError("encountered `none`")
         }
     }
     

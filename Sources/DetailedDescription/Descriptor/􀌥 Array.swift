@@ -23,15 +23,15 @@ extension DetailedDescription.Descriptor {
     /// ```
     ///
     /// - Parameters:
-    ///   - title: The title of the description. When `nil`, the `keyPath` will be used instead.
+    ///   - label: The label of the description. When `nil`, the `keyPath` will be used instead.
     ///   - keyPath: The keyPath to the sequence to be described.
     ///
     /// - SeeAlso: Read [here](<doc:BlockModifiers>) for a list of modifiers that can be attached to the returned block.
     public func sequence<S: Sequence>(
-        _ title: String? = nil,
+        _ label: String? = nil,
         for keyPath: KeyPath<Base, S>
     ) -> any DescriptionBlockProtocol {
-        self.sequence(title ?? keyPath.trailingPath, of: self.base[keyPath: keyPath])
+        self.sequence(label ?? keyPath.trailingPath, of: self.base[keyPath: keyPath])
     }
     
     /// A description for a sequence.
@@ -49,19 +49,19 @@ extension DetailedDescription.Descriptor {
     /// ```
     ///
     /// - Parameters:
-    ///   - title: The title of the description.
+    ///   - label: The label of the description.
     ///   - sequence: The sequence to be described.
     ///
     /// - SeeAlso: Read [here](<doc:BlockModifiers>) for a list of modifiers that can be attached to the returned block.
     public func sequence<S: Sequence>(
-        _ title: String,
+        _ label: String,
         of sequence: S
     ) -> any DescriptionBlockProtocol {
         LineBlock(
-            title: title,
+            label: label,
             value: SequenceBlock(
                 blocks: sequence.map {
-                    LineBlock(title: nil, value: $0)
+                    LineBlock(label: nil, value: $0)
                 }
             )
         )

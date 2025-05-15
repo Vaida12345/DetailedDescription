@@ -61,8 +61,6 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
             
             if let target = target as? FlattenLinesBlock {
                 checking.append(contentsOf: target.lines)
-            } else if let target = (target as? OptionalBlock)?.block {
-                checking.append(target)
             } else {
                 lines.append(target)
             }

@@ -10,7 +10,7 @@ import Foundation
 
 struct ContainerBlock: DescriptionBlockProtocol {
     
-    let title: String?
+    let label: String?
     
     let lines: any DescriptionBlockProtocol
     
@@ -21,8 +21,8 @@ struct ContainerBlock: DescriptionBlockProtocol {
         parent: _ParentInfo = [],
         environment: _EnvironmentValues
     ) where Target : TextOutputStream {
-        if let title {
-            target.write(title)
+        if let label {
+            target.write(label)
         }
         
         guard !lines._isEmpty(environment: environment) else { return }

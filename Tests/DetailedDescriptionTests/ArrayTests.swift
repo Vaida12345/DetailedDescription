@@ -13,14 +13,14 @@ import DetailedDescription
 struct ArrayTestSuit {
     @Test func noIndex() async throws {
         let block = SequenceBlock(blocks: [
-            LineBlock(title: "Hello", value: "you"),
-            LineBlock(title: "Hello", value: "you too"),
-            LineBlock(title: "Hello", value: "you tooo"),
-            LineBlock(title: "Hello", value: "you toooo"),
-            LineBlock(title: "Hello", value: "you tooooo"),
-            LineBlock(title: "Hello", value: "you toooooo"),
-            LineBlock(title: "Hello", value: "you tooooooo"),
-            LineBlock(title: "Hello", value: "you toooooooo"),
+            LineBlock(label: "Hello", value: "you"),
+            LineBlock(label: "Hello", value: "you too"),
+            LineBlock(label: "Hello", value: "you tooo"),
+            LineBlock(label: "Hello", value: "you toooo"),
+            LineBlock(label: "Hello", value: "you tooooo"),
+            LineBlock(label: "Hello", value: "you toooooo"),
+            LineBlock(label: "Hello", value: "you tooooooo"),
+            LineBlock(label: "Hello", value: "you toooooooo"),
         ])
             .hideIndex()
             .hideEmptySequence()
@@ -53,14 +53,14 @@ struct ArrayTestSuit {
     
     @Test func index() async throws {
         let block = SequenceBlock(blocks: [
-            LineBlock(title: "Hello", value: "you"),
-            LineBlock(title: "Hello", value: "you too"),
-            LineBlock(title: "Hello", value: "you tooo"),
-            LineBlock(title: "Hello", value: "you toooo"),
-            LineBlock(title: "Hello", value: "you tooooo"),
-            LineBlock(title: "Hello", value: "you toooooo"),
-            LineBlock(title: "Hello", value: "you tooooooo"),
-            LineBlock(title: "Hello", value: "you toooooooo"),
+            LineBlock(label: "Hello", value: "you"),
+            LineBlock(label: "Hello", value: "you too"),
+            LineBlock(label: "Hello", value: "you tooo"),
+            LineBlock(label: "Hello", value: "you toooo"),
+            LineBlock(label: "Hello", value: "you tooooo"),
+            LineBlock(label: "Hello", value: "you toooooo"),
+            LineBlock(label: "Hello", value: "you tooooooo"),
+            LineBlock(label: "Hello", value: "you toooooooo"),
         ])
             .hideIndex(false)
         
@@ -81,10 +81,10 @@ struct ArrayTestSuit {
     
     @Test func nestedIndex() async throws {
         let block = SequenceBlock(blocks: [
-            LineBlock(title: "Hello", value: "you"),
-            LineBlock(title: "Hello", value: "you too"),
-            LineBlock(title: "Not", raw: .block(ContainerBlock(title: "No", lines: FlattenLinesBlock(lines: [LineBlock(title: "Not", value: "you tooo")])))),
-            LineBlock(title: "Hello", value: "you tooo"),
+            LineBlock(label: "Hello", value: "you"),
+            LineBlock(label: "Hello", value: "you too"),
+            LineBlock(label: "Not", raw: .block(ContainerBlock(label: "No", lines: FlattenLinesBlock(lines: [LineBlock(label: "Not", value: "you tooo")])))),
+            LineBlock(label: "Hello", value: "you tooo"),
         ])
             .hideEmptySequence()
         
@@ -171,16 +171,13 @@ struct ArrayTestSuit {
     
     @Test
     func testFlatten() async throws {
-        let block = descriptor.container {
-            descriptor.forEach(0..<2) { i in
-                descriptor.value("a", of: i)
-            }
+        let block = descriptor.forEach(0..<2) { i in
+            descriptor.value("a", of: i)
         }
         
         let match = """
-        EmptyModel
-         ├─a: 0
-         ╰─a: 1
+         a: 0
+         a: 1
         """
         
         #expect(block.string == match)

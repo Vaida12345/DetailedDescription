@@ -8,6 +8,13 @@
 
 /// A type with a customized textual representation suitable for detailed display & debugging.
 ///
+/// > remark:
+/// > Currently, this protocol does not work on non-`final` `class`.
+/// >
+/// > Users are recommended to create an intermediate wrapper descriptor `struct`.
+/// >
+/// > [read more]()
+///
 /// ## Topics
 /// ### Requirement
 /// Structures only need to implement the following.

@@ -55,7 +55,7 @@ extension Node: CustomDetailedStringConvertible {
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> any DescriptionBlockProtocol {
         descriptor.container("Node<Int>") {
             descriptor.optional(for: \.nextNode)
-            descriptor.optional(for: \.isLeaf)
+            descriptor.optional("isLeaf", of: self.isLeaf)
         }
     }
     
