@@ -38,7 +38,7 @@ public protocol DetailedStringConvertible {
 }
 
 
-@available(*, deprecated, renamed: "DetailedStringConvertible", message: "The protocol has been renamed to a less verbose name.")
+@available(*, unavailable, renamed: "DetailedStringConvertible", message: "The protocol has been renamed to a less verbose name.")
 public protocol CustomDetailedStringConvertible {
 
 }
