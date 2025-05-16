@@ -6,7 +6,7 @@
 //
 
 
-/// A type with a customized textual representation suitable for detailed display & debugging.
+/// A type with a customized textual representation suitable for detailed display & debugging with an additional configuration type.
 ///
 /// > remark:
 /// > Currently, this protocol does not work on non-`final` `class`.
@@ -18,8 +18,8 @@
 /// ## Topics
 /// ### Requirement
 /// Structures only need to implement the following.
-/// - ``detailedDescription(using:)``
-public protocol DetailedStringConvertible {
+/// - ``detailedDescription(using:configuration:)``
+public protocol DetailedStringConvertibleWithConfiguration {
     
     /// Use this function to provide description.
     ///
@@ -29,16 +29,24 @@ public protocol DetailedStringConvertible {
     ///
     /// - Parameters:
     ///   - descriptor: The source of block creation.
+    ///   - configuration: The configuration received.
     ///
     /// - Returns: The built blocks using `descriptor`.
     func detailedDescription(
-        using descriptor: DetailedDescription.Descriptor<Self>
+        using descriptor: DetailedDescription.Descriptor<Self>,
+        configuration: Configuration
     ) -> any DescriptionBlockProtocol
+    
+    
+    /// The configuration type that assists in describing.
+    associatedtype Configuration: Initializable
     
 }
 
 
-@available(*, deprecated, renamed: "DetailedStringConvertible", message: "The protocol has been renamed to a less verbose name.")
-public protocol CustomDetailedStringConvertible {
-
+/// Protocol that can be initialized with default empty parameter.
+public protocol Initializable {
+    
+    init()
+    
 }

@@ -94,3 +94,71 @@ extension DetailedDescription.Descriptor {
     }
     
 }
+
+
+extension DetailedDescription.Descriptor {
+    
+    /// A description for a sequence.
+    ///
+    /// This method is used to describe a sequence.
+    ///
+    /// ```swift
+    /// descriptor.sequence("header", of: [1, 2, 3, 4, 5])
+    /// // header: <5 elements>
+    /// //  ├─[0]: 1
+    /// //  ├─[1]: 2
+    /// //  ├─[2]: 3
+    /// //  ├─[3]: 4
+    /// //  ╰─[4]: 5
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - label: The label of the description. When `nil`, the `keyPath` will be used instead.
+    ///   - keyPath: The keyPath to the sequence to be described.
+    ///   - configuration: The configuration for description.
+    ///
+    /// - SeeAlso: Read [here](<doc:BlockModifiers>) for a list of modifiers that can be attached to the returned block.
+    public func sequence<S: Sequence>(
+        _ label: String? = nil,
+        for keyPath: KeyPath<Base, S>,
+        configuration: S.Element.Configuration
+    ) -> any DescriptionBlockProtocol where S.Element: DetailedStringConvertibleWithConfiguration {
+        self.sequence(label ?? keyPath.trailingPath, of: self.base[keyPath: keyPath], configuration: configuration)
+    }
+    
+    /// A description for a sequence.
+    ///
+    /// This method is used to describe a sequence.
+    ///
+    /// ```swift
+    /// descriptor.sequence("header", of: [1, 2, 3, 4, 5])
+    /// // header: <5 elements>
+    /// //  ├─[0]: 1
+    /// //  ├─[1]: 2
+    /// //  ├─[2]: 3
+    /// //  ├─[3]: 4
+    /// //  ╰─[4]: 5
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - label: The label of the description.
+    ///   - sequence: The sequence to be described.
+    ///   - configuration: The configuration for description.
+    ///
+    /// - SeeAlso: Read [here](<doc:BlockModifiers>) for a list of modifiers that can be attached to the returned block.
+    public func sequence<S: Sequence>(
+        _ label: String,
+        of sequence: S,
+        configuration: S.Element.Configuration
+    ) -> any DescriptionBlockProtocol where S.Element: DetailedStringConvertibleWithConfiguration {
+        LineBlock(
+            label: label,
+            value: SequenceBlock(
+                blocks: sequence.map {
+                    LineBlock(label: nil, value: $0.descriptionBlocks(configuration: configuration))
+                }
+            )
+        )
+    }
+    
+}

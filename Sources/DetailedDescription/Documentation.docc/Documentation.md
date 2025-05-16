@@ -38,7 +38,7 @@ detailedPrint(model)
 `DetailedDescription` uses [Swift Package Manager](https://www.swift.org/documentation/package-manager/) as its build tool. If you want to import in your own project, it's as simple as adding a `dependencies` clause to your `Package.swift`:
 ```swift
 dependencies: [
-    .package(url: "https://www.github.com/Vaida12345/DetailedDescription", branch: "main")
+    .package(url: "https://www.github.com/Vaida12345/DetailedDescription", from: "2.0.0")
 ]
 ```
 and then adding the appropriate module to your target dependencies.
@@ -55,6 +55,7 @@ https://www.github.com/Vaida12345/DetailedDescription
 ### Interface
 
 - ``DetailedStringConvertible``
+- ``DetailedStringConvertibleWithConfiguration``
 
 ### Block Structure
 Use these methods and modifiers to build the resulting blocks.
@@ -67,8 +68,11 @@ Use these methods and modifiers to build the resulting blocks.
 Use the following to retrieve the detailed description.
 - ``DetailedStringConvertible/detailedDescription``
 - ``detailedPrint(_:terminator:)``
+- ``detailedPrint(_:configuration:terminator:)``
 
 
 ### Implementation Details
 - ``DetailedDescription``
 - ``DescriptionBlockProtocol``
+- ``Initializable``
+- ``CustomDetailedStringConvertible``
