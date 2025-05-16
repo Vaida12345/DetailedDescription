@@ -121,7 +121,7 @@ struct ArrayTestSuit {
         
         let match = """
         Model<Array>
-         ├─_array: []
+         ├─_array: <0 elements>
          ╰─count: 3
         """
         
@@ -195,6 +195,38 @@ struct ArrayTestSuit {
         EmptyModel
          ├─a: 0
          ╰─a: 1
+        """
+        
+        #expect(block.string == match)
+    }
+    
+    @Test
+    func testEmptySequence() {
+        let block = descriptor.container {
+            descriptor.constant("a")
+            descriptor.value("b", of: [])
+        }
+        
+        let match = """
+        EmptyModel
+         ├─a
+         ╰─b: <0 elements>
+        """
+        
+        #expect(block.string == match)
+    }
+    
+    @Test
+    func testHideEmptySequence() {
+        let block = descriptor.container {
+            descriptor.constant("a")
+            descriptor.value("b", of: [])
+        }
+        .hideEmptySequence()
+        
+        let match = """
+        EmptyModel
+         ╰─a
         """
         
         #expect(block.string == match)

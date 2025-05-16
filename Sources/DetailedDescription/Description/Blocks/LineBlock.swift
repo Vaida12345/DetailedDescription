@@ -21,9 +21,9 @@ struct LineBlock: DescriptionBlockProtocol {
         if let value = value as? (any DescriptionBlockProtocol) {
             self.value = .block(value)
         } else if let value = value as? (any DetailedStringConvertible) {
-            self.value = .detailedStringConvertible(value)
+            self.value = .block(value.descriptionBlocks())
         } else if let value = value as? (any DetailedStringConvertibleWithConfiguration) {
-            self.value = .detailedStringConvertibleWithConfiguration(value)
+            self.value = .block(value.descriptionBlocks())
         } else if let value = value as? String {
             self.value = .string(value, isString: true)
         } else if let value = value as? CustomStringConvertible {
@@ -89,14 +89,7 @@ struct LineBlock: DescriptionBlockProtocol {
                 }
             }
         case .block(let block):
-            block
-                ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
-        case .detailedStringConvertible(let value):
-            value.descriptionBlocks()
-                ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
-        case .detailedStringConvertibleWithConfiguration(let value):
-            value.descriptionBlocks()
-                ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
+            block._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         case .customStringConvertible(let value):
             target.write(value.description)
             if environment.showType {
@@ -111,8 +104,6 @@ struct LineBlock: DescriptionBlockProtocol {
         case string(String, isString: Bool)
         case block(any DescriptionBlockProtocol)
         case customStringConvertible(any CustomStringConvertible)
-        case detailedStringConvertible(any DetailedStringConvertible)
-        case detailedStringConvertibleWithConfiguration(any DetailedStringConvertibleWithConfiguration)
         case none
     }
     

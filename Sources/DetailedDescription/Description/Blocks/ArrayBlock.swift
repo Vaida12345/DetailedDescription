@@ -40,17 +40,16 @@ struct SequenceBlock: DescriptionBlockProtocol {
             }
             target.write("]")
             return
-        } else if linesCount != 0 {
+        } else {
             if linesCount == 1 {
                 target.write("<\(linesCount) element>")
             } else {
                 target.write("<\(linesCount) elements>")
             }
             
-            target.write("\n")
-        } else {
-            target.write("[]")
-            return
+            if linesCount != 0 {
+                target.write("\n")
+            }
         }
         
         for (index, line) in blocks.enumerated() {
