@@ -28,7 +28,7 @@ extension DetailedDescription.Descriptor {
     ///
     /// - Parameters:
     ///   - label: The label of the description. When `nil`, the `keyPath` will be used instead.
-    ///   - keyPath: The keyPath to the property to be described.
+    ///   - value: The property to be described.
     public func optional<T>(
         _ label: String,
         of value: T?
@@ -64,7 +64,7 @@ extension DetailedDescription.Descriptor {
     ///
     /// - Parameters:
     ///   - label: The label of the description. When `nil`, the `keyPath` will be used instead.
-    ///   - keyPath: The keyPath to the property to be described.
+    ///   - value: The property to be described.
     ///   - configuration: The configuration for description. 
     public func optional<T>(
         _ label: String,
