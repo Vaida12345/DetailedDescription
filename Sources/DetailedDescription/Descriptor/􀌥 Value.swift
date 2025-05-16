@@ -60,7 +60,7 @@ extension DetailedDescription.Descriptor {
     public func value<T>(
         _ label: String? = nil,
         for keyPath: KeyPath<Base, T>,
-        configuration: T.Configuration
+        configuration: T.DescriptionConfiguration
     ) -> any DescriptionBlockProtocol where T: DetailedStringConvertibleWithConfiguration {
         self.value(label ?? keyPath.trailingPath, of: base[keyPath: keyPath], configuration: configuration)
     }
@@ -78,7 +78,7 @@ extension DetailedDescription.Descriptor {
     public func value<T>(
         _ label: String,
         of value: T,
-        configuration: T.Configuration
+        configuration: T.DescriptionConfiguration
     ) -> any DescriptionBlockProtocol where T: DetailedStringConvertibleWithConfiguration {
         LineBlock(label: label, value: value.descriptionBlocks(configuration: configuration))
     }

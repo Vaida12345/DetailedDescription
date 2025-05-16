@@ -53,7 +53,7 @@ extension DetailedDescription.Descriptor {
     public func optional<T>(
         _ label: String? = nil,
         for keyPath: KeyPath<Base, T?>,
-        configuration: T.Configuration
+        configuration: T.DescriptionConfiguration
     ) -> any DescriptionBlockProtocol where T: DetailedStringConvertibleWithConfiguration {
         self.optional(label ?? keyPath.trailingPath, of: base[keyPath: keyPath], configuration: configuration)
     }
@@ -69,7 +69,7 @@ extension DetailedDescription.Descriptor {
     public func optional<T>(
         _ label: String,
         of value: T?,
-        configuration: T.Configuration
+        configuration: T.DescriptionConfiguration
     ) -> any DescriptionBlockProtocol where T: DetailedStringConvertibleWithConfiguration {
         guard let attribute = value else { return OptionalBlock(block: nil) }
         return OptionalBlock(block: LineBlock(label: label, value: attribute.descriptionBlocks(configuration: configuration)))

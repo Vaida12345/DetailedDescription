@@ -121,7 +121,7 @@ extension DetailedDescription.Descriptor {
     public func sequence<S: Sequence>(
         _ label: String? = nil,
         for keyPath: KeyPath<Base, S>,
-        configuration: S.Element.Configuration
+        configuration: S.Element.DescriptionConfiguration
     ) -> any DescriptionBlockProtocol where S.Element: DetailedStringConvertibleWithConfiguration {
         self.sequence(label ?? keyPath.trailingPath, of: self.base[keyPath: keyPath], configuration: configuration)
     }
@@ -149,7 +149,7 @@ extension DetailedDescription.Descriptor {
     public func sequence<S: Sequence>(
         _ label: String,
         of sequence: S,
-        configuration: S.Element.Configuration
+        configuration: S.Element.DescriptionConfiguration
     ) -> any DescriptionBlockProtocol where S.Element: DetailedStringConvertibleWithConfiguration {
         LineBlock(
             label: label,

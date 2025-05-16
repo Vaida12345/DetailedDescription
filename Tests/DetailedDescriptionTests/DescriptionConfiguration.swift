@@ -1,5 +1,5 @@
 //
-//  Configuration.swift
+//  DescriptionConfiguration.swift
 //  DetailedDescription
 //
 //  Created by Vaida on 2025-05-16.
@@ -16,7 +16,7 @@ struct ConfigurationTests {
         
         func detailedDescription(
             using descriptor: DetailedDescription.Descriptor<ConfigurationTests.Model>,
-            configuration: Configuration
+            configuration: DescriptionConfiguration
         ) -> any DescriptionBlockProtocol {
             descriptor.container {
                 if configuration == .a {
@@ -28,7 +28,7 @@ struct ConfigurationTests {
         }
         
         
-        enum Configuration: Initializable {
+        enum DescriptionConfiguration: Initializable {
             case a
             case b
             case none

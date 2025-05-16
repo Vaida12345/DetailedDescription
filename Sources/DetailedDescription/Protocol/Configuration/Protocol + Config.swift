@@ -34,12 +34,12 @@ public protocol DetailedStringConvertibleWithConfiguration {
     /// - Returns: The built blocks using `descriptor`.
     func detailedDescription(
         using descriptor: DetailedDescription.Descriptor<Self>,
-        configuration: Configuration
+        configuration: DescriptionConfiguration
     ) -> any DescriptionBlockProtocol
     
     
     /// The configuration type that assists in describing.
-    associatedtype Configuration: Initializable
+    associatedtype DescriptionConfiguration: Initializable
     
 }
 
@@ -47,6 +47,7 @@ public protocol DetailedStringConvertibleWithConfiguration {
 /// Protocol that can be initialized with default empty parameter.
 public protocol Initializable {
     
+    /// The default initializer.
     init()
     
 }

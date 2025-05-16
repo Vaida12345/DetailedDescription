@@ -1,12 +1,12 @@
 //
-//  Configuration.swift
+//  DescriptionConfiguration.swift
 //  
 //
 //  Created by Vaida on 7/12/24.
 //
 
 
-/// Configuration, but only pass down one level.
+/// DescriptionConfiguration, but only pass down one level.
 public struct _ParentInfo: OptionSet, Sendable {
     
     public let rawValue: UInt

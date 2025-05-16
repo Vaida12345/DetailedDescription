@@ -8,7 +8,7 @@
 public extension DetailedStringConvertibleWithConfiguration {
     
     /// Use this property to access the detailed description of a ``DetailedStringConvertible``.
-    func detailedDescription(configuration: Configuration = Configuration()) -> String {
+    func detailedDescription(configuration: DescriptionConfiguration = DescriptionConfiguration()) -> String {
         let descriptor = DetailedDescription.Descriptor(base: self)
         let descriptions = self.detailedDescription(using: descriptor, configuration: configuration)
         return descriptions.string
@@ -18,11 +18,11 @@ public extension DetailedStringConvertibleWithConfiguration {
     /// The blocks for debugging use.
     internal func descriptionBlocks() -> any DescriptionBlockProtocol {
         let descriptor = DetailedDescription.Descriptor(base: self)
-        return self.detailedDescription(using: descriptor, configuration: Configuration())
+        return self.detailedDescription(using: descriptor, configuration: DescriptionConfiguration())
     }
     
     /// The blocks for debugging use.
-    internal func descriptionBlocks(configuration: Configuration) -> any DescriptionBlockProtocol {
+    internal func descriptionBlocks(configuration: DescriptionConfiguration) -> any DescriptionBlockProtocol {
         let descriptor = DetailedDescription.Descriptor(base: self)
         return self.detailedDescription(using: descriptor, configuration: configuration)
     }
