@@ -38,7 +38,7 @@ detailedPrint(model)
 `DetailedDescription` uses [Swift Package Manager](https://www.swift.org/documentation/package-manager/) as its build tool. If you want to import in your own project, it's as simple as adding a `dependencies` clause to your `Package.swift`:
 ```swift
 dependencies: [
-    .package(url: "https://www.github.com/Vaida12345/DetailedDescription", from: "2.0.0")
+    .package(url: "https://www.github.com/Vaida12345/DetailedDescription", from: "2.0.2")
 ]
 ```
 and then adding the appropriate module to your target dependencies.
