@@ -6,17 +6,10 @@
 //
 
 
-struct EnvironmentKey: RawRepresentable, Hashable {
+protocol EnvironmentKey {
     
-    var rawValue: UInt64
+    static var defaultValue: Self.Value { get }
     
-    
-    init(rawValue: UInt64) {
-        self.rawValue = rawValue
-    }
-    
-    init(high: UInt64, low: UInt64) {
-        self.init(rawValue: high << 32 | low)
-    }
+    associatedtype Value: Sendable
     
 }

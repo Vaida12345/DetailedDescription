@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension Array: CustomDetailedStringConvertible {
+extension Array: DetailedStringConvertible {
     
     public func detailedDescription(using descriptor: DetailedDescription.Descriptor<Array<Element>>) -> any DescriptionBlockProtocol {
         descriptor.sequence("", for: \.self)

@@ -18,7 +18,7 @@ class NonFinalModel {
 }
 
 
-struct NonFinalModelDescriptor: CustomDetailedStringConvertible {
+struct NonFinalModelDescriptor: DetailedStringConvertible {
     
     let model: NonFinalModel
     

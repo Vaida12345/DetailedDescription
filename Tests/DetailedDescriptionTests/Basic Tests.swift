@@ -10,7 +10,7 @@ import Testing
 @testable 
 import DetailedDescription
 
-struct Model: CustomDetailedStringConvertible {
+struct Model: DetailedStringConvertible {
     
     let name: String
     
@@ -28,7 +28,7 @@ struct Model: CustomDetailedStringConvertible {
     }
 }
 
-struct BasicModel: CustomDetailedStringConvertible {
+struct BasicModel: DetailedStringConvertible {
     
     let name: String
     
@@ -43,7 +43,7 @@ struct BasicModel: CustomDetailedStringConvertible {
     
 }
 
-struct EmptyModel: CustomDetailedStringConvertible {
+struct EmptyModel: DetailedStringConvertible {
     
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<EmptyModel>) -> any DescriptionBlockProtocol {
         descriptor.container("Model<T>") {

@@ -19,7 +19,7 @@
 /// ### Requirement
 /// Structures only need to implement the following.
 /// - ``detailedDescription(using:)``
-public protocol CustomDetailedStringConvertible {
+public protocol DetailedStringConvertible {
     
     /// Use this function to provide description.
     ///
@@ -33,4 +33,10 @@ public protocol CustomDetailedStringConvertible {
     /// - Returns: The built blocks using `descriptor`.
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Self>) -> any DescriptionBlockProtocol
     
+}
+
+
+@available(*, deprecated, renamed: "DetailedStringConvertible", message: "The protocol has been renamed to a less verbose name.")
+public protocol CustomDetailedStringConvertible {
+
 }

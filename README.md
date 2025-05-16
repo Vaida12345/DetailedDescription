@@ -2,12 +2,12 @@ A package to provide detailed description of any structure.
 
 ## Overview
 
-``CustomDetailedStringConvertible`` serves as an alternative to `Mirror`. This protocol describes the details to types confirming to ``CustomDetailedStringConvertible`` without exposing implementation details of Swift Foundation structures that `Mirror` would.
+``DetailedStringConvertible`` serves as an alternative to `Mirror`. This protocol describes the details to types confirming to ``DetailedStringConvertible`` without exposing implementation details of Swift Foundation structures that `Mirror` would.
 
-To use this package, your structure needs to conform to the ``CustomDetailedStringConvertible`` protocol.
+To use this package, your structure needs to conform to the ``DetailedStringConvertible`` protocol.
 
 ```swift
-struct BasicModel: CustomDetailedStringConvertible {
+struct BasicModel: DetailedStringConvertible {
 
     let name: String
 
@@ -60,7 +60,7 @@ Arguably the best use case is when dealing with recursive structures.
 
 | Definition | Result |
 | ---------- | ------ |
-| <pre lang="swift">struct SCNNodeDescriptor: CustomDetailedStringConvertible {&#13;    &#13;    let node: SCNNode&#13;    &#13;    func detailedDescription(&#13;        using descriptor: DetailedDescription.Descriptor<SCNNodeDescriptor>&#13;    ) -> any DescriptionBlockProtocol {&#13;        descriptor.container {&#13;            descriptor.value("name", of: node.name)&#13;            descriptor.sequence("children", &#13;                       of: node.childNodes.map(SCNNodeDescriptor.init)&#13;            )&#13;        }&#13;    }&#13;    &#13;}</pre> | <pre>SCNNodeDescriptor&#13; ├─name: nil&#13; ╰─children: <1 element>&#13;   ╰─[0]: SCNNodeDescriptor&#13;          ├─name: "scene"&#13;          ╰─children: <1 element>&#13;            ╰─[0]: SCNNodeDescriptor&#13;                   ├─name: "Meshes"&#13;                   ╰─children: ...</pre> |
+| <pre lang="swift">struct SCNNodeDescriptor: DetailedStringConvertible {&#13;    &#13;    let node: SCNNode&#13;    &#13;    func detailedDescription(&#13;        using descriptor: DetailedDescription.Descriptor<SCNNodeDescriptor>&#13;    ) -> any DescriptionBlockProtocol {&#13;        descriptor.container {&#13;            descriptor.value("name", of: node.name)&#13;            descriptor.sequence("children", &#13;                       of: node.childNodes.map(SCNNodeDescriptor.init)&#13;            )&#13;        }&#13;    }&#13;    &#13;}</pre> | <pre>SCNNodeDescriptor&#13; ├─name: nil&#13; ╰─children: <1 element>&#13;   ╰─[0]: SCNNodeDescriptor&#13;          ├─name: "scene"&#13;          ╰─children: <1 element>&#13;            ╰─[0]: SCNNodeDescriptor&#13;                   ├─name: "Meshes"&#13;                   ╰─children: ...</pre> |
 
 With the above definition, you can now inspect a complex `SCNNode` by `detailedPrint(SCNNodeDescriptor(node: node))`.
 
@@ -111,7 +111,7 @@ descriptor.container("CGPDFArray") {
 The [`container`](https://vaida12345.github.io/DetailedDescription/documentation/detaileddescription/detaileddescription/descriptor/container(_:showtype:blocks:)) comes with ways to configure how you want to describe the children, including `showType`.
 
 ```swift
-struct BasicModel: CustomDetailedStringConvertible {
+struct BasicModel: DetailedStringConvertible {
     
     let name: String
     

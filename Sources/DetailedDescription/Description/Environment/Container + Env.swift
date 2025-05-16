@@ -5,15 +5,16 @@
 //  Created by Vaida on 2025-05-15.
 //
 
-private extension EnvironmentKey {
-    static let showType = EnvironmentKey(high: 2, low: 1)
+private struct ShowTypeEnvironmentKey: EnvironmentKey {
+    static let defaultValue: Bool = false
 }
 
 
 extension _EnvironmentValues {
     
     var showType: Bool {
-        contents[.showType] as? Bool ?? false
+        get { self[ShowTypeEnvironmentKey.self] }
+        set { self[ShowTypeEnvironmentKey.self] = newValue }
     }
     
 }
@@ -44,7 +45,7 @@ public extension DescriptionBlockProtocol {
     /// //  ╰─name: "dog" <String>
     /// ```
     func showType(_ bool: Bool = true) -> any DescriptionBlockProtocol {
-        self.environment(.showType, value: bool)
+        self.environment(ShowTypeEnvironmentKey.self, value: bool)
     }
     
 }

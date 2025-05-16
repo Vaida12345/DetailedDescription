@@ -4,12 +4,12 @@ A package to provide detailed description of any structure.
 
 ## Overview
 
-``CustomDetailedStringConvertible`` serves as an alternative to `Mirror`. This protocol describes the details to types confirming to ``CustomDetailedStringConvertible`` without exposing implementation details of Swift Foundation structures that `Mirror` would.
+``DetailedStringConvertible`` serves as an alternative to `Mirror`. This protocol describes the details to types confirming to ``DetailedStringConvertible`` without exposing implementation details of Swift Foundation structures that `Mirror` would.
 
-To use this package, your structure needs to conform to the ``CustomDetailedStringConvertible`` protocol.
+To use this package, your structure needs to conform to the ``DetailedStringConvertible`` protocol.
 
 ```swift
-struct BasicModel: CustomDetailedStringConvertible {
+struct BasicModel: DetailedStringConvertible {
 
     let name: String
 
@@ -54,7 +54,7 @@ https://www.github.com/Vaida12345/DetailedDescription
 
 ### Interface
 
-- ``CustomDetailedStringConvertible``
+- ``DetailedStringConvertible``
 
 ### Block Structure
 Use these methods and modifiers to build the resulting blocks.
@@ -65,7 +65,7 @@ Use these methods and modifiers to build the resulting blocks.
 
 ### Description
 Use the following to retrieve the detailed description.
-- ``CustomDetailedStringConvertible/detailedDescription``
+- ``DetailedStringConvertible/detailedDescription``
 - ``detailedPrint(_:terminator:)``
 
 

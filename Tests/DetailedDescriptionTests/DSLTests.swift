@@ -10,7 +10,7 @@ import Testing
 import DetailedDescription
 
 
-struct LoopModel: CustomDetailedStringConvertible {
+struct LoopModel: DetailedStringConvertible {
     
     let dictionary: [String : String]
     

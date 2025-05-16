@@ -8,7 +8,7 @@ The methods to construct building blocks.
 Uses these methods of ``DetailedDescription/Descriptor`` to build ``DescriptionBlockProtocol``, the return value required for ``DetailedDescription/Builder``.
 
 ```swift
-struct BasicModel: CustomDetailedStringConvertible {
+struct BasicModel: DetailedStringConvertible {
 
     let name: String
 

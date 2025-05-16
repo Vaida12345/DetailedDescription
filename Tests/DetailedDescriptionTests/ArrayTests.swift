@@ -100,7 +100,7 @@ struct ArrayTestSuit {
         #expect(block.string == match)
     }
     
-    struct Model: CustomDetailedStringConvertible {
+    struct Model: DetailedStringConvertible {
         
         let array: [Int]
         
@@ -144,7 +144,7 @@ struct ArrayTestSuit {
         #expect(match == model.detailedDescription)
     }
     
-    struct LoopModel: CustomDetailedStringConvertible {
+    struct LoopModel: DetailedStringConvertible {
         
         let dictionary: [String : String]
         

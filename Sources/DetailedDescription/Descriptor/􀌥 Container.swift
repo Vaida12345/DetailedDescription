@@ -10,7 +10,7 @@ extension DetailedDescription.Descriptor {
     
     /// Creates a new hierarchy.
     ///
-    /// This method is usually used as first line in ``CustomDetailedStringConvertible/detailedDescription(using:)``. However, it can also be used to create new hierarchies.
+    /// This method is usually used as first line in ``DetailedStringConvertible/detailedDescription(using:)``. However, it can also be used to create new hierarchies.
     ///
     /// ```swift
     /// descriptor.container("Model") {

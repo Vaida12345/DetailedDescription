@@ -20,8 +20,8 @@ struct LineBlock: DescriptionBlockProtocol {
         
         if let value = value as? (any DescriptionBlockProtocol) {
             self.value = .block(value)
-        } else if let value = value as? (any CustomDetailedStringConvertible) {
-            self.value = .customDetailedStringConvertible(value)
+        } else if let value = value as? (any DetailedStringConvertible) {
+            self.value = .detailedStringConvertible(value)
         } else if let value = value as? String {
             self.value = .string(value, isString: true)
         } else if let value = value as? CustomStringConvertible {
@@ -88,7 +88,7 @@ struct LineBlock: DescriptionBlockProtocol {
             }
         case .block(let block):
             block._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
-        case .customDetailedStringConvertible(let value):
+        case .detailedStringConvertible(let value):
             value.descriptionBlocks()._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         case .customStringConvertible(let value):
             target.write(value.description)
@@ -104,7 +104,7 @@ struct LineBlock: DescriptionBlockProtocol {
         case string(String, isString: Bool)
         case block(any DescriptionBlockProtocol)
         case customStringConvertible(any CustomStringConvertible)
-        case customDetailedStringConvertible(any CustomDetailedStringConvertible)
+        case detailedStringConvertible(any DetailedStringConvertible)
         case none
     }
     

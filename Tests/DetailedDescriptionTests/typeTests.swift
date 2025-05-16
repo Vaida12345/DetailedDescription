@@ -40,7 +40,7 @@ struct TypeTestSuit {
         #expect(model.detailedDescription == match)
     }
     
-    struct BasicModel: CustomDetailedStringConvertible {
+    struct BasicModel: DetailedStringConvertible {
         
         let name: String
         
@@ -61,7 +61,7 @@ struct TypeTestSuit {
         
     }
     
-    struct BasicModel2: CustomDetailedStringConvertible {
+    struct BasicModel2: DetailedStringConvertible {
         
         let name: String
         

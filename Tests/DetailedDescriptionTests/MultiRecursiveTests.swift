@@ -44,7 +44,7 @@ private let node = Node.node([
 ])
 
 
-extension Node: CustomDetailedStringConvertible {
+extension Node: DetailedStringConvertible {
     
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<Node>) -> any DescriptionBlockProtocol {
         descriptor.container {

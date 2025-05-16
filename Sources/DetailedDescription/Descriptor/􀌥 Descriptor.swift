@@ -31,7 +31,7 @@ extension DetailedDescription {
     ///
     /// ### ForEach
     /// - ``DetailedDescription/Descriptor/forEach(_:blocks:)``
-    public struct Descriptor<Base> where Base: CustomDetailedStringConvertible {
+    public struct Descriptor<Base> where Base: DetailedStringConvertible {
         
         let base: Base
         
