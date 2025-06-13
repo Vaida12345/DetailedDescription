@@ -10,6 +10,9 @@ struct SequenceBlock: DescriptionBlockProtocol {
     
     let blocks: [LineBlock]
     
+    var _detachedChildren: [any DescriptionBlockProtocol]? {
+        nil
+    }
     
     func _isEmpty(environment: _EnvironmentValues) -> Bool {
         environment.hideEmptySequence && blocks.allSatisfy({ $0._isEmpty(environment: environment) })

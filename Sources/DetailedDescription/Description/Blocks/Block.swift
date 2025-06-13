@@ -39,6 +39,8 @@ public protocol DescriptionBlockProtocol {
     /// Empty blocks will not be rendered.
     func _isEmpty(environment: _EnvironmentValues) -> Bool
     
+    var _detachedChildren: [any DescriptionBlockProtocol]? { get }
+    
 }
 
 

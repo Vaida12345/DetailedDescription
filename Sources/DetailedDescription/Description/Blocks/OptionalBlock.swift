@@ -10,6 +10,9 @@ struct OptionalBlock: DescriptionBlockProtocol {
     
     let block: (any DescriptionBlockProtocol)?
     
+    var _detachedChildren: [any DescriptionBlockProtocol]? {
+        self.block?._detachedChildren
+    }
     
     func _detailedWrite<Target>(
         to target: inout Target,

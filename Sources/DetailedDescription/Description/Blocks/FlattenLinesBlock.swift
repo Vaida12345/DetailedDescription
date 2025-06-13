@@ -10,6 +10,10 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
     
     let lines: [any DescriptionBlockProtocol]
     
+    var _detachedChildren: [any DescriptionBlockProtocol]? {
+        lines
+    }
+    
     func _isEmpty(environment: _EnvironmentValues) -> Bool {
         lines.allSatisfy { $0._isEmpty(environment: environment) }
     }
@@ -59,8 +63,8 @@ struct FlattenLinesBlock: DescriptionBlockProtocol {
         while i < checking.count {
             let target = checking[i]
             
-            if let target = target as? FlattenLinesBlock {
-                checking.append(contentsOf: target.lines)
+            if let lines = target._detachedChildren {
+                checking.append(contentsOf: lines)
             } else {
                 lines.append(target)
             }

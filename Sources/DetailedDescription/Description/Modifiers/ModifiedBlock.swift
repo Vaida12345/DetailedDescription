@@ -12,6 +12,9 @@ struct ModifiedBlock: DescriptionBlockProtocol {
     
     let environment: _EnvironmentValues
     
+    var _detachedChildren: [any DescriptionBlockProtocol]? {
+        self.block._detachedChildren
+    }
     
     init(block: any DescriptionBlockProtocol, environment: _EnvironmentValues = _EnvironmentValues()) {
         self.block = block

@@ -76,7 +76,16 @@ struct MultiArray: DetailedStringConvertible {
         ])
     ])
     
-    #expect(model.detailedDescription == "match")
+    let reference = """
+    MultiArray
+     ├─MultiArray
+     │ ╰─MultiArray
+     │   ╰─leaf
+     ╰─MultiArray
+       ╰─leaf
+    """
+    
+    #expect(model.detailedDescription == reference)
 }
 
 
@@ -101,5 +110,13 @@ struct ForEachMultiArray: DetailedStringConvertible {
 
 @Test func DSLForEach() async throws {
     let model = ForEachMultiArray(children: [1, 2, 3, 4, 5])
-    #expect(model.detailedDescription == "")
+    let expected = """
+        ForEachMultiArray
+         ├─1
+         ├─2
+         ├─3
+         ├─4
+         ╰─5
+        """
+    #expect(model.detailedDescription == expected)
 }

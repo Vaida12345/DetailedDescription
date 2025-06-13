@@ -14,6 +14,10 @@ struct ContainerBlock: DescriptionBlockProtocol {
     
     let lines: any DescriptionBlockProtocol
     
+    var _detachedChildren: [any DescriptionBlockProtocol]? {
+        nil
+    }
+    
     
     func _detailedWrite<Target>(
         to target: inout Target,
