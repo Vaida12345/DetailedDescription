@@ -19,7 +19,7 @@
 /// ### Requirement
 /// Structures only need to implement the following.
 /// - ``detailedDescription(using:configuration:)``
-public protocol DetailedStringConvertibleWithConfiguration {
+public protocol DetailedStringConvertibleWithConfiguration<DescriptionConfiguration> {
     
     /// Use this function to provide description.
     ///

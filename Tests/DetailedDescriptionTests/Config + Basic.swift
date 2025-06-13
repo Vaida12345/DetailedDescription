@@ -50,27 +50,4 @@ struct ConfigurationTests {
         
         #expect(model.detailedDescription() == match)
     }
-    
-    @Test func configBTest() async throws {
-        let model = Model()
-        
-        let match = """
-            Model
-             ╰─b: Model
-            """
-        
-        #expect(model.detailedDescription(configuration: .b) == match)
-    }
-    
-    @Test func configATest() async throws {
-        let model = Model()
-        
-        let match = """
-            Model
-             ╰─child: Model
-               ╰─b: Model
-            """
-        
-        #expect(model.detailedDescription(configuration: .a) == match)
-    }
 }

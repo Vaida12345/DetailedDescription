@@ -11,6 +11,7 @@ public extension DetailedStringConvertibleWithConfiguration {
     func detailedDescription(configuration: DescriptionConfiguration = DescriptionConfiguration()) -> String {
         let descriptor = DetailedDescription.Descriptor(base: self)
         let descriptions = self.detailedDescription(using: descriptor, configuration: configuration)
+            .environment(DescriptionConfiguration.self, value: configuration)
         return descriptions.string
     }
     

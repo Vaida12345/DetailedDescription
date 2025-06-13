@@ -20,9 +20,9 @@ struct LineBlock: DescriptionBlockProtocol {
         
         if let value = value as? (any DescriptionBlockProtocol) {
             self.value = .block(value)
+        }  else if let value = value as? (any DetailedStringConvertibleWithConfiguration) {
+            self.value = .configurable(value)
         } else if let value = value as? (any DetailedStringConvertible) {
-            self.value = .block(value.descriptionBlocks())
-        } else if let value = value as? (any DetailedStringConvertibleWithConfiguration) {
             self.value = .block(value.descriptionBlocks())
         } else if let value = value as? String {
             self.value = .string(value, isString: true)
@@ -95,8 +95,16 @@ struct LineBlock: DescriptionBlockProtocol {
             if environment.showType {
                 target.write(" <\(type)>")
             }
-        case .none:
-            fatalError("Should never evoke")
+        case .configurable(let descriptor):
+            func handle<T: DetailedStringConvertibleWithConfiguration>(configurable: T) {
+                let configurationType = T.DescriptionConfiguration.self
+                let configuration = environment.configuration(for: configurationType)
+                
+                configurable.descriptionBlocks(configuration: configuration)
+                    ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
+            }
+            
+            handle(configurable: descriptor)
         }
     }
     
@@ -104,14 +112,12 @@ struct LineBlock: DescriptionBlockProtocol {
         case string(String, isString: Bool)
         case block(any DescriptionBlockProtocol)
         case customStringConvertible(any CustomStringConvertible)
-        case none
+        case configurable(any DetailedStringConvertibleWithConfiguration)
     }
     
     
     func _isEmpty(environment: _EnvironmentValues) -> Bool {
         switch value {
-        case .none:
-            true
         case let .block(block):
             block._isEmpty(environment: environment)
         default:
