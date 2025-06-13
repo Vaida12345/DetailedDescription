@@ -20,10 +20,10 @@ struct LineBlock: DescriptionBlockProtocol {
         
         if let value = value as? (any DescriptionBlockProtocol) {
             self.value = .block(value)
-        }  else if let value = value as? (any DetailedStringConvertibleWithConfiguration) {
+        } else if let value = value as? (any DetailedStringConvertibleWithConfiguration) {
             self.value = .configurable(value)
         } else if let value = value as? (any DetailedStringConvertible) {
-            self.value = .block(value.descriptionBlocks())
+            self.value = .detailedString(value)
         } else if let value = value as? String {
             self.value = .string(value, isString: true)
         } else if let value = value as? CustomStringConvertible {
@@ -90,21 +90,17 @@ struct LineBlock: DescriptionBlockProtocol {
             }
         case .block(let block):
             block._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
+        case .detailedString(let descriptor):
+            descriptor.descriptionBlocks()
+                ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         case .customStringConvertible(let value):
             target.write(value.description)
             if environment.showType {
                 target.write(" <\(type)>")
             }
         case .configurable(let descriptor):
-            func handle<T: DetailedStringConvertibleWithConfiguration>(configurable: T) {
-                let configurationType = T.DescriptionConfiguration.self
-                let configuration = environment.configuration(for: configurationType)
-                
-                configurable.descriptionBlocks(configuration: configuration)
-                    ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
-            }
-            
-            handle(configurable: descriptor)
+            handle(configurable: descriptor, environment: environment)
+                ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         }
     }
     
@@ -113,6 +109,14 @@ struct LineBlock: DescriptionBlockProtocol {
         case block(any DescriptionBlockProtocol)
         case customStringConvertible(any CustomStringConvertible)
         case configurable(any DetailedStringConvertibleWithConfiguration)
+        case detailedString(any DetailedStringConvertible)
+    }
+    
+    func handle<T: DetailedStringConvertibleWithConfiguration>(configurable: T, environment: _EnvironmentValues) -> any DescriptionBlockProtocol {
+        let configurationType = T.DescriptionConfiguration.self
+        let configuration = environment.configuration(for: configurationType)
+        
+        return configurable.descriptionBlocks(configuration: configuration)
     }
     
     
@@ -120,6 +124,10 @@ struct LineBlock: DescriptionBlockProtocol {
         switch value {
         case let .block(block):
             block._isEmpty(environment: environment)
+        case .configurable(let descriptor):
+            handle(configurable: descriptor, environment: environment)._isEmpty(environment: environment)
+        case .detailedString(let descriptor):
+            descriptor.descriptionBlocks()._isEmpty(environment: environment)
         default:
             false
         }

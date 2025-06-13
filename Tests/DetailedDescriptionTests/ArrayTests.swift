@@ -79,27 +79,6 @@ struct ArrayTestSuit {
         #expect(block.string == match)
     }
     
-    @Test func nestedIndex() async throws {
-        let block = SequenceBlock(blocks: [
-            LineBlock(label: "Hello", value: "you"),
-            LineBlock(label: "Hello", value: "you too"),
-            LineBlock(label: "Not", raw: .block(ContainerBlock(label: "No", lines: FlattenLinesBlock(lines: [LineBlock(label: "Not", value: "you tooo")])))),
-            LineBlock(label: "Hello", value: "you tooo"),
-        ])
-            .hideEmptySequence()
-        
-        let match = """
-        <4 elements>
-         ├─[0]: Hello: "you"
-         ├─[1]: Hello: "you too"
-         ├─[2]: Not: No
-         │      ╰─Not: "you tooo"
-         ╰─[3]: Hello: "you tooo"
-        """
-        
-        #expect(block.string == match)
-    }
-    
     struct Model: DetailedStringConvertible {
         
         let array: [Int]

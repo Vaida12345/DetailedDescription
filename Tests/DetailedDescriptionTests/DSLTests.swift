@@ -44,3 +44,62 @@ struct LoopModel: DetailedStringConvertible {
 }
 
 
+struct MultiArray: DetailedStringConvertible {
+    
+    let show: Bool
+    let children: [MultiArray]
+    
+    
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<MultiArray>) -> any DescriptionBlockProtocol {
+        descriptor.container {
+            if show {
+                for child in children {
+                    descriptor.value("", of: child)
+                }
+            } else {
+                descriptor.constant("leaf")
+            }
+        }
+    }
+    
+}
+
+
+@Test func DSLRecursive() async throws {
+    let model = MultiArray(show: true, children: [
+        MultiArray(show: true, children: [
+            MultiArray(show: false, children: [])
+        ]),
+        MultiArray(show: false, children: [
+            MultiArray(show: false, children: [])
+        ])
+    ])
+    
+    #expect(model.detailedDescription == "match")
+}
+
+
+struct ForEachMultiArray: DetailedStringConvertible {
+    
+    let children: [Int]
+    
+    
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<ForEachMultiArray>) -> any DescriptionBlockProtocol {
+        descriptor.container {
+            if true {
+                for child in children {
+                    descriptor.value("", of: child)
+                }
+            }
+        }
+    }
+    
+}
+
+
+@Test func DSLForEach() async throws {
+    let model = ForEachMultiArray(children: [1, 2, 3, 4, 5])
+    #expect(model.detailedDescription == "")
+}
