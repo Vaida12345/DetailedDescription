@@ -98,7 +98,17 @@ struct LineBlock: DescriptionBlockProtocol {
             descriptor.descriptionBlocks()
                 ._detailedWrite(to: &target, trivia: trivia, parent: [], environment: environment)
         case .customStringConvertible(let value):
-            target.write(value.description)
+            let components = value.description.components(separatedBy: .newlines)
+            for (offset, line) in components.enumerated() {
+                if offset != 0 {
+                    target.write(trivia.map(\.symbol).joined())
+                    target.write(String(repeating: " ", count: leadingCount))
+                }
+                target.write(line)
+                if offset != components.count - 1 {
+                    target.write("\n")
+                }
+            }
             if environment.showType {
                 target.write(" <\(type)>")
             }
