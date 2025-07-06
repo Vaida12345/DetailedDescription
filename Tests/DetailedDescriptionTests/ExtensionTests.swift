@@ -15,7 +15,15 @@ import DetailedDescription
     
     @Test func optionalSome() {
         let model: Model? = Model(name: "123", age: 123)
-        #expect(model.detailedDescription == Model(name: "123", age: 123).detailedDescription)
+        let match = """
+        Optional
+         ╰─Model<T>
+           ├─details
+           │ ├─name: "123"
+           │ ╰─age: 123
+           ╰─the end
+        """
+        #expect(model.detailedDescription == match)
     }
     
     @Test func optionalNone() {
