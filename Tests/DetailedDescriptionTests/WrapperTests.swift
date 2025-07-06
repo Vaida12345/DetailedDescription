@@ -45,3 +45,30 @@ func testNonFinalModelWrapper() {
     #expect(descriptor.detailedDescription == match)
     
 }
+
+
+
+struct Wrapper<Value>: DetailedStringConvertible {
+    
+    let value: Value
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<Wrapper<Value>>) -> any DescriptionBlockProtocol {
+        descriptor.value(for: \.value)
+    }
+    
+}
+
+
+@Suite struct WrapperTests {
+    
+    @Test func any() {
+        let value: Any = "Hello, World!"
+        #expect(Wrapper(value: value).detailedDescription == "value: \"Hello, World!\"")
+    }
+    
+    @Test func NSDate() {
+        let value: Any = Date(timeIntervalSince1970: 0) as NSDate
+        #expect(Wrapper(value: value).detailedDescription == "value: \(value as! Date)")
+    }
+    
+}
