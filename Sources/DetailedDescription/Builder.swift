@@ -28,7 +28,7 @@ extension DetailedDescription {
             ModifiedBlock(block: component)
         }
         
-        public static func buildOptional(_ component: (any DescriptionBlockProtocol)?) -> any DescriptionBlockProtocol {
+        public static func buildIf(_ component: (any DescriptionBlockProtocol)?) -> any DescriptionBlockProtocol {
             OptionalBlock(block: component)
         }
         

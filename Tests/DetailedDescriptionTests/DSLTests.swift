@@ -120,3 +120,28 @@ struct ForEachMultiArray: DetailedStringConvertible {
         """
     #expect(model.detailedDescription == expected)
 }
+
+
+struct FlatModel: DetailedStringConvertible {
+    
+    func detailedDescription(using descriptor: DetailedDescription.Descriptor<FlatModel>) -> any DescriptionBlockProtocol {
+        descriptor.container {
+            if true {
+                descriptor.constant("123")
+            }
+            descriptor.constant("456")
+        }
+    }
+}
+
+
+@Test(.disabled("Order is wrong")) func testFlatModel() async throws {
+    let model = FlatModel()
+    let expected = """
+        FlatModel
+         ├─123
+         ╰─456
+        """
+    dump(model.descriptionBlocks())
+    #expect(model.detailedDescription == expected)
+}

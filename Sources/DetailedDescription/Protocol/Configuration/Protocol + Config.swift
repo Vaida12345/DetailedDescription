@@ -15,6 +15,11 @@
 /// >
 /// > [read more](https://github.com/Vaida12345/DetailedDescription/issues/1)
 ///
+/// > Tip:
+/// > To store a configuration in the environment, use ``DescriptionBlockProtocol/configuration(_:)`` modifier.
+/// >
+/// > Any block that can adopt the configuration will use the configuration.
+///
 /// ## Topics
 /// ### Requirement
 /// Structures only need to implement the following.
