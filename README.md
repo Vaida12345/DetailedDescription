@@ -54,6 +54,19 @@ Full Documentation in DocC. [View on Github Pages](https://vaida12345.github.io/
 
 ## More Examples
 
+### Configuration
+
+You can pass options to a `DetailedStringConvertibleWithConfiguration`, for example, [FinderItem](https://github.com/Vaida12345/FinderItem) adopts this protocol, enabling you to pass different options when printing.
+
+```swift
+import DetailedDescription
+
+let item = FinderItem(at: "/Users/vaida/Desktop/file.mid")
+detailedPrint(item, configuration: .showFileSize)
+// file.mid [25 kB]
+```
+
+
 ### Recursive
 
 Arguably the best use case is when dealing with recursive structures.
