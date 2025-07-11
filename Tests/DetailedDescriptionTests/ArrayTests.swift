@@ -211,4 +211,23 @@ struct ArrayTestSuit {
         #expect(block.string == match)
     }
     
+    @Test
+    func testOptionalSequence() {
+        let array: [Int]? = [1, 2, 3]
+        let block = descriptor.container {
+            descriptor.optional("", of: array)
+        }
+            .hideEmptySequence()
+        
+        let match = """
+        EmptyModel
+         ╰─<3 elements>
+           ├─[0]: 1
+           ├─[1]: 2
+           ╰─[2]: 3
+        """
+        
+        #expect(block.string == match)
+    }
+    
 }
