@@ -104,6 +104,43 @@ public func withStandardOutputCaptured(_ body: () throws -> Void) throws -> File
     #expect(output == match)
 }
 
+@Test func testNestedDebugDescription() throws {
+    let model = Model(name: "hello", age: 100)
+    let match = """
+    Model<T>
+     ├─details
+     │ ├─name: "hello"
+     │ ╰─age: 100
+     ╰─the end
+    """
+    
+    #expect(model.detailedDescription == match)
+    
+    let data = try withStandardOutputCaptured {
+        debugPrint(model, terminator: "")
+    }.readToEnd()!
+    let output = String(data: data, encoding: .utf8) ?? "(false data)"
+    
+    #expect(output == match)
+}
+
+@Test func testNestedMirror() throws {
+    let model = Model(name: "hello", age: 100)
+    let match = """
+    Model<T>
+     ├─details
+     │ ├─name: "hello"
+     │ ╰─age: 100
+     ╰─the end
+    """
+    
+    #expect(model.detailedDescription == match)
+    
+    let output = String(reflecting: model)
+    
+    #expect(output == match)
+}
+
 @Test func testEmpty() {
     let model = EmptyModel()
     

@@ -66,6 +66,8 @@ detailedPrint(item, configuration: .showFileSize)
 // file.mid [25 kB]
 ```
 
+If you prefer not to import `DetailedDescription` on caller side, you can use `debugDescription` instead.
+
 
 ### Recursive
 

@@ -19,7 +19,7 @@
 /// ### Requirement
 /// Structures only need to implement the following.
 /// - ``detailedDescription(using:)``
-public protocol DetailedStringConvertible {
+public protocol DetailedStringConvertible: CustomDebugStringConvertible {
     
     /// Use this function to provide description.
     ///
@@ -34,6 +34,16 @@ public protocol DetailedStringConvertible {
     func detailedDescription(
         using descriptor: DetailedDescription.Descriptor<Self>
     ) -> any DescriptionBlockProtocol
+    
+}
+
+
+extension DetailedStringConvertible {
+    
+    /// The default implementation for debug description: its ``detailedDescription``.
+    public var debugDescription: String {
+        self.detailedDescription
+    }
     
 }
 

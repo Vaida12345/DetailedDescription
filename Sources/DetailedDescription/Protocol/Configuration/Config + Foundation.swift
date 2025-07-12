@@ -7,7 +7,7 @@
 
 public extension DetailedStringConvertibleWithConfiguration {
     
-    /// Use this property to access the detailed description of a ``DetailedStringConvertible``.
+    /// Use this property to access the detailed description of a ``DetailedStringConvertibleWithConfiguration``.
     func detailedDescription(configuration: DescriptionConfiguration = DescriptionConfiguration()) -> String {
         let descriptor = DetailedDescription.Descriptor(base: self)
         let descriptions = self.detailedDescription(using: descriptor, configuration: configuration)

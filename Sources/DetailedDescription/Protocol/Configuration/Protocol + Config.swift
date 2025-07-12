@@ -24,7 +24,7 @@
 /// ### Requirement
 /// Structures only need to implement the following.
 /// - ``detailedDescription(using:configuration:)``
-public protocol DetailedStringConvertibleWithConfiguration<DescriptionConfiguration> {
+public protocol DetailedStringConvertibleWithConfiguration<DescriptionConfiguration>: CustomDebugStringConvertible {
     
     /// Use this function to provide description.
     ///
@@ -45,6 +45,16 @@ public protocol DetailedStringConvertibleWithConfiguration<DescriptionConfigurat
     
     /// The configuration type that assists in describing.
     associatedtype DescriptionConfiguration: Initializable
+    
+}
+
+
+extension DetailedStringConvertibleWithConfiguration {
+    
+    /// The default implementation for debug description: its ``detailedDescription``.
+    public var debugDescription: String {
+        self.detailedDescription()
+    }
     
 }
 
