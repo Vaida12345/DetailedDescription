@@ -1,6 +1,6 @@
 //
 //  ArrayBlock.swift
-//  
+//
 //
 //  Created by Vaida on 7/12/24.
 //
@@ -26,14 +26,11 @@ struct SequenceBlock: DescriptionBlockProtocol {
         environment: _EnvironmentValues
     ) where Target : TextOutputStream {
         let blocks = self.blocks.filter({ !$0._isEmpty(environment: environment) })
-        
-        let linesCount = self.blocks.count
+        let linesCount = blocks.count
         
         if environment.serialized {
             target.write("[")
             for (index, line) in blocks.enumerated() {
-                guard !line._isEmpty(environment: environment) else { continue }
-                
                 let isLastLine = index == linesCount - 1
                 line._detailedWrite(to: &target, trivia: [], environment: environment)
                 
@@ -56,8 +53,6 @@ struct SequenceBlock: DescriptionBlockProtocol {
         }
         
         for (index, line) in blocks.enumerated() {
-            guard !line._isEmpty(environment: environment) else { continue }
-            
             let isLastLine = index == linesCount - 1
             
             target.write(trivia.map(\.symbol).joined())

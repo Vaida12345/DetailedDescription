@@ -10,7 +10,10 @@ extension KeyPath {
     
     var trailingPath: String {
         let path = "\(self)"
-        return String(path[path.index(after: path.lastIndex(of: ".")!)...])
+        if let lastDot = path.lastIndex(of: ".") {
+            return String(path[path.index(after: lastDot)...])
+        }
+        return path
     }
     
 }

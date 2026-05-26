@@ -37,7 +37,7 @@ struct ModifiedBlock: DescriptionBlockProtocol {
     }
     
     func _isEmpty(environment: _EnvironmentValues) -> Bool {
-        self.block._isEmpty(environment: environment)
+        self.block._isEmpty(environment: environment.mergePreservingRight(self.environment))
     }
     
 }

@@ -20,8 +20,8 @@ struct OptionalBlock: DescriptionBlockProtocol {
         parent: _ParentInfo = [],
         environment: _EnvironmentValues
     ) where Target : TextOutputStream {
-        assert(block != nil)
-        block!._detailedWrite(to: &target, trivia: trivia, parent: parent, environment: environment) // pass through
+        guard let block else { return }
+        block._detailedWrite(to: &target, trivia: trivia, parent: parent, environment: environment) // pass through
     }
     
     func _isEmpty(environment: _EnvironmentValues) -> Bool {
