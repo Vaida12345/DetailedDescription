@@ -25,13 +25,13 @@ struct ConfigurationRecursiveTests {
                 case .right(let model):
                     descriptor.value("right", of: model)
                 case .leaf:
-                    descriptor.constant("leaf")
+                    descriptor.raw("leaf")
                 }
                 
                 if configuration == .a {
-                    descriptor.constant("a")
+                    descriptor.raw("a")
                 } else if configuration == .b {
-                    descriptor.constant("b")
+                    descriptor.raw("b")
                 }
             }
         }

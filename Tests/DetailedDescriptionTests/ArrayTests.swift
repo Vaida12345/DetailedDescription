@@ -130,7 +130,7 @@ struct ArrayTestSuit {
         func detailedDescription(using descriptor: DetailedDescription.Descriptor<LoopModel>) -> any DescriptionBlockProtocol {
             descriptor.container {
                 descriptor.forEach(dictionary) { (key, value) in
-                    descriptor.constant("\(key): \(value)")
+                    descriptor.raw("\(key): \(value)")
                 }
             }
         }
@@ -182,7 +182,7 @@ struct ArrayTestSuit {
     @Test
     func testEmptySequence() {
         let block = descriptor.container {
-            descriptor.constant("a")
+            descriptor.raw("a")
             descriptor.value("b", of: [])
         }
         
@@ -198,7 +198,7 @@ struct ArrayTestSuit {
     @Test
     func testHideEmptySequence() {
         let block = descriptor.container {
-            descriptor.constant("a")
+            descriptor.raw("a")
             descriptor.value("b", of: [])
         }
         .hideEmptySequence()

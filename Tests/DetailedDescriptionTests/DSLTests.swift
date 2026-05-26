@@ -58,7 +58,7 @@ struct MultiArray: DetailedStringConvertible {
                     descriptor.value("", of: child)
                 }
             } else {
-                descriptor.constant("leaf")
+                descriptor.raw("leaf")
             }
         }
     }
@@ -127,9 +127,9 @@ struct FlatModel: DetailedStringConvertible {
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<FlatModel>) -> any DescriptionBlockProtocol {
         descriptor.container {
             if true {
-                descriptor.constant("123")
+                descriptor.raw("123")
             }
-            descriptor.constant("456")
+            descriptor.raw("456")
         }
     }
 }

@@ -41,7 +41,19 @@ extension DetailedDescription.Descriptor {
     /// Use this when you want to add a constant string. For dynamically constructed description, it is recommended to use ``value(_:for:)``
     ///
     /// - Note: `content` will not be bounded by quotation marks.
+    @available(*, deprecated, renamed: "raw")
     public func constant(
+        _ content: String
+    ) -> any DescriptionBlockProtocol {
+        LineBlock(label: nil, raw: .string(content, isString: false))
+    }
+    
+    /// Explicitly add a `String`.
+    ///
+    /// Use this when you want to add a constant string. For dynamically constructed description, it is recommended to use ``value(_:for:)``
+    ///
+    /// - Note: `content` will not be bounded by quotation marks.
+    public func raw(
         _ content: String
     ) -> any DescriptionBlockProtocol {
         LineBlock(label: nil, raw: .string(content, isString: false))

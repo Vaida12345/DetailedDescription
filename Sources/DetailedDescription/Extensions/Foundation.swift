@@ -26,7 +26,7 @@ extension Optional: DetailedStringConvertible where Wrapped: DetailedStringConve
                 descriptor.value("", of: wrapped)
             }
         } else {
-            return descriptor.constant("nil")
+            return descriptor.raw("nil")
         }
     }
 }
@@ -41,7 +41,7 @@ extension Optional: DetailedStringConvertibleWithConfiguration where Wrapped: De
                     .environment(DescriptionConfiguration.self, value: configuration)
             }
         } else {
-            return descriptor.constant("nil")
+            return descriptor.raw("nil")
         }
     }
     

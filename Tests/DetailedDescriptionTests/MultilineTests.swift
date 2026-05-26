@@ -18,7 +18,7 @@ struct MultilineWrapper<Value>: DetailedStringConvertible {
     func detailedDescription(using descriptor: DetailedDescription.Descriptor<MultilineWrapper<Value>>) -> any DescriptionBlockProtocol {
         descriptor.container {
             descriptor.value(for: \.value)
-            descriptor.constant("end")
+            descriptor.raw("end")
         }
     }
     

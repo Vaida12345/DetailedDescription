@@ -23,7 +23,7 @@ struct Model: DetailedStringConvertible {
                 descriptor.value("age", of: age)
             }
             
-            descriptor.constant("the end")
+            descriptor.raw("the end")
         }
     }
 }
