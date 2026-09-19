@@ -66,21 +66,31 @@ nonisolated(unsafe) let descriptor = DetailedDescription.Descriptor(base: EmptyM
 
 
 /// Redirects the standard output and captures the result.
-public func withStandardOutputCaptured(_ body: () throws -> Void) throws -> FileHandle {
-    // Create a pipe and redirect stdout
+///
+/// - Returns: Empty string if the returned file handle is empty.
+@inlinable
+@available(macOS 10.15, iOS 13, watchOS 6, *)
+func withStandardOutputCaptured(_ body: () throws -> Void) throws -> Data {
+    fflush(stdout)
+    
     let pipe = Pipe()
     let oldStdout = dup(STDOUT_FILENO)
-    dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
     
-    // Print something (this will be captured)
-    try body()
+    do {
+        dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
+        
+        defer {
+            fflush(stdout)
+            dup2(oldStdout, STDOUT_FILENO)
+            close(oldStdout)
+        }
+        
+        try body()
+        fflush(stdout)
+        try pipe.fileHandleForWriting.close()
+    }
     
-    // Restore stdout
-    dup2(oldStdout, STDOUT_FILENO)
-    close(oldStdout)
-    try pipe.fileHandleForWriting.close()
-    
-    return pipe.fileHandleForReading
+    return try pipe.fileHandleForReading.readToEnd() ?? Data()
 }
 
 
@@ -98,47 +108,51 @@ public func withStandardOutputCaptured(_ body: () throws -> Void) throws -> File
     
     let data = try withStandardOutputCaptured {
         detailedPrint(model, terminator: "")
-    }.readToEnd()!
+    }
     let output = String(data: data, encoding: .utf8) ?? "(false data)"
     
     #expect(output == match)
 }
 
-@Test func testNestedDebugDescription() throws {
-    let model = Model(name: "hello", age: 100)
-    let match = """
+@Suite(.serialized)
+struct PrintSuite {
+    
+    @Test func testNestedDebugDescription() throws {
+        let model = Model(name: "hello", age: 100)
+        let match = """
     Model<T>
      ├─details
      │ ├─name: "hello"
      │ ╰─age: 100
      ╰─the end
     """
+        
+        #expect(model.detailedDescription == match)
+        
+        let data = try withStandardOutputCaptured {
+            debugPrint(model, terminator: "")
+        }
+        let output = String(data: data, encoding: .utf8) ?? "(false data)"
+        
+        #expect(output == match)
+    }
     
-    #expect(model.detailedDescription == match)
-    
-    let data = try withStandardOutputCaptured {
-        debugPrint(model, terminator: "")
-    }.readToEnd()!
-    let output = String(data: data, encoding: .utf8) ?? "(false data)"
-    
-    #expect(output == match)
-}
-
-@Test func testNestedMirror() throws {
-    let model = Model(name: "hello", age: 100)
-    let match = """
+    @Test func testNestedMirror() throws {
+        let model = Model(name: "hello", age: 100)
+        let match = """
     Model<T>
      ├─details
      │ ├─name: "hello"
      │ ╰─age: 100
      ╰─the end
     """
-    
-    #expect(model.detailedDescription == match)
-    
-    let output = String(reflecting: model)
-    
-    #expect(output == match)
+        
+        #expect(model.detailedDescription == match)
+        
+        let output = String(reflecting: model)
+        
+        #expect(output == match)
+    }
 }
 
 @Test func testEmpty() {
