@@ -40,12 +40,12 @@ struct MultilineTests {
     }
     
     @Test func NSArray() {
-        let value = [Date(timeIntervalSince1970: 0) as NSDate] as NSArray
+        let value = ["1970-01-01 12:00:00 AM +0000" as NSString] as NSArray
         let model = MultilineWrapper(value: value)
         let match = """
             MultilineWrapper<NSArray>
              ├─value: (
-             │            "1970-01-01 12:00:00\\U202fAM +0000"
+             │            "1970-01-01 12:00:00 AM +0000"
              │        )
              ╰─end
             """
