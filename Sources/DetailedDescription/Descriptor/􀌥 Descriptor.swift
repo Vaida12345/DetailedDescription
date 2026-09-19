@@ -19,7 +19,7 @@ extension DetailedDescription {
     /// ### Describing Value
     /// - ``DetailedDescription/Descriptor/value(_:for:)``
     /// - ``DetailedDescription/Descriptor/value(_:of:)``
-    /// - ``DetailedDescription/Descriptor/constant(_:)``
+    /// - ``DetailedDescription/Descriptor/raw(_:)``
     ///
     /// ### Describing Optional
     /// - ``DetailedDescription/Descriptor/optional(_:for:)``
