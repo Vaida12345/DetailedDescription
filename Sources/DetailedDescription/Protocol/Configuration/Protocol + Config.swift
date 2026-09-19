@@ -51,7 +51,7 @@ public protocol DetailedStringConvertibleWithConfiguration<DescriptionConfigurat
 
 extension DetailedStringConvertibleWithConfiguration {
     
-    /// The default implementation for debug description: its ``detailedDescription``.
+    /// The default implementation for debug description: its ``detailedDescription(configuration:)``.
     public var debugDescription: String {
         self.detailedDescription()
     }

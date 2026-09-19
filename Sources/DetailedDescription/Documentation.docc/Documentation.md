@@ -75,4 +75,3 @@ Use the following to retrieve the detailed description.
 - ``DetailedDescription``
 - ``DescriptionBlockProtocol``
 - ``Initializable``
-- ``CustomDetailedStringConvertible``
